@@ -5,168 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CMS Judiciary - Advocate Ifthekhar Ahmad Khan</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --cms-navy: #0e1e38;
-            --cms-header: #162a45;
-            --cms-gold: #b45309;
-            --cms-green: #15803d;
-            --cms-red: #b91c1c;
-            --bg-gray: #f1f5f9;
-            --surface: #ffffff;
-            --border-color: #cbd5e1;
-            --text-primary: #0f172a;
-            --text-muted: #475569;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: var(--bg-gray); color: var(--text-primary); overflow-x: hidden; }
-
-        .gov-top-bar {
-            background: #000; color: #cbd5e1; font-size: 0.65rem;
-            padding: 4px 1rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px; letter-spacing: 0.5px;
-        }
-
-        .main-header {
-            background: var(--cms-navy); color: white; position: sticky;
-            top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .brand-container {
-            max-width: 1200px; margin: 0 auto; padding: 0.8rem 1rem;
-            display: flex; align-items: center; gap: 12px;
-        }
-
-        .cms-logo {
-            font-size: 1.8rem; background: rgba(255,255,255,0.08);
-            padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); flex-shrink: 0;
-        }
-
-        .brand-titles h1 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #f8fafc; line-height: 1.2; }
-        .brand-titles p { font-size: 0.7rem; color: #94a3b8; }
-
-        .top-nav {
-            display: flex; background: var(--cms-header);
-            border-top: 1px solid rgba(255,255,255,0.08); width: 100%;
-            overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;
-        }
-
-        .top-nav::-webkit-scrollbar { display: none; }
-
-        .nav-btn {
-            background: transparent; border: none; color: #94a3b8;
-            padding: 0.75rem 1rem; cursor: pointer; font-size: 0.8rem;
-            font-weight: 600; border-bottom: 3px solid transparent; transition: all 0.2s; display: inline-block;
-        }
-
-        .nav-btn:hover { color: white; }
-        .nav-btn.active { color: #f59e0b; border-bottom-color: #f59e0b; background: rgba(255,255,255,0.04); }
-
-        .content-container { max-width: 1200px; margin: 0 auto; padding: 1rem 0.75rem; }
-        .portion { display: none; }
-        .portion.active { display: block; }
-
-        /* Stats Grid */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.2rem; }
-        .stat-card { background: var(--surface); border: 1px solid var(--border-color); border-left: 4px solid var(--cms-navy); padding: 0.85rem; border-radius: 6px; }
-        .stat-card.gold { border-left-color: var(--cms-gold); }
-        .stat-card.green { border-left-color: var(--cms-green); }
-        .stat-card.red { border-left-color: var(--cms-red); }
-        .stat-title { font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
-        .stat-number { display: block; font-size: 1.15rem; font-weight: 700; color: var(--cms-navy); margin-top: 4px; }
-
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.4rem; gap: 10px; flex-wrap: wrap; }
-        .section-header h3 { font-size: 0.95rem; color: var(--cms-navy); }
-
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
-        .cms-court-card { background: var(--surface); border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px; }
-        .court-badge { display: inline-block; background: #e2e8f0; color: var(--cms-navy); font-size: 0.6rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-bottom: 6px; }
-        .court-badge.gold { background: #fef3c7; color: var(--cms-gold); }
-
-        .toolbar { display: flex; gap: 8px; margin-bottom: 10px; }
-        .search-input { width: 100%; padding: 0.55rem; border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.8rem; }
-
-        .panel-card { background: var(--surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1.2rem; }
-        .panel-header h2 { font-size: 1rem; color: var(--cms-navy); margin-bottom: 0.4rem; }
-
-        .form-row { display: flex; gap: 10px; margin-bottom: 0.8rem; flex-wrap: wrap; }
-        .form-field { flex: 1; min-width: 100%; }
-        @media(min-width: 600px) { .form-field { min-width: 200px; } }
-
-        label { display: block; font-size: 0.7rem; font-weight: 700; margin-bottom: 3px; color: var(--cms-navy); }
-        input, select, textarea { width: 100%; padding: 0.55rem; border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.8rem; }
-
-        .cms-btn { padding: 0.55rem 0.9rem; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; color: white; transition: background 0.2s; font-size: 0.8rem; width: 100%; text-align: center; }
-        @media(min-width: 600px) { .cms-btn { width: auto; } }
-
-        .btn-navy { background: var(--cms-navy); }
-        .btn-green { background: var(--cms-green); }
-        .btn-gold { background: var(--cms-gold); }
-        .btn-print { background: #334155; }
-
-        .table-responsive { overflow-x: auto; background: var(--surface); border: 1px solid var(--border-color); border-radius: 6px; -webkit-overflow-scrolling: touch; }
-        .cms-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; text-align: left; min-width: 500px; }
-        .cms-table th { background: var(--cms-navy); color: white; padding: 0.6rem; font-weight: 600; }
-        .cms-table td { padding: 0.6rem; border-bottom: 1px solid var(--border-color); }
-
-        .badge { padding: 2px 6px; border-radius: 4px; font-weight: 700; font-size: 0.65rem; }
-        .badge.cleared { background: #dcfce7; color: var(--cms-green); }
-        .badge.due { background: #fee2e2; color: var(--cms-red); }
-
-        .text-center { text-align: center; }
-        .calc-sub-title { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.8rem; }
-
-        .calc-pills-nav {
-            display: flex; justify-content: flex-start; gap: 6px; overflow-x: auto;
-            margin-bottom: 1rem; background: #f8fafc; padding: 6px; border-radius: 8px; border: 1px solid #e2e8f0; white-space: nowrap;
-        }
-
-        .pill-btn {
-            border: none; background: transparent; padding: 0.5rem 0.8rem; font-size: 0.75rem;
-            font-weight: 600; color: var(--text-muted); border-radius: 6px; cursor: pointer; transition: all 0.2s ease;
-        }
-
-        .pill-btn.active { background: var(--cms-navy); color: #ffffff; }
-        .calc-module { display: none; }
-        .calc-module.active { display: block; }
-
-        .general-calc-ui { max-width: 100%; margin: 0 auto; background: #0f172a; padding: 12px; border-radius: 12px; }
-        @media(min-width: 400px) { .general-calc-ui { max-width: 320px; } }
-
-        .calc-screen { background: #1e293b; border-radius: 6px; padding: 8px; text-align: right; margin-bottom: 10px; border: 1px solid #334155; }
-        .screen-history { font-size: 0.7rem; color: #94a3b8; height: 14px; overflow: hidden; }
-        .screen-input { width: 100%; background: transparent; border: none; color: #38bdf8; font-size: 1.4rem; font-weight: 700; text-align: right; outline: none; }
-        .calc-keypad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        .key { padding: 10px 0; font-size: 0.95rem; font-weight: 600; border: none; border-radius: 6px; background: #334155; color: #f8fafc; cursor: pointer; }
-        .key-action { background: #e11d48; color: white; }
-        .key-op { background: #d97706; color: white; }
-        .key-equals { background: #16a34a; color: white; }
-
-        .module-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 1rem; border-radius: 6px; }
-        .res-box { display: none; margin-top: 0.8rem; padding: 0.8rem; background: #ffffff; border-left: 4px solid var(--cms-navy); border-radius: 4px; }
-
-        .law-card { background: white; border: 1px solid var(--border-color); border-radius: 6px; padding: 0.85rem; margin-bottom: 8px; }
-        .law-card h4 { color: var(--cms-navy); font-size: 0.85rem; margin-bottom: 4px; }
-        .law-card p { font-size: 0.75rem; color: var(--text-muted); }
-
-        #doc-print-template { display: none; background: white; padding: 20px; border: 1px solid #ccc; font-family: 'Times New Roman', serif; }
-        #doc-print-template h2 { text-align: center; text-decoration: underline; margin-bottom: 15px; font-size: 1.3rem; }
-        #doc-print-template p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 10px; }
-
-        .chat-wrapper { height: 380px; display: flex; flex-direction: column; }
-        .chat-display { flex: 1; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 4px; padding: 0.6rem; background: #f8fafc; display: flex; flex-direction: column; gap: 6px; }
-        .chat-bubble { max-width: 85%; padding: 0.5rem 0.75rem; border-radius: 4px; font-size: 0.78rem; }
-        .chat-bubble.bot { background: #e2e8f0; color: var(--cms-navy); align-self: flex-start; }
-        .chat-bubble.user { background: var(--cms-navy); color: white; align-self: flex-end; }
-        .chat-controls { display: flex; gap: 6px; margin-top: 8px; }
-
-        @media print {
-            body * { visibility: hidden; }
-            .printable-area, .printable-area * { visibility: visible; }
-            .printable-area { position: absolute; left: 0; top: 0; width: 100%; }
-            .no-print { display: none !important; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -193,17 +32,22 @@
             <button class="nav-btn" onclick="showPortion('docs', this)">📄 Doc Generator</button>
             <button class="nav-btn" onclick="showPortion('library', this)">📖 Legal Reference</button>
             <button class="nav-btn" onclick="showPortion('assistant', this)">🤖 Helpdesk</button>
+            <button id="theme-toggle-btn" class="nav-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
         </nav>
     </header>
 
     <main class="content-container">
+        <iframe src="hadith.html" style="width:100%; height:280px; border:none; margin-bottom:10px;"></iframe>
+
+        <!-- Toast Notification Box -->
+        <div id="toast" class="toast-notification">Notification</div>
 
         <!-- Dashboard Portion -->
         <section id="portion-dashboard" class="portion active no-print">
             <div class="stats-grid">
                 <div class="stat-card">
                     <span class="stat-title">Active Cases</span>
-                    <span class="stat-number">15</span>
+                    <span class="stat-number" id="dash-active-count">15</span>
                 </div>
                 <div class="stat-card gold">
                     <span class="stat-title">Next Hearing</span>
@@ -226,13 +70,11 @@
                 <div class="cms-court-card"><div class="court-badge">Session Division</div><h4>District & Session Judge</h4><p>Attock HQ Court Complex</p></div>
                 <div class="cms-court-card"><div class="court-badge gold">INJRA Division</div><h4>Civil Judge Hifsa Bukhari</h4><p>Civil & Land Records Suits</p></div>
                 <div class="cms-court-card"><div class="court-badge gold">Jand Division</div><h4>Civil Judge Yousuf Abdur Rehman</h4><p>Jand Sub-Division Court</p></div>
-                <div class="cms-court-card"><div class="court-badge">Fateh Jang</div><h4>Civil Judge Najaam Ayub</h4><p>Family & Civil Matters</p></div>
-                <div class="cms-court-card"><div class="court-badge">Hassan Abdal</div><h4>Senior Civil Judge</h4><p>Hassan Abdal Division</p></div>
-                <div class="cms-court-card"><div class="court-badge">Pindi Gheb</div><h4>Additional Session Judge</h4><p>Pindi Gheb Sub-Division</p></div>
+                <div class="cms-court-card"><div class="court-badge">Basaal</div><h4>Civil Judge Najaam Ayub</h4><p>Family & Civil Matters</p></div>
             </div>
         </section>
 
-        <!-- Cause List / Diary -->
+        <!-- Cause List / Diary Portion -->
         <section id="portion-diary" class="portion">
             <div class="panel-card no-print">
                 <div class="panel-header"><h2>Record Entry & Set Limitation Target</h2></div>
@@ -248,8 +90,7 @@
                                 <option>District & Session Judge Attock</option>
                                 <option>Civil Judge Hifsa Bukhari (INJRA Division)</option>
                                 <option>Civil Judge Yousuf Abdur Rehman (Jand Division)</option>
-                                <option>Civil Judge Najaam Ayub (Fateh Jang)</option>
-                                <option>Sub-Division Hassan Abdal</option>
+                                <option>Civil Judge Najaam Ayub (Basaal)</option>
                                 <option>Sub-Division Pindi Gheb</option>
                             </select>
                         </div>
@@ -261,7 +102,10 @@
 
             <div class="section-header no-print">
                 <h3>Daily Cause List Directory</h3>
-                <button onclick="window.print()" class="cms-btn btn-print">🖨️ Print List</button>
+                <div style="display:flex; gap:8px;">
+                    <button onclick="exportTableToCSV('cause-list.csv', 'diary-records-body')" class="cms-btn btn-gold" style="width:auto;">📥 Export Excel</button>
+                    <button onclick="window.print()" class="cms-btn btn-print" style="width:auto;">🖨️ Print List</button>
+                </div>
             </div>
 
             <div class="toolbar no-print">
@@ -274,14 +118,13 @@
                         <tr><th>Date</th><th>Case Title / Ref</th><th>Court Division</th><th>Proceeding Stage</th></tr>
                     </thead>
                     <tbody id="diary-records-body">
-                        <tr><td>2026-08-25</td><td>Civil Suit #45/2026</td><td>Civil Judge Hifsa Bukhari (INJRA)</td><td>Arguments Hearing</td></tr>
-                        <tr><td>2026-08-28</td><td>Bail App #12/2026</td><td>Session Judge Attock</td><td>Prosecution Response</td></tr>
+                        <!-- Loaded from LocalStorage or Default -->
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- Billing Register -->
+        <!-- Billing Register Portion -->
         <section id="portion-billing" class="portion">
             <div class="panel-card no-print">
                 <div class="panel-header"><h2>Financial Ledger Entry</h2></div>
@@ -300,7 +143,10 @@
 
             <div class="section-header no-print">
                 <h3>Financial Audit Ledger</h3>
-                <button onclick="window.print()" class="cms-btn btn-print">🖨️ Print Ledger</button>
+                <div style="display:flex; gap:8px;">
+                    <button onclick="exportTableToCSV('billing-ledger.csv', 'billing-records-body')" class="cms-btn btn-gold" style="width:auto;">📥 Export Excel</button>
+                    <button onclick="window.print()" class="cms-btn btn-print" style="width:auto;">🖨️ Print Ledger</button>
+                </div>
             </div>
 
             <div class="toolbar no-print">
@@ -313,8 +159,7 @@
                         <tr><th>Client</th><th>Case Ref</th><th>Total Fee</th><th>Paid</th><th>Balance</th></tr>
                     </thead>
                     <tbody id="billing-records-body">
-                        <tr><td>Ahmad Ali</td><td>Land Claim Ref #88</td><td>PKR 150,000</td><td>PKR 100,000</td><td><span class="badge due">Due: PKR 50,000</span></td></tr>
-                        <tr><td>Tariq Mahmood</td><td>Bail Matter #104</td><td>PKR 60,000</td><td>PKR 60,000</td><td><span class="badge cleared">Cleared</span></td></tr>
+                        <!-- Loaded from LocalStorage or Default -->
                     </tbody>
                 </table>
             </div>
@@ -343,13 +188,13 @@
                         <tr><th>Client / Case Ref</th><th>Document Title</th><th>Storage Location / Link</th></tr>
                     </thead>
                     <tbody id="locker-records-body">
-                        <tr><td>Ahmad Ali (#88)</td><td>Fard Malkiyat & Registry Copies</td><td>Physical Cabinet B - File #14</td></tr>
+                        <!-- Loaded from LocalStorage or Default -->
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- Calculators Suite -->
+        <!-- Calculators Suite Portion -->
         <section id="portion-calculator" class="portion no-print">
             <div class="panel-card">
                 <div class="panel-header text-center">
@@ -444,7 +289,7 @@
             </div>
         </section>
 
-        <!-- Document Generator -->
+        <!-- Document Generator Portion -->
         <section id="portion-docs" class="portion">
             <div class="panel-card no-print">
                 <div class="panel-header"><h2>📄 Legal Document Generator</h2></div>
@@ -487,7 +332,7 @@
             <button id="doc-print-btn" onclick="window.print()" class="cms-btn btn-print no-print" style="display:none; margin-top:15px;">🖨️ Print Prepared Document</button>
         </section>
 
-        <!-- Legal Reference -->
+        <!-- Legal Reference Portion -->
         <section id="portion-library" class="portion no-print">
             <div class="panel-card">
                 <div class="panel-header"><h2>📖 Advocate's Quick Reference</h2></div>
@@ -531,225 +376,6 @@
 
     </main>
 
-    <script>
-        function showPortion(portionId, btnElement) {
-            document.querySelectorAll('.portion').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('portion-' + portionId).classList.add('active');
-            btnElement.classList.add('active');
-        }
-
-        function saveDiary(e) {
-            e.preventDefault();
-            const date = document.getElementById('diary-date').value;
-            const title = document.getElementById('diary-case').value;
-            const court = document.getElementById('diary-court').value;
-            const stage = document.getElementById('diary-stage').value;
-
-            const row = `<tr><td>${date}</td><td><strong>${title}</strong></td><td>${court}</td><td>${stage}</td></tr>`;
-            document.getElementById('diary-records-body').insertAdjacentHTML('afterbegin', row);
-            document.getElementById('diary-form').reset();
-        }
-
-        function saveBilling(e) {
-            e.preventDefault();
-            const client = document.getElementById('bill-client').value;
-            const caseRef = document.getElementById('bill-case').value;
-            const total = parseFloat(document.getElementById('bill-amount').value);
-            const paid = parseFloat(document.getElementById('bill-paid').value);
-            const bal = total - paid;
-
-            const badge = bal <= 0 ? `<span class="badge cleared">Cleared</span>` : `<span class="badge due">Due: PKR ${bal.toLocaleString()}</span>`;
-            const row = `<tr><td><strong>${client}</strong></td><td>${caseRef}</td><td>PKR ${total.toLocaleString()}</td><td>PKR ${paid.toLocaleString()}</td><td>${badge}</td></tr>`;
-            document.getElementById('billing-records-body').insertAdjacentHTML('afterbegin', row);
-            document.getElementById('billing-form').reset();
-        }
-
-        function saveLocker(e) {
-            e.preventDefault();
-            const client = document.getElementById('locker-client').value;
-            const type = document.getElementById('locker-type').value;
-            const link = document.getElementById('locker-link').value;
-
-            const row = `<tr><td><strong>${client}</strong></td><td>${type}</td><td>${link}</td></tr>`;
-            document.getElementById('locker-records-body').insertAdjacentHTML('afterbegin', row);
-            document.getElementById('locker-form').reset();
-        }
-
-        function filterTable(tableBodyId, query) {
-            const rows = document.querySelectorAll(`#${tableBodyId} tr`);
-            rows.forEach(row => {
-                row.style.display = row.innerText.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
-            });
-        }
-
-        function filterLaws(query) {
-            const cards = document.querySelectorAll('.law-card');
-            cards.forEach(card => {
-                card.style.display = card.innerText.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
-            });
-        }
-
-        function updateLimitationCounter(targetDateStr) {
-            const target = new Date(targetDateStr);
-            const today = new Date();
-            const diffTime = target - today;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-            document.getElementById('dash-next-hearing').innerText = targetDateStr;
-            document.getElementById('dash-limitation-days').innerText = diffDays > 0 ? `${diffDays} Days Left` : 'Deadline Passed';
-        }
-
-        function generateDocument(e) {
-            e.preventDefault();
-            const type = document.getElementById('doc-type-select').value;
-            const court = document.getElementById('doc-court').value;
-            const client = document.getElementById('doc-client').value;
-            const opposite = document.getElementById('doc-opposite').value;
-            const casetitle = document.getElementById('doc-casetitle').value;
-
-            document.getElementById('w-court').innerText = court;
-            document.getElementById('w-client').innerText = client;
-            document.getElementById('w-opposite').innerText = opposite;
-            document.getElementById('w-casetitle').innerText = casetitle;
-
-            if (type === 'wakalatnama') {
-                document.getElementById('print-doc-title').innerText = 'WAKALATNAMA / POWER OF ATTORNEY';
-                document.getElementById('print-doc-body').innerHTML = 'I/We do hereby appoint and retain <strong>ADVOCATE IFTHEKHAR AHMAD KHAN</strong>, High Court, to appear and act for me/us in the above case.';
-            } else if (type === 'urgent') {
-                document.getElementById('print-doc-title').innerText = 'APPLICATION FOR URGENT HEARING';
-                document.getElementById('print-doc-body').innerHTML = 'It is respectfully prayed that the titled matter involves urgent interim relief issues, and may kindly be fixed for immediate hearing today.';
-            } else if (type === 'legal_notice') {
-                document.getElementById('print-doc-title').innerText = 'FORMAL LEGAL NOTICE';
-                document.getElementById('print-doc-body').innerHTML = 'Take notice that my client calls upon you to settle the outstanding dispute within 14 days of receipt of this notice.';
-            }
-
-            document.getElementById('doc-print-template').style.display = 'block';
-            document.getElementById('doc-print-btn').style.display = 'block';
-        }
-
-        function switchCalcModule(modId, btn) {
-            document.querySelectorAll('.calc-module').forEach(m => m.classList.remove('active'));
-            document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('module-' + modId).classList.add('active');
-            btn.classList.add('active');
-        }
-
-        let genExpression = '';
-        function calcInput(val) {
-            const display = document.getElementById('gen-display');
-            if (display.value === '0' && val !== '.') genExpression = '';
-            genExpression += val;
-            display.value = genExpression;
-        }
-        function calcClearAll() {
-            genExpression = '';
-            document.getElementById('gen-display').value = '0';
-            document.getElementById('gen-history').innerText = '';
-        }
-        function calcDeleteOne() {
-            const display = document.getElementById('gen-display');
-            genExpression = genExpression.slice(0, -1);
-            display.value = genExpression.length > 0 ? genExpression : '0';
-        }
-        function calcEquals() {
-            const display = document.getElementById('gen-display');
-            const history = document.getElementById('gen-history');
-            if (!genExpression) return;
-            try {
-                history.innerText = genExpression + ' =';
-                let evalResult = Function('"use strict";return (' + genExpression + ')')();
-                display.value = Number(evalResult.toFixed(6));
-                genExpression = display.value;
-            } catch (e) {
-                display.value = 'Error';
-                genExpression = '';
-            }
-        }
-
-        function computeLandShare() {
-            const k = parseFloat(document.getElementById('land-kanal').value) || 0;
-            const m = parseFloat(document.getElementById('land-marla').value) || 0;
-            const s = parseFloat(document.getElementById('land-sarsai').value) || 0;
-            const totalShares = parseFloat(document.getElementById('land-total-shares').value) || 0;
-            const userShares = parseFloat(document.getElementById('land-user-shares').value) || 0;
-            const out = document.getElementById('land-output');
-
-            if (totalShares <= 0 || userShares <= 0) {
-                out.style.display = 'block';
-                out.innerHTML = '<b style="color:red;">Enter valid shares.</b>';
-                return;
-            }
-
-            const totalSarsai = (k * 180) + (m * 9) + s;
-            const userSarsaiTotal = (totalSarsai / totalShares) * userShares;
-
-            const resKanal = Math.floor(userSarsaiTotal / 180);
-            let rem = userSarsaiTotal % 180;
-            const resMarla = Math.floor(rem / 9);
-            const resSarsai = (rem % 9).toFixed(2);
-
-            out.style.display = 'block';
-            out.innerHTML = `<h4>Share Result:</h4><p style="font-size:1rem; font-weight:bold; color:var(--cms-gold);">${resKanal} Kanal - ${resMarla} Marla - ${resSarsai} Sarsai</p>`;
-        }
-
-        function computeAge() {
-            const dob = document.getElementById('dob-val').value;
-            const target = document.getElementById('target-date-val').value;
-            const out = document.getElementById('age-output');
-
-            if (!dob || !target) return;
-            let d1 = new Date(dob), d2 = new Date(target);
-            let years = d2.getFullYear() - d1.getFullYear();
-            let months = d2.getMonth() - d1.getMonth();
-            let days = d2.getDate() - d1.getDate();
-
-            if (days < 0) { months--; days += new Date(d2.getFullYear(), d2.getMonth(), 0).getDate(); }
-            if (months < 0) { years--; months += 12; }
-
-            out.style.display = 'block';
-            out.innerHTML = `<h4>Age Result:</h4><p style="font-size:1rem; font-weight:bold; color:var(--cms-navy);">${years} Y, ${months} M, ${days} D</p>`;
-        }
-
-        function computeCourtExpenses() {
-            const rate = parseFloat(document.getElementById('court-stamp-rate').value) || 0;
-            const claim = parseFloat(document.getElementById('court-claim-val').value) || 0;
-            const pages = parseFloat(document.getElementById('court-pages-val').value) || 0;
-            const out = document.getElementById('court-output');
-
-            const duty = claim * (rate / 100);
-            const printing = pages * 20;
-            const total = duty + printing;
-
-            out.style.display = 'block';
-            out.innerHTML = `<p><strong>Duty:</strong> PKR ${duty.toLocaleString()}</p><p><strong>Printing:</strong> PKR ${printing.toLocaleString()}</p><p style="font-size:1rem; font-weight:bold; color:var(--cms-red);">Total: PKR ${total.toLocaleString()}</p>`;
-        }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const display = document.getElementById('chat-box');
-            const text = input.value.trim();
-            if (!text) return;
-
-            display.innerHTML += `<div class="chat-bubble user">${text}</div>`;
-            input.value = '';
-            display.scrollTop = display.scrollHeight;
-
-            let reply = "Thank you for contacting Office CMS. Please visit during court hours.";
-            const q = text.toLowerCase();
-            if (q.includes('injra')) reply = "INJRA Division is presided by Civil Judge Hifsa Bukhari.";
-            else if (q.includes('jand')) reply = "Jand Division is presided by Civil Judge Yousuf Abdur Rehman.";
-
-            setTimeout(() => {
-                display.innerHTML += `<div class="chat-bubble bot">${reply}</div>`;
-                display.scrollTop = display.scrollHeight;
-            }, 300);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const today = new Date().toISOString().split('T')[0];
-            if (document.getElementById('target-date-val')) document.getElementById('target-date-val').value = today;
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
