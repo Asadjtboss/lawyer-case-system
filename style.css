@@ -1,0 +1,49 @@
+/* Google Professional Fonts */
+@import url('https://googleapis.com');
+
+* {
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Luxury Law Gradient Background */
+body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+/* Premium Glassmorphism Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+/* Gold/Amber Custom Input Fields */
+input:focus, select:focus {
+    border-color: #d97706 !important;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2) !important;
+}
+
+/* Custom Table Styling */
+.custom-table th {
+    background-color: #1e293b;
+    color: #f8fafc;
+    letter-spacing: 0.05em;
+}
+
+.custom-table tr:hover {
+    background-color: #fdf8f2;
+    transform: scale(1.005);
+}
+
+/* Premium Buttons */
+.btn-primary {
+    background: linear-gradient(to right, #d97706, #b45309);
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to right, #b45309, #92400e);
+    box-shadow: 0 6px 16px rgba(217, 119, 6, 0.4);
+}
