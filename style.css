@@ -14,10 +14,9 @@ body {
     color: #f8fafc;
     min-height: 100vh;
     display: flex;
-    flex-direction: row; /* Desktop defaults */
 }
 
-/* Sidebar Styling */
+/* Sidebar (Desktop Mode) */
 .sidebar {
     width: 260px;
     background: #1e293b;
@@ -94,9 +93,9 @@ body {
     border-bottom: 1px solid #e2e8f0;
 }
 
-/* Responsive Grid layouts */
+/* Grid Layouts for Data Counters */
 .grid-container {
-    padding: 20px;
+    padding: 30px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
@@ -104,7 +103,7 @@ body {
 
 .stat-card {
     background: white;
-    padding: 20px;
+    padding: 25px;
     border-radius: 12px;
     border: 1px solid #e2e8f0;
     display: flex;
@@ -121,39 +120,25 @@ body {
 }
 
 .stat-value {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: #0f172a;
     margin-top: 5px;
 }
 
 .stat-icon {
-    font-size: 1.8rem;
+    font-size: 2rem;
     background: #fef3c7;
-    padding: 8px;
+    padding: 10px;
     border-radius: 10px;
 }
 
-.content-box {
-    padding: 20px;
-}
-
-.form-card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-    border: 1px solid #e2e8f0;
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-}
+.content-box { padding: 30px; }
+.form-card { background: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #e2e8f0; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
 
 .action-panel {
-    margin: 20px;
+    margin: 0 30px 30px 30px;
     background: white;
     padding: 25px;
     border-radius: 12px;
@@ -162,52 +147,67 @@ body {
 
 .action-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     margin-top: 15px;
 }
 
-/* Tables scroll wrapper for small mobile screens */
-.table-card {
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    overflow-x: auto; /* Adds swiping gesture on mobile tables */
+.action-btn {
+    display: block;
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #334155;
+    font-weight: 600;
+    background: #f8fafc;
 }
 
+.action-btn:hover {
+    border-color: #d97706;
+    background: #fffbeb;
+    color: #b45309;
+}
+
+.table-card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow-x: auto; }
+
 /* ======================================================= */
-/* 📱 SPECIAL MOBILE & TABLET MEDIA QUERY RESPONSIVENESS */
+/* 📱 SCREEN FIX FOR MOBILE RESPONSIVENESS (MAX-WIDTH)    */
 /* ======================================================= */
-@media (max-wihdt: 768px) or (max-width: 768px) {
+@media (max-width: 768px) {
     body {
-        flex-direction: column; /* Stacks sidebar on top of content on mobile */
+        flex-direction: column; /* Side panels ko mobile par upar-niche stack karein */
     }
     
     .sidebar {
         width: 100%;
         height: auto;
         border-right: none;
-        border-bottom: 1px solid #334155;
+        border-bottom: 2px solid #334155;
     }
     
     .nav-links {
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: wrap; /* Auto alignment for multi buttons row */
         padding: 10px;
         margin-top: 0;
-        gap: 5px;
+        gap: 6px;
         justify-content: center;
     }
     
     .nav-links a {
         margin-bottom: 0;
-        padding: 8px 12px;
-        font-size: 0.85rem;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        flex: 1 1 calc(50% - 10px); /* Do do buttons barabar aayenge mobile screen par */
+        text-align: center;
     }
     
     .btn-logout {
-        padding: 8px;
+        padding: 10px;
         font-size: 0.85rem;
+        border-radius: 0;
     }
     
     .main-content {
@@ -218,11 +218,25 @@ body {
     .top-navbar {
         padding: 15px;
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
         text-align: center;
     }
     
-    .grid-container, .content-box, .action-panel {
+    .grid-container {
+        padding: 15px;
+        grid-template-columns: 1fr 1fr; /* Mobile par do cards aik row mein dikhenge */
+        gap: 12px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+    }
+    
+    .stat-value {
+        font-size: 1.3rem;
+    }
+    
+    .content-box, .action-panel {
         padding: 15px;
         margin: 15px;
     }
