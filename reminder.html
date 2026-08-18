@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Court Reminders - CMS Judiciary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="brand-container">
+            <div class="cms-logo">⏰</div>
+            <div class="brand-titles">
+                <h1>ADVOCATE IFTHEKHAR AHMAD KHAN</h1>
+                <p>Case Hearing & Task Reminders</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-container">
+        <div id="toast" class="toast-notification">Notification</div>
+
+        <!-- Add Reminder Form -->
+        <div class="cms-card">
+            <h3>Add New Reminder</h3>
+            <form id="reminderForm" onsubmit="saveReminder(event)" style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:15px;">
+                <input type="text" id="remTitle" placeholder="Title (e.g. Evidence Submission)" required style="padding:10px; border:1px solid #ccc; border-radius:5px;">
+                <input type="text" id="remCase" placeholder="Case / Client Name" required style="padding:10px; border:1px solid #ccc; border-radius:5px;">
+                <input type="date" id="remDate" required style="padding:10px; border:1px solid #ccc; border-radius:5px;">
+                <input type="time" id="remTime" required style="padding:10px; border:1px solid #ccc; border-radius:5px;">
+                <button type="submit" class="cms-btn btn-navy" style="grid-column: span 2;">➕ Add Reminder</button>
+            </form>
+        </div>
+
+        <!-- Reminders List -->
+        <div class="cms-card" style="margin-top:20px;">
+            <h3>Active Reminders</h3>
+            <div id="reminderList" style="margin-top:15px;"></div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        function loadReminders() {
+            const list = JSON.parse(localStorage.getItem('cms_reminders')) || [];
+            const container = document.getElementById('reminderList');
+            container.innerHTML = '';
+
+            if (list.length === 0) {
+                container.innerHTML = '<p style="color:#666;">No active reminders set.</p>';
+                return;
+            }
+
+            list.forEach((item, index) => {
+                container.innerHTML += `
+                    <div style="background:#f8fafc; border-left:4px solid #1e3a8a; padding:12px; margin-bottom:10px; border-radius:4px; display:flex; justify-between; align-items:center;">
+                        <div>
+                            <strong style="font-size:1.1rem; color:#1e3a8a;">${item.title}</strong>
+                            <p style="margin:4px 0; color:#475569;">📌 ${item.caseName} | 📅 ${item.date} ⏰ ${item.time}</p>
+                        </div>
+                        <button onclick="deleteReminder(${index})" style="background:#ef4444; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;">Delete</button>
+                    </div>
+                `;
+            });
+        }
+
+        function saveReminder(e) {
+            e.preventDefault();
+            const title = document.getElementById('remTitle').value;
+            const caseName = document.getElementById('remCase').value;
+            const date = document.getElementById('remDate').value;
+            const time = document.getElementById('remTime').value;
+
+            const reminders = JSON.parse(localStorage.getItem('cms_reminders')) || [];
+            reminders.push({ title, caseName, date, time });
+            localStorage.setItem('cms_reminders', JSON.stringify(reminders));
+
+            document.getElementById('reminderForm').reset();
+            loadReminders();
+            if (typeof showToast === 'function') showToast("Reminder Saved!");
+        }
+
+        function deleteReminder(index) {
+            const reminders = JSON.parse(localStorage.getItem('cms_reminders')) || [];
+            reminders.splice(index, 1);
+            localStorage.setItem('cms_reminders', JSON.stringify(reminders));
+            loadReminders();
+            if (typeof showToast === 'function') showToast("Reminder Deleted!");
+        }
+
+        window.onload = loadReminders;
+    </script>
+</body>
+</html>
