@@ -4,8 +4,181 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advocate Portal - Dashboard</title>
-    <!-- Sirf apni style.css use ho rahi hai -->
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- Internal Premium CSS Core -->
+    <style>
+        @import url('https://googleapis.com');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar Sizing Control */
+        .sidebar {
+            width: 260px;
+            background: #1e293b;
+            border-right: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: #0f172a;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #f59e0b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Fixing the HUGE Law Icon Size */
+        .sidebar-header svg {
+            width: 24px !important;
+            height: 24px !important;
+            min-width: 24px;
+            min-height: 24px;
+        }
+
+        .nav-links {
+            margin-top: 20px;
+            padding: 0 15px;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 12px 15px;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .nav-links a.active, .nav-links a:hover {
+            background: #a16207;
+            color: #fff;
+        }
+
+        .btn-logout {
+            background: #be123c;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Main App Body View */
+        .main-content {
+            flex: 1;
+            background: #f1f5f9;
+            color: #1e293b;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        .top-navbar {
+            background: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Counters Section Grid */
+        .grid-container {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .stat-title {
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 5px;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            background: #fef3c7;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .action-panel {
+            margin: 0 30px 30px 30px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            display: block;
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #334155;
+            font-weight: 600;
+            background: #f8fafc;
+        }
+
+        .action-btn:hover {
+            border-color: #d97706;
+            background: #fffbeb;
+            color: #b45309;
+        }
+    </style>
+
+    <!-- JavaScript Protection & Session Logic -->
     <script>
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'index.html';
@@ -18,10 +191,11 @@
 </head>
 <body>
 
-    <!-- SIDEBAR -->
+    <!-- 1. FIXED PREMIUM SIDEBAR -->
     <div class="sidebar">
         <div>
             <div class="sidebar-header">
+                <!-- Controlled Size Scaler SVG Icon -->
                 <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
                 </svg>
@@ -41,7 +215,7 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT AREA -->
+    <!-- 2. WORKSPACE DISPLAY SCREEN -->
     <div class="main-content">
         <header class="top-navbar">
             <h2 style="font-weight: 700; color: #1e293b;">Welcome Back, Counselor</h2>
@@ -50,7 +224,7 @@
             </div>
         </header>
 
-        <!-- Stats Cards Grid -->
+        <!-- Dynamic Counter Row Panels -->
         <div class="grid-container">
             <div class="stat-card">
                 <div>
@@ -82,7 +256,7 @@
             </div>
         </div>
 
-        <!-- Quick Links Panel -->
+        <!-- Quick Launch Pad Menu Links -->
         <div class="action-panel">
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #1e293b;">Quick Navigation Panel</h3>
             <div class="action-grid">
