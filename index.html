@@ -12,6 +12,10 @@
     <div class="gov-top-bar no-print">
         <span>CMS EXECUTIVE ADVOCATE PRACTICE PORTAL</span>
         <span>ATTOCK DIVISION</span>
+        <span class="gov-contact-link">
+            <a href="https://wa.me/923035962727" target="_blank" rel="noopener noreferrer">WhatsApp: +92 303 5962727</a>
+        </span>
+        <span class="gov-contact-link">Email: To be added later</span>
     </div>
 
     <header class="main-header no-print">
@@ -37,9 +41,95 @@
     </header>
 
     <main class="content-container">
+        <button class="floating-assistant-launcher" type="button" aria-label="Open legal desk assistant" onclick="focusAssistant()">
+            <span class="launcher-icon">⚖️</span>
+            <span class="launcher-text">Legal Desk</span>
+        </button>
+
         <iframe src="hadith.html" style="width:100%; height:280px; border:none; margin-bottom:10px;"></iframe>
 
-        <!-- Toast Notification Box -->
+        <section class="hero-panel no-print">
+            <div class="hero-copy">
+                <span class="eyebrow">Practice Management</span>
+                <h2>Professional case management for efficient, reliable advocacy.</h2>
+                <p>
+                    A secure, organized workspace to manage hearings, deadlines, billing, and case documents. Designed for
+                    clear workflows, accurate record-keeping, and faster preparation — so legal teams can concentrate on
+                    strategy and client outcomes.
+                </p>
+                <div class="hero-actions">
+                    <span class="tag-badge">Cause List</span>
+                    <span class="tag-badge">Billing</span>
+                    <span class="tag-badge">Evidence Locker</span>
+                    <span class="tag-badge">Legal Research</span>
+                </div>
+            </div>
+            <div class="hero-metrics">
+                <div class="mini-stat">
+                    <span class="mini-label">Today's Focus</span>
+                    <strong>12 Matters</strong>
+                </div>
+                <div class="mini-stat accent-gold">
+                    <span class="mini-label">Next Hearing</span>
+                    <strong>25 Aug 2026</strong>
+                </div>
+                <div class="mini-stat accent-green">
+                    <span class="mini-label">Recovery Rate</span>
+                    <strong>78% Cleared</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="feature-strip no-print">
+            <div class="feature-card">
+                <span class="feature-icon">⚖️</span>
+                <h3>Cause List Control</h3>
+                <p>Track daily proceedings, hearing dates, and court stages from a single dashboard.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💰</span>
+                <h3>Fee Ledger</h3>
+                <p>Maintain transparent billing records and monitor client balances accurately.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📁</span>
+                <h3>Evidence Vault</h3>
+                <p>Organize legal documents, registry copies, and case evidence with fast indexing.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📚</span>
+                <h3>Reference Library</h3>
+                <p>Store case law, procedural notes, and legal guidance for quick access during work.</p>
+            </div>
+        </section>
+
+                <section class="assistant-panel no-print" aria-label="Legal desk assistant">
+            <div class="assistant-header">
+                <div class="assistant-title">
+                    <span class="assistant-icon">⚖️</span>
+                    <div>
+                        <h3>Legal Desk Assistant</h3>
+                        <p>Daily briefing, case prep, and compliance support</p>
+                    </div>
+                </div>
+                <button type="button" class="assistant-mini-btn" onclick="askAssistant()">Generate Brief</button>
+            </div>
+
+            <div class="assistant-quick-actions" aria-label="Assistant quick actions">
+                <button type="button" class="assistant-chip" onclick="askAssistantPreset('hearing')">Hearing Prep</button>
+                <button type="button" class="assistant-chip" onclick="askAssistantPreset('billing')">Fee Check</button>
+                <button type="button" class="assistant-chip" onclick="askAssistantPreset('document')">Document Audit</button>
+                <button type="button" class="assistant-chip" onclick="askAssistantPreset('summary')">Case Summary</button>
+            </div>
+
+            <div class="assistant-chat" id="assistant-chat-box">
+                <div class="assistant-bubble assistant-bot">Welcome! I can prepare hearing notes, review fees, and suggest next legal actions for the day.</div>
+            </div>
+            <div class="assistant-input-row">
+                <input type="text" id="assistant-input" placeholder="Ask about hearing, fee, client follow-up, or document status..." onkeydown="if(event.key === 'Enter') askAssistant()">
+                <button type="button" class="cms-btn btn-navy" onclick="askAssistant()">Send</button>
+            </div>
+        </section><!-- Toast Notification Box -->
         <div id="toast" class="toast-notification">Notification</div>
 
         <!-- Dashboard Portion -->
@@ -61,6 +151,43 @@
                     <span class="stat-title">Fee Cleared</span>
                     <span class="stat-number">78%</span>
                 </div>
+            </div>
+
+            <div class="auth-panel panel-card no-print">
+                <div class="auth-header">
+                    <div>
+                        <span class="eyebrow small">Secure Access</span>
+                        <h3>Advocate Account</h3>
+                    </div>
+                    <span id="auth-state-badge" class="auth-badge guest">Guest Access</span>
+                </div>
+                <div id="auth-logged-out" class="auth-box">
+                    <div class="form-row compact-row">
+                        <div class="form-field">
+                            <label>Username</label>
+                            <input type="text" id="login-username" placeholder="Enter username">
+                        </div>
+                        <div class="form-field">
+                            <label>Password</label>
+                            <input type="password" id="login-password" placeholder="Enter password">
+                        </div>
+                    </div>
+                    <div class="auth-actions">
+                        <button type="button" onclick="loginUser()" class="cms-btn btn-navy">Login</button>
+                        <button type="button" onclick="registerUser()" class="cms-btn btn-gold">Create Account</button>
+                    </div>
+                </div>
+                <div id="auth-logged-in" class="auth-box hidden">
+                    <div class="user-welcome">
+                        <strong id="logged-user-name">Advocate</strong>
+                        <span id="user-role-label">Case Manager</span>
+                    </div>
+                    <div class="auth-actions">
+                        <button type="button" onclick="showPortion('diary', document.querySelectorAll('.nav-btn')[1])" class="cms-btn btn-green">My Cases</button>
+                        <button type="button" onclick="logoutUser()" class="cms-btn btn-print">Logout</button>
+                    </div>
+                </div>
+                <div id="status-summary" class="status-summary">Login to view your personal case status updates.</div>
             </div>
 
             <div class="section-header">
@@ -115,7 +242,7 @@
             <div class="table-responsive printable-area">
                 <table class="cms-table">
                     <thead>
-                        <tr><th>Date</th><th>Case Title / Ref</th><th>Court Division</th><th>Proceeding Stage</th></tr>
+                        <tr><th>Date</th><th>Case Title / Ref</th><th>Court Division</th><th>Proceeding Stage</th><th>Status</th><th>Action</th></tr>
                     </thead>
                     <tbody id="diary-records-body">
                         <!-- Loaded from LocalStorage or Default -->
@@ -179,6 +306,20 @@
                     </div>
                     <button type="submit" class="cms-btn btn-navy">Save Record</button>
                 </form>
+            </div>
+
+            <div class="locker-showcase">
+                <div class="locker-cabinet">
+                    <button type="button" class="locker-drawer drawer-a" onclick="selectLockerItem('Case Files')"><span>Case Files</span></button>
+                    <button type="button" class="locker-drawer drawer-b" onclick="selectLockerItem('Evidence')"><span>Evidence</span></button>
+                    <button type="button" class="locker-drawer drawer-c" onclick="selectLockerItem('Registry')"><span>Registry</span></button>
+                </div>
+                <div class="locker-files">
+                    <button type="button" class="file-card card-1" onclick="selectLockerItem('FIR Copy')">FIR Copy</button>
+                    <button type="button" class="file-card card-2" onclick="selectLockerItem('CNIC')">CNIC</button>
+                    <button type="button" class="file-card card-3" onclick="selectLockerItem('Title Deed')">Title Deed</button>
+                    <button type="button" class="file-card card-4" onclick="selectLockerItem('Affidavit')">Affidavit</button>
+                </div>
             </div>
 
             <div class="section-header"><h3>Stored Records Index</h3></div>
@@ -379,3 +520,5 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+    
