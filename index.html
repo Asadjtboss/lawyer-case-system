@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS Judiciary - Advocate Ifthekhar Ahmad Khan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cms-navy: #0e1e38;
+            --cms-header: #162a45;
+            --cms-gold: #b45309;
+            --cms-green: #15803d;
+            --cms-red: #b91c1c;
+            --bg-gray: #f1f5f9;
+            --surface: #ffffff;
+            --border-color: #cbd5e1;
+            --text-primary: #0f172a;
+            --text-muted: #475569;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-gray); color: var(--text-primary); overflow-x: hidden; }
+
+        .gov-top-bar {
+            background: #000; color: #cbd5e1; font-size: 0.65rem;
+            padding: 4px 1rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px; letter-spacing: 0.5px;
+        }
+
+        .main-header {
+            background: var(--cms-navy); color: white; position: sticky;
+            top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .brand-container {
+            max-width: 1200px; margin: 0 auto; padding: 0.8rem 1rem;
+            display: flex; align-items: center; gap: 12px;
+        }
+
+        .cms-logo {
+            font-size: 1.8rem; background: rgba(255,255,255,0.08);
+            padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); flex-shrink: 0;
+        }
+
+        .brand-titles h1 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #f8fafc; line-height: 1.2; }
+        .brand-titles p { font-size: 0.7rem; color: #94a3b8; }
+
+        .top-nav {
+            display: flex; background: var(--cms-header);
+            border-top: 1px solid rgba(255,255,255,0.08); width: 100%;
+            overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;
+        }
+
+        .top-nav::-webkit-scrollbar { display: none; }
+
+        .nav-btn {
+            background: transparent; border: none; color: #94a3b8;
+            padding: 0.75rem 1rem; cursor: pointer; font-size: 0.8rem;
+            font-weight: 600; border-bottom: 3px solid transparent; transition: all 0.2s; display: inline-block;
+        }
+
+        .nav-btn:hover { color: white; }
+        .nav-btn.active { color: #f59e0b; border-bottom-color: #f59e0b; background: rgba(255,255,255,0.04); }
+
+        .content-container { max-width: 1200px; margin: 0 auto; padding: 1rem 0.75rem; }
+        .portion { display: none; }
+        .portion.active { display: block; }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.2rem; }
+        .stat-card { background: var(--surface); border: 1px solid var(--border-color); border-left: 4px solid var(--cms-navy); padding: 0.85rem; border-radius: 6px; }
+        .stat-card.gold { border-left-color: var(--cms-gold); }
+        .stat-card.green { border-left-color: var(--cms-green); }
+        .stat-card.red { border-left-color: var(--cms-red); }
+        .stat-title { font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+        .stat-number { display: block; font-size: 1.15rem; font-weight: 700; color: var(--cms-navy); margin-top: 4px; }
+
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.4rem; gap: 10px; flex-wrap: wrap; }
+        .section-header h3 { font-size: 0.95rem; color: var(--cms-navy); }
+
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+        .cms-court-card { background: var(--surface); border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px; }
+        .court-badge { display: inline-block; background: #e2e8f0; color: var(--cms-navy); font-size: 0.6rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-bottom: 6px; }
+        .court-badge.gold { background: #fef3c7; color: var(--cms-gold); }
+
+        .toolbar { display: flex; gap: 8px; margin-bottom: 10px; }
+        .search-input { width: 100%; padding: 0.55rem; border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.8rem; }
+
+        .panel-card { background: var(--surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1.2rem; }
+        .panel-header h2 { font-size: 1rem; color: var(--cms-navy); margin-bottom: 0.4rem; }
+
+        .form-row { display: flex; gap: 10px; margin-bottom: 0.8rem; flex-wrap: wrap; }
+        .form-field { flex: 1; min-width: 100%; }
+        @media(min-width: 600px) { .form-field { min-width: 200px; } }
+
+        label { display: block; font-size: 0.7rem; font-weight: 700; margin-bottom: 3px; color: var(--cms-navy); }
+        input, select, textarea { width: 100%; padding: 0.55rem; border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.8rem; }
+
+        .cms-btn { padding: 0.55rem 0.9rem; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; color: white; transition: background 0.2s; font-size: 0.8rem; width: 100%; text-align: center; }
+        @media(min-width: 600px) { .cms-btn { width: auto; } }
+
+        .btn-navy { background: var(--cms-navy); }
+        .btn-green { background: var(--cms-green); }
+        .btn-gold { background: var(--cms-gold); }
+        .btn-print { background: #334155; }
+
+        .table-responsive { overflow-x: auto; background: var(--surface); border: 1px solid var(--border-color); border-radius: 6px; -webkit-overflow-scrolling: touch; }
+        .cms-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; text-align: left; min-width: 500px; }
+        .cms-table th { background: var(--cms-navy); color: white; padding: 0.6rem; font-weight: 600; }
+        .cms-table td { padding: 0.6rem; border-bottom: 1px solid var(--border-color); }
+
+        .badge { padding: 2px 6px; border-radius: 4px; font-weight: 700; font-size: 0.65rem; }
+        .badge.cleared { background: #dcfce7; color: var(--cms-green); }
+        .badge.due { background: #fee2e2; color: var(--cms-red); }
+
+        .text-center { text-align: center; }
+        .calc-sub-title { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.8rem; }
+
+        .calc-pills-nav {
+            display: flex; justify-content: flex-start; gap: 6px; overflow-x: auto;
+            margin-bottom: 1rem; background: #f8fafc; padding: 6px; border-radius: 8px; border: 1px solid #e2e8f0; white-space: nowrap;
+        }
+
+        .pill-btn {
+            border: none; background: transparent; padding: 0.5rem 0.8rem; font-size: 0.75rem;
+            font-weight: 600; color: var(--text-muted); border-radius: 6px; cursor: pointer; transition: all 0.2s ease;
+        }
+
+        .pill-btn.active { background: var(--cms-navy); color: #ffffff; }
+        .calc-module { display: none; }
+        .calc-module.active { display: block; }
+
+        .general-calc-ui { max-width: 100%; margin: 0 auto; background: #0f172a; padding: 12px; border-radius: 12px; }
+        @media(min-width: 400px) { .general-calc-ui { max-width: 320px; } }
+
+        .calc-screen { background: #1e293b; border-radius: 6px; padding: 8px; text-align: right; margin-bottom: 10px; border: 1px solid #334155; }
+        .screen-history { font-size: 0.7rem; color: #94a3b8; height: 14px; overflow: hidden; }
+        .screen-input { width: 100%; background: transparent; border: none; color: #38bdf8; font-size: 1.4rem; font-weight: 700; text-align: right; outline: none; }
+        .calc-keypad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        .key { padding: 10px 0; font-size: 0.95rem; font-weight: 600; border: none; border-radius: 6px; background: #334155; color: #f8fafc; cursor: pointer; }
+        .key-action { background: #e11d48; color: white; }
+        .key-op { background: #d97706; color: white; }
+        .key-equals { background: #16a34a; color: white; }
+
+        .module-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 1rem; border-radius: 6px; }
+        .res-box { display: none; margin-top: 0.8rem; padding: 0.8rem; background: #ffffff; border-left: 4px solid var(--cms-navy); border-radius: 4px; }
+
+        .law-card { background: white; border: 1px solid var(--border-color); border-radius: 6px; padding: 0.85rem; margin-bottom: 8px; }
+        .law-card h4 { color: var(--cms-navy); font-size: 0.85rem; margin-bottom: 4px; }
+        .law-card p { font-size: 0.75rem; color: var(--text-muted); }
+
+        #doc-print-template { display: none; background: white; padding: 20px; border: 1px solid #ccc; font-family: 'Times New Roman', serif; }
+        #doc-print-template h2 { text-align: center; text-decoration: underline; margin-bottom: 15px; font-size: 1.3rem; }
+        #doc-print-template p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 10px; }
+
+        .chat-wrapper { height: 380px; display: flex; flex-direction: column; }
+        .chat-display { flex: 1; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 4px; padding: 0.6rem; background: #f8fafc; display: flex; flex-direction: column; gap: 6px; }
+        .chat-bubble { max-width: 85%; padding: 0.5rem 0.75rem; border-radius: 4px; font-size: 0.78rem; }
+        .chat-bubble.bot { background: #e2e8f0; color: var(--cms-navy); align-self: flex-start; }
+        .chat-bubble.user { background: var(--cms-navy); color: white; align-self: flex-end; }
+        .chat-controls { display: flex; gap: 6px; margin-top: 8px; }
+
+        @media print {
+            body * { visibility: hidden; }
+            .printable-area, .printable-area * { visibility: visible; }
+            .printable-area { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gov-top-bar no-print">
+        <span>CMS EXECUTIVE ADVOCATE PRACTICE PORTAL</span>
+        <span>ATTOCK DIVISION</span>
+    </div>
+
+    <header class="main-header no-print">
+        <div class="brand-container">
+            <div class="cms-logo">🏛️</div>
+            <div class="brand-titles">
+                <h1>ADVOCATE IFTHEKHAR AHMAD KHAN</h1>
+                <p>Case Management System</p>
+            </div>
+        </div>
+
+        <nav class="top-nav">
+            <button class="nav-btn active" onclick="showPortion('dashboard', this)">📊 Dashboard</button>
+            <button class="nav-btn" onclick="showPortion('diary', this)">⚖️ Cause List</button>
+            <button class="nav-btn" onclick="showPortion('billing', this)">📜 Billing</button>
+            <button class="nav-btn" onclick="showPortion('locker', this)">📁 Locker</button>
+            <button class="nav-btn" onclick="showPortion('calculator', this)">🧮 Calculators</button>
+            <button class="nav-btn" onclick="showPortion('docs', this)">📄 Doc Generator</button>
+            <button class="nav-btn" onclick="showPortion('library', this)">📖 Legal Reference</button>
+            <button class="nav-btn" onclick="showPortion('assistant', this)">🤖 Helpdesk</button>
+        </nav>
+    </header>
+
+    <main class="content-container">
+
+        <!-- Dashboard Portion -->
+        <section id="portion-dashboard" class="portion active no-print">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-title">Active Cases</span>
+                    <span class="stat-number">15</span>
+                </div>
+                <div class="stat-card gold">
+                    <span class="stat-title">Next Hearing</span>
+                    <span class="stat-number" id="dash-next-hearing">2026-08-25</span>
+                </div>
+                <div class="stat-card red">
+                    <span class="stat-title">Limitation Alert</span>
+                    <span class="stat-number" id="dash-limitation-days">7 Days Left</span>
+                </div>
+                <div class="stat-card green">
+                    <span class="stat-title">Fee Cleared</span>
+                    <span class="stat-number">78%</span>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3>Subordinate Courts Directory (Attock Division)</h3>
+            </div>
+            <div class="grid-layout">
+                <div class="cms-court-card"><div class="court-badge">Session Division</div><h4>District & Session Judge</h4><p>Attock HQ Court Complex</p></div>
+                <div class="cms-court-card"><div class="court-badge gold">INJRA Division</div><h4>Civil Judge Hifsa Bukhari</h4><p>Civil & Land Records Suits</p></div>
+                <div class="cms-court-card"><div class="court-badge gold">Jand Division</div><h4>Civil Judge Yousuf Abdur Rehman</h4><p>Jand Sub-Division Court</p></div>
+                <div class="cms-court-card"><div class="court-badge">Fateh Jang</div><h4>Civil Judge Najaam Ayub</h4><p>Family & Civil Matters</p></div>
+                <div class="cms-court-card"><div class="court-badge">Hassan Abdal</div><h4>Senior Civil Judge</h4><p>Hassan Abdal Division</p></div>
+                <div class="cms-court-card"><div class="court-badge">Pindi Gheb</div><h4>Additional Session Judge</h4><p>Pindi Gheb Sub-Division</p></div>
+            </div>
+        </section>
+
+        <!-- Cause List / Diary -->
+        <section id="portion-diary" class="portion">
+            <div class="panel-card no-print">
+                <div class="panel-header"><h2>Record Entry & Set Limitation Target</h2></div>
+                <form id="diary-form" onsubmit="saveDiary(event)">
+                    <div class="form-row">
+                        <div class="form-field"><label>Next Hearing Date</label><input type="date" id="diary-date" required onchange="updateLimitationCounter(this.value)"></div>
+                        <div class="form-field"><label>Case Title / Number</label><input type="text" id="diary-case" placeholder="e.g. Case #102/2026" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Court Division</label>
+                            <select id="diary-court" required>
+                                <option>District & Session Judge Attock</option>
+                                <option>Civil Judge Hifsa Bukhari (INJRA Division)</option>
+                                <option>Civil Judge Yousuf Abdur Rehman (Jand Division)</option>
+                                <option>Civil Judge Najaam Ayub (Fateh Jang)</option>
+                                <option>Sub-Division Hassan Abdal</option>
+                                <option>Sub-Division Pindi Gheb</option>
+                            </select>
+                        </div>
+                        <div class="form-field"><label>Proceeding Stage</label><input type="text" id="diary-stage" placeholder="e.g. Evidentiary Hearing" required></div>
+                    </div>
+                    <button type="submit" class="cms-btn btn-navy">Save to Cause List</button>
+                </form>
+            </div>
+
+            <div class="section-header no-print">
+                <h3>Daily Cause List Directory</h3>
+                <button onclick="window.print()" class="cms-btn btn-print">🖨️ Print List</button>
+            </div>
+
+            <div class="toolbar no-print">
+                <input type="text" class="search-input" placeholder="🔍 Search by Case or Court..." onkeyup="filterTable('diary-records-body', this.value)">
+            </div>
+
+            <div class="table-responsive printable-area">
+                <table class="cms-table">
+                    <thead>
+                        <tr><th>Date</th><th>Case Title / Ref</th><th>Court Division</th><th>Proceeding Stage</th></tr>
+                    </thead>
+                    <tbody id="diary-records-body">
+                        <tr><td>2026-08-25</td><td>Civil Suit #45/2026</td><td>Civil Judge Hifsa Bukhari (INJRA)</td><td>Arguments Hearing</td></tr>
+                        <tr><td>2026-08-28</td><td>Bail App #12/2026</td><td>Session Judge Attock</td><td>Prosecution Response</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Billing Register -->
+        <section id="portion-billing" class="portion">
+            <div class="panel-card no-print">
+                <div class="panel-header"><h2>Financial Ledger Entry</h2></div>
+                <form id="billing-form" onsubmit="saveBilling(event)">
+                    <div class="form-row">
+                        <div class="form-field"><label>Client Name</label><input type="text" id="bill-client" required></div>
+                        <div class="form-field"><label>Case Details</label><input type="text" id="bill-case" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field"><label>Total Fee (PKR)</label><input type="number" id="bill-amount" required></div>
+                        <div class="form-field"><label>Paid Amount (PKR)</label><input type="number" id="bill-paid" required></div>
+                    </div>
+                    <button type="submit" class="cms-btn btn-green">Update Billing</button>
+                </form>
+            </div>
+
+            <div class="section-header no-print">
+                <h3>Financial Audit Ledger</h3>
+                <button onclick="window.print()" class="cms-btn btn-print">🖨️ Print Ledger</button>
+            </div>
+
+            <div class="toolbar no-print">
+                <input type="text" class="search-input" placeholder="🔍 Search Ledger..." onkeyup="filterTable('billing-records-body', this.value)">
+            </div>
+
+            <div class="table-responsive printable-area">
+                <table class="cms-table">
+                    <thead>
+                        <tr><th>Client</th><th>Case Ref</th><th>Total Fee</th><th>Paid</th><th>Balance</th></tr>
+                    </thead>
+                    <tbody id="billing-records-body">
+                        <tr><td>Ahmad Ali</td><td>Land Claim Ref #88</td><td>PKR 150,000</td><td>PKR 100,000</td><td><span class="badge due">Due: PKR 50,000</span></td></tr>
+                        <tr><td>Tariq Mahmood</td><td>Bail Matter #104</td><td>PKR 60,000</td><td>PKR 60,000</td><td><span class="badge cleared">Cleared</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Locker Portion -->
+        <section id="portion-locker" class="portion no-print">
+            <div class="panel-card">
+                <div class="panel-header"><h2>📁 Evidence & Document Locker</h2></div>
+                <form id="locker-form" onsubmit="saveLocker(event)">
+                    <div class="form-row">
+                        <div class="form-field"><label>Client / Case Ref</label><input type="text" id="locker-client" placeholder="e.g. Case #45 - Ahmad Ali" required></div>
+                        <div class="form-field"><label>Document Type</label><input type="text" id="locker-type" placeholder="e.g. CNIC Copy, FIR, Fard" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field"><label>Storage Location / Drive Link</label><input type="text" id="locker-link" placeholder="e.g. Cabinet #2 File #A" required></div>
+                    </div>
+                    <button type="submit" class="cms-btn btn-navy">Save Record</button>
+                </form>
+            </div>
+
+            <div class="section-header"><h3>Stored Records Index</h3></div>
+            <div class="table-responsive">
+                <table class="cms-table">
+                    <thead>
+                        <tr><th>Client / Case Ref</th><th>Document Title</th><th>Storage Location / Link</th></tr>
+                    </thead>
+                    <tbody id="locker-records-body">
+                        <tr><td>Ahmad Ali (#88)</td><td>Fard Malkiyat & Registry Copies</td><td>Physical Cabinet B - File #14</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Calculators Suite -->
+        <section id="portion-calculator" class="portion no-print">
+            <div class="panel-card">
+                <div class="panel-header text-center">
+                    <h2>🏛️ CMS Judicial Calculators</h2>
+                </div>
+
+                <div class="calc-pills-nav">
+                    <button class="pill-btn active" onclick="switchCalcModule('gen', this)">🧮 Math</button>
+                    <button class="pill-btn" onclick="switchCalcModule('land', this)">🌾 Land Share</button>
+                    <button class="pill-btn" onclick="switchCalcModule('age', this)">📅 Age Counter</button>
+                    <button class="pill-btn" onclick="switchCalcModule('court', this)">⚖️ Court Fee</button>
+                </div>
+
+                <div class="calc-body-wrapper">
+                    <div id="module-gen" class="calc-module active">
+                        <div class="general-calc-ui">
+                            <div class="calc-screen">
+                                <div id="gen-history" class="screen-history"></div>
+                                <input type="text" id="gen-display" class="screen-input" readonly value="0">
+                            </div>
+                            <div class="calc-keypad">
+                                <button onclick="calcClearAll()" class="key key-action">AC</button>
+                                <button onclick="calcDeleteOne()" class="key key-action">DEL</button>
+                                <button onclick="calcInput('%')" class="key key-op">%</button>
+                                <button onclick="calcInput('/')" class="key key-op">÷</button>
+
+                                <button onclick="calcInput('7')" class="key">7</button>
+                                <button onclick="calcInput('8')" class="key">8</button>
+                                <button onclick="calcInput('9')" class="key">9</button>
+                                <button onclick="calcInput('*')" class="key key-op">×</button>
+
+                                <button onclick="calcInput('4')" class="key">4</button>
+                                <button onclick="calcInput('5')" class="key">5</button>
+                                <button onclick="calcInput('6')" class="key">6</button>
+                                <button onclick="calcInput('-')" class="key key-op">-</button>
+
+                                <button onclick="calcInput('1')" class="key">1</button>
+                                <button onclick="calcInput('2')" class="key">2</button>
+                                <button onclick="calcInput('3')" class="key">3</button>
+                                <button onclick="calcInput('+')" class="key key-op">+</button>
+
+                                <button onclick="calcInput('00')" class="key">00</button>
+                                <button onclick="calcInput('0')" class="key">0</button>
+                                <button onclick="calcInput('.')" class="key">.</button>
+                                <button onclick="calcEquals()" class="key key-equals">=</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="module-land" class="calc-module">
+                        <div class="module-card">
+                            <h3>Punjab Land Record Share Division</h3>
+                            <div class="form-row">
+                                <div class="form-field"><label>Total Kanal</label><input type="number" id="land-kanal" min="0" value="0"></div>
+                                <div class="form-field"><label>Total Marla</label><input type="number" id="land-marla" min="0" max="19" value="0"></div>
+                                <div class="form-field"><label>Total Sarsai</label><input type="number" id="land-sarsai" min="0" max="8" value="0"></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field"><label>Total Estate Shares</label><input type="number" id="land-total-shares" placeholder="e.g. 240"></div>
+                                <div class="form-field"><label>Litigant Shares</label><input type="number" id="land-user-shares" placeholder="e.g. 15"></div>
+                            </div>
+                            <button onclick="computeLandShare()" class="cms-btn btn-navy">Compute Share</button>
+                            <div id="land-output" class="res-box"></div>
+                        </div>
+                    </div>
+
+                    <div id="module-age" class="calc-module">
+                        <div class="module-card">
+                            <h3>Litigant Age Counter</h3>
+                            <div class="form-row">
+                                <div class="form-field"><label>Date of Birth</label><input type="date" id="dob-val"></div>
+                                <div class="form-field"><label>Target Date</label><input type="date" id="target-date-val"></div>
+                            </div>
+                            <button onclick="computeAge()" class="cms-btn btn-gold">Calculate Age</button>
+                            <div id="age-output" class="res-box"></div>
+                        </div>
+                    </div>
+
+                    <div id="module-court" class="calc-module">
+                        <div class="module-card">
+                            <h3>Court Stamp Duty & Expense Calculator</h3>
+                            <div class="form-row">
+                                <div class="form-field"><label>Stamp Duty Rate (%)</label><input type="number" id="court-stamp-rate" value="15"></div>
+                                <div class="form-field"><label>Claim Value (PKR)</label><input type="number" id="court-claim-val" placeholder="e.g. 500000"></div>
+                                <div class="form-field"><label>Doc Pages</label><input type="number" id="court-pages-val" placeholder="e.g. 12"></div>
+                            </div>
+                            <button onclick="computeCourtExpenses()" class="cms-btn btn-green">Calculate Expenses</button>
+                            <div id="court-output" class="res-box"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Document Generator -->
+        <section id="portion-docs" class="portion">
+            <div class="panel-card no-print">
+                <div class="panel-header"><h2>📄 Legal Document Generator</h2></div>
+                <form onsubmit="generateDocument(event)">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Document Type</label>
+                            <select id="doc-type-select">
+                                <option value="wakalatnama">Wakalatnama / Power of Attorney</option>
+                                <option value="urgent">Urgent Form / Application</option>
+                                <option value="legal_notice">Legal Notice / Demand</option>
+                            </select>
+                        </div>
+                        <div class="form-field"><label>Court / Office Name</label><input type="text" id="doc-court" placeholder="e.g. Session Court, Attock" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field"><label>Party 1 (Client Full Name)</label><input type="text" id="doc-client" placeholder="e.g. Malik Amir" required></div>
+                        <div class="form-field"><label>Party 2 (Opposite Party)</label><input type="text" id="doc-opposite" placeholder="e.g. State" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field"><label>Case Ref / Subject Title</label><input type="text" id="doc-casetitle" placeholder="e.g. Criminal Appeal #12/2026" required></div>
+                    </div>
+                    <button type="submit" class="cms-btn btn-gold">Generate & Preview</button>
+                </form>
+            </div>
+
+            <div id="doc-print-template" class="printable-area">
+                <h2 id="print-doc-title">WAKALATNAMA / POWER OF ATTORNEY</h2>
+                <p><strong>IN THE COURT OF:</strong> <span id="w-court"></span></p>
+                <p><strong>CASE TITLE:</strong> <span id="w-client"></span> <i>VS</i> <span id="w-opposite"></span></p>
+                <p><strong>SUBJECT REF:</strong> <span id="w-casetitle"></span></p>
+                <br>
+                <p id="print-doc-body">I/We do hereby appoint and retain <strong>ADVOCATE IFTHEKHAR AHMAD KHAN</strong>, High Court, to appear and act for me/us in the above case.</p>
+                <br><br>
+                <div style="display:flex; justify-content:space-between; margin-top:40px;">
+                    <div>__________________<br><strong>Client Signature</strong></div>
+                    <div>__________________<br><strong>Advocate Signature</strong></div>
+                </div>
+            </div>
+            <button id="doc-print-btn" onclick="window.print()" class="cms-btn btn-print no-print" style="display:none; margin-top:15px;">🖨️ Print Prepared Document</button>
+        </section>
+
+        <!-- Legal Reference -->
+        <section id="portion-library" class="portion no-print">
+            <div class="panel-card">
+                <div class="panel-header"><h2>📖 Advocate's Quick Reference</h2></div>
+                <div class="toolbar">
+                    <input type="text" class="search-input" placeholder="🔍 Search Sections or Laws..." onkeyup="filterLaws(this.value)">
+                </div>
+                <div id="laws-container">
+                    <div class="law-card">
+                        <h4>PPC Section 302 - Punishment of Qatl-i-Amd</h4>
+                        <p>Deals with death sentence, life imprisonment for murder.</p>
+                    </div>
+                    <div class="law-card">
+                        <h4>CrPC Section 497 - Bail in Non-Bailable Offenses</h4>
+                        <p>Conditions for granting bail in non-bailable cases.</p>
+                    </div>
+                    <div class="law-card">
+                        <h4>CPC Order 39 Rules 1 & 2 - Temporary Injunctions</h4>
+                        <p>Procedures for obtaining stay orders in civil suits.</p>
+                    </div>
+                    <div class="law-card">
+                        <h4>Limitation Act Article 152 - Civil Appeals</h4>
+                        <p>30 Days period for filing appeal against civil decree.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Helpdesk Portion -->
+        <section id="portion-assistant" class="portion no-print">
+            <div class="panel-card chat-wrapper">
+                <div class="panel-header"><h2>CMS Office Helpdesk</h2></div>
+                <div class="chat-display" id="chat-box">
+                    <div class="chat-bubble bot">Welcome to Office CMS. Ask any query regarding court cases or court divisions.</div>
+                </div>
+                <div class="chat-controls">
+                    <input type="text" id="chat-input" placeholder="Type query..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+                    <button onclick="sendChatMessage()" class="cms-btn btn-navy" style="width: auto;">Send</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function showPortion(portionId, btnElement) {
+            document.querySelectorAll('.portion').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('portion-' + portionId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+
+        function saveDiary(e) {
+            e.preventDefault();
+            const date = document.getElementById('diary-date').value;
+            const title = document.getElementById('diary-case').value;
+            const court = document.getElementById('diary-court').value;
+            const stage = document.getElementById('diary-stage').value;
+
+            const row = `<tr><td>${date}</td><td><strong>${title}</strong></td><td>${court}</td><td>${stage}</td></tr>`;
+            document.getElementById('diary-records-body').insertAdjacentHTML('afterbegin', row);
+            document.getElementById('diary-form').reset();
+        }
+
+        function saveBilling(e) {
+            e.preventDefault();
+            const client = document.getElementById('bill-client').value;
+            const caseRef = document.getElementById('bill-case').value;
+            const total = parseFloat(document.getElementById('bill-amount').value);
+            const paid = parseFloat(document.getElementById('bill-paid').value);
+            const bal = total - paid;
+
+            const badge = bal <= 0 ? `<span class="badge cleared">Cleared</span>` : `<span class="badge due">Due: PKR ${bal.toLocaleString()}</span>`;
+            const row = `<tr><td><strong>${client}</strong></td><td>${caseRef}</td><td>PKR ${total.toLocaleString()}</td><td>PKR ${paid.toLocaleString()}</td><td>${badge}</td></tr>`;
+            document.getElementById('billing-records-body').insertAdjacentHTML('afterbegin', row);
+            document.getElementById('billing-form').reset();
+        }
+
+        function saveLocker(e) {
+            e.preventDefault();
+            const client = document.getElementById('locker-client').value;
+            const type = document.getElementById('locker-type').value;
+            const link = document.getElementById('locker-link').value;
+
+            const row = `<tr><td><strong>${client}</strong></td><td>${type}</td><td>${link}</td></tr>`;
+            document.getElementById('locker-records-body').insertAdjacentHTML('afterbegin', row);
+            document.getElementById('locker-form').reset();
+        }
+
+        function filterTable(tableBodyId, query) {
+            const rows = document.querySelectorAll(`#${tableBodyId} tr`);
+            rows.forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
+            });
+        }
+
+        function filterLaws(query) {
+            const cards = document.querySelectorAll('.law-card');
+            cards.forEach(card => {
+                card.style.display = card.innerText.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
+            });
+        }
+
+        function updateLimitationCounter(targetDateStr) {
+            const target = new Date(targetDateStr);
+            const today = new Date();
+            const diffTime = target - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            document.getElementById('dash-next-hearing').innerText = targetDateStr;
+            document.getElementById('dash-limitation-days').innerText = diffDays > 0 ? `${diffDays} Days Left` : 'Deadline Passed';
+        }
+
+        function generateDocument(e) {
+            e.preventDefault();
+            const type = document.getElementById('doc-type-select').value;
+            const court = document.getElementById('doc-court').value;
+            const client = document.getElementById('doc-client').value;
+            const opposite = document.getElementById('doc-opposite').value;
+            const casetitle = document.getElementById('doc-casetitle').value;
+
+            document.getElementById('w-court').innerText = court;
+            document.getElementById('w-client').innerText = client;
+            document.getElementById('w-opposite').innerText = opposite;
+            document.getElementById('w-casetitle').innerText = casetitle;
+
+            if (type === 'wakalatnama') {
+                document.getElementById('print-doc-title').innerText = 'WAKALATNAMA / POWER OF ATTORNEY';
+                document.getElementById('print-doc-body').innerHTML = 'I/We do hereby appoint and retain <strong>ADVOCATE IFTHEKHAR AHMAD KHAN</strong>, High Court, to appear and act for me/us in the above case.';
+            } else if (type === 'urgent') {
+                document.getElementById('print-doc-title').innerText = 'APPLICATION FOR URGENT HEARING';
+                document.getElementById('print-doc-body').innerHTML = 'It is respectfully prayed that the titled matter involves urgent interim relief issues, and may kindly be fixed for immediate hearing today.';
+            } else if (type === 'legal_notice') {
+                document.getElementById('print-doc-title').innerText = 'FORMAL LEGAL NOTICE';
+                document.getElementById('print-doc-body').innerHTML = 'Take notice that my client calls upon you to settle the outstanding dispute within 14 days of receipt of this notice.';
+            }
+
+            document.getElementById('doc-print-template').style.display = 'block';
+            document.getElementById('doc-print-btn').style.display = 'block';
+        }
+
+        function switchCalcModule(modId, btn) {
+            document.querySelectorAll('.calc-module').forEach(m => m.classList.remove('active'));
+            document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('module-' + modId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        let genExpression = '';
+        function calcInput(val) {
+            const display = document.getElementById('gen-display');
+            if (display.value === '0' && val !== '.') genExpression = '';
+            genExpression += val;
+            display.value = genExpression;
+        }
+        function calcClearAll() {
+            genExpression = '';
+            document.getElementById('gen-display').value = '0';
+            document.getElementById('gen-history').innerText = '';
+        }
+        function calcDeleteOne() {
+            const display = document.getElementById('gen-display');
+            genExpression = genExpression.slice(0, -1);
+            display.value = genExpression.length > 0 ? genExpression : '0';
+        }
+        function calcEquals() {
+            const display = document.getElementById('gen-display');
+            const history = document.getElementById('gen-history');
+            if (!genExpression) return;
+            try {
+                history.innerText = genExpression + ' =';
+                let evalResult = Function('"use strict";return (' + genExpression + ')')();
+                display.value = Number(evalResult.toFixed(6));
+                genExpression = display.value;
+            } catch (e) {
+                display.value = 'Error';
+                genExpression = '';
+            }
+        }
+
+        function computeLandShare() {
+            const k = parseFloat(document.getElementById('land-kanal').value) || 0;
+            const m = parseFloat(document.getElementById('land-marla').value) || 0;
+            const s = parseFloat(document.getElementById('land-sarsai').value) || 0;
+            const totalShares = parseFloat(document.getElementById('land-total-shares').value) || 0;
+            const userShares = parseFloat(document.getElementById('land-user-shares').value) || 0;
+            const out = document.getElementById('land-output');
+
+            if (totalShares <= 0 || userShares <= 0) {
+                out.style.display = 'block';
+                out.innerHTML = '<b style="color:red;">Enter valid shares.</b>';
+                return;
+            }
+
+            const totalSarsai = (k * 180) + (m * 9) + s;
+            const userSarsaiTotal = (totalSarsai / totalShares) * userShares;
+
+            const resKanal = Math.floor(userSarsaiTotal / 180);
+            let rem = userSarsaiTotal % 180;
+            const resMarla = Math.floor(rem / 9);
+            const resSarsai = (rem % 9).toFixed(2);
+
+            out.style.display = 'block';
+            out.innerHTML = `<h4>Share Result:</h4><p style="font-size:1rem; font-weight:bold; color:var(--cms-gold);">${resKanal} Kanal - ${resMarla} Marla - ${resSarsai} Sarsai</p>`;
+        }
+
+        function computeAge() {
+            const dob = document.getElementById('dob-val').value;
+            const target = document.getElementById('target-date-val').value;
+            const out = document.getElementById('age-output');
+
+            if (!dob || !target) return;
+            let d1 = new Date(dob), d2 = new Date(target);
+            let years = d2.getFullYear() - d1.getFullYear();
+            let months = d2.getMonth() - d1.getMonth();
+            let days = d2.getDate() - d1.getDate();
+
+            if (days < 0) { months--; days += new Date(d2.getFullYear(), d2.getMonth(), 0).getDate(); }
+            if (months < 0) { years--; months += 12; }
+
+            out.style.display = 'block';
+            out.innerHTML = `<h4>Age Result:</h4><p style="font-size:1rem; font-weight:bold; color:var(--cms-navy);">${years} Y, ${months} M, ${days} D</p>`;
+        }
+
+        function computeCourtExpenses() {
+            const rate = parseFloat(document.getElementById('court-stamp-rate').value) || 0;
+            const claim = parseFloat(document.getElementById('court-claim-val').value) || 0;
+            const pages = parseFloat(document.getElementById('court-pages-val').value) || 0;
+            const out = document.getElementById('court-output');
+
+            const duty = claim * (rate / 100);
+            const printing = pages * 20;
+            const total = duty + printing;
+
+            out.style.display = 'block';
+            out.innerHTML = `<p><strong>Duty:</strong> PKR ${duty.toLocaleString()}</p><p><strong>Printing:</strong> PKR ${printing.toLocaleString()}</p><p style="font-size:1rem; font-weight:bold; color:var(--cms-red);">Total: PKR ${total.toLocaleString()}</p>`;
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const display = document.getElementById('chat-box');
+            const text = input.value.trim();
+            if (!text) return;
+
+            display.innerHTML += `<div class="chat-bubble user">${text}</div>`;
+            input.value = '';
+            display.scrollTop = display.scrollHeight;
+
+            let reply = "Thank you for contacting Office CMS. Please visit during court hours.";
+            const q = text.toLowerCase();
+            if (q.includes('injra')) reply = "INJRA Division is presided by Civil Judge Hifsa Bukhari.";
+            else if (q.includes('jand')) reply = "Jand Division is presided by Civil Judge Yousuf Abdur Rehman.";
+
+            setTimeout(() => {
+                display.innerHTML += `<div class="chat-bubble bot">${reply}</div>`;
+                display.scrollTop = display.scrollHeight;
+            }, 300);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            if (document.getElementById('target-date-val')) document.getElementById('target-date-val').value = today;
+        });
+    </script>
+</body>
+</html>
