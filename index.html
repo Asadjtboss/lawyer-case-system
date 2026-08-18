@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS Judiciary - Advocate Ifthekhar Ahmad Khan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="gov-top-bar no-print">
+        <span>CMS EXECUTIVE ADVOCATE PRACTICE PORTAL</span>
+        <span>ATTOCK DIVISION</span>
+    </div>
+
+    <header class="main-header no-print">
+        <div class="brand-container">
+            <div class="cms-logo">🏛️</div>
+            <div class="brand-titles">
+                <h1>ADVOCATE IFTHEKHAR AHMAD KHAN</h1>
+                <p>Case Management System</p>
+            </div>
+        </div>
+
+        <nav class="top-nav">
+            <button class="nav-btn active" onclick="showPortion('dashboard', this)">📊 Dashboard</button>
+            <button class="nav-btn" onclick="showPortion('diary', this)">⚖️ Cause List</button>
+            <button class="nav-btn" onclick="showPortion('billing', this)">📜 Billing</button>
+            <button class="nav-btn" onclick="showPortion('locker', this)">📁 Locker</button>
+            <button class="nav-btn" onclick="showPortion('calculator', this)">🧮 Calculators</button>
+            <button class="nav-btn" onclick="showPortion('docs', this)">📄 Doc Generator</button>
+            <button class="nav-btn" onclick="showPortion('library', this)">📖 Legal Reference</button>
+            <button class="nav-btn" onclick="showPortion('assistant', this)">🤖 Helpdesk</button>
+            <button id="theme-toggle-btn" class="nav-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+        </nav>
+    </header>
+
+    <main class="content-container">
+        <iframe src="hadith.html" style="width:100%; height:280px; border:none; margin-bottom:10px;"></iframe>
+
+        <!-- Toast Notification Box -->
+        <div id="toast" class="toast-notification">Notification</div>
+
+        <!-- Dashboard Portion -->
+        <section id="portion-dashboard" class="portion active no-print">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-title">Active Cases</span>
+                    <span class="stat-number" id="dash-active-count">15</span>
+                </div>
+                <div class="stat-card gold">
+                    <span class="stat-title">Next Hearing</span>
+                    <span class="stat-number" id="dash-next-hearing">2026-08-25</span>
+                </div>
+                <div class="stat-card red">
+                    <span class="stat-title">Limitation Alert</span>
+                    <span class="stat-number" id="dash-limitation-days">7 Days Left</span>
+                </div>
+                <div class="stat-card green">
+                    <span class="stat-title">Fee Cleared</span>
+                    <span class="stat-number">78%</span>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3>Subordinate Courts Directory (Attock Division)</h3>
+            </div>
+            <div class="grid-layout">
+                <div class="cms-court-card"><div class="court-badge">Session Division</div><h4>District & Session Judge</h4><p>Attock HQ Court Complex</p></div>
+                <div class="cms-court-card"><div class="court-badge gold">INJRA Division</div><h4>Civil Judge Hifsa Bukhari</h4><p>Civil & Land Records Suits</p></div>
+                <div class="cms-court-card"><div class="court-badge gold">Jand Division</div><h4>Civil Judge Yousuf Abdur Rehman</h4><p>Jand Sub-Division Court</p></div>
+                <div class="cms-court-card"><div class="court-badge">Basaal</div><h4>Civil Judge Najaam Ayub</h4><p>Family & Civil Matters</p></div>
+            </div>
+        </section>
+
+        <!-- Cause List / Diary Portion -->
+        <section id="portion-diary" class="portion">
+            <div class="panel-card no-print">
+                <div class="panel-header"><h2>Record Entry & Set Limitation Target</h2></div>
+                <form id="diary-form" onsubmit="saveDiary(event)">
+                    <div class="form-row">
+                        <div class="form-field"><label>Next Hearing Date</label><input type="date" id="diary-date" required onchange="updateLimitationCounter(this.value)"></div>
+                        <div class="form-field"><label>Case Title / Number</label><input type="text" id="diary-case" placeholder="e.g. Case #102/2026" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Court Division</label>
+                            <select id="diary-court" required>
+                                <option>District & Session Judge Attock</option>
+                                <option>Civil Judge Hifsa Bukhari (INJRA Division)</option>
+                                <option>Civil Judge Yousuf Abdur Rehman (Jand Division)</option>
+                                <option>Civil Judge Najaam Ayub (Basaal)</option>
+                                <option>Sub-Division Pindi Gheb</option>
+                            </select>
+                        </div>
+                        <div class="form-field"><label>Proceeding Stage</label><input type="text" id="diary-stage" placeholder="e.g. Evidentiary Hearing" required></div>
+                    </div>
+                    <button type="submit" class="cms-btn btn-navy">Save to Cause List</button>
+                </form>
+            </div>
+
+            <div class="section-header no-print">
+                <h3>Daily Cause List Directory</h3>
+                <div style="display:flex; gap:8px;">
+                    <button onclick="exportTableToCSV('cause-list.csv', 'diary-records-body')" class="cms-btn btn-gold" style="width:auto;">📥 Export Excel</button>
+                    <button onclick="window.print()" class="cms-btn btn-print" style="width:auto;">🖨️ Print List</button>
+                </div>
+            </div>
+
+            <div class="toolbar no-print">
+                <input type="text" class="search-input" placeholder="🔍 Search by Case or Court..." onkeyup="filterTable('diary-records-body', this.value)">
+            </div>
+
+            <div class="table-responsive printable-area">
+                <table class="cms-table">
+                    <thead>
+                        <tr><th>Date</th><th>Case Title / Ref</th><th>Court Division</th><th>Proceeding Stage</th></tr>
+                    </thead>
+                    <tbody id="diary-records-body">
+                        <!-- Loaded from LocalStorage or Default -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Billing Register Portion -->
+        <section id="portion-billing" class="portion">
+            <div class="panel-card no-print">
+                <div class="panel-header"><h2>Financial Ledger Entry</h2></div>
+                <form id="billing-form" onsubmit="saveBilling(event)">
+                    <div class="form-row">
+                        <div class="form-field"><label>Client Name</label><input type="text" id="bill-client" required></div>
+                        <div class="form-field"><label>Case Details</label><input type="text" id="bill-case" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field"><label>Total Fee (PKR)</label><input type="number" id="bill-amount" required></div>
+                        <div class="form-field"><label>Paid Amount (PKR)</label><input type="number" id="bill-paid" required></div>
+                    </div>
+                    <button type="submit" class="cms-btn btn-green">Update Billing</button>
+                </form>
+            </div>
+
+            <div class="section-header no-print">
+                <h3>Financial Audit Ledger</h3>
+                <div style="display:flex; gap:8px;">
+                    <button onclick="exportTableToCSV('billing-ledger.csv', 'billing-records-body')" class="cms-btn btn-gold" style="width:auto;">📥 Export Excel</button>
+                    <button onclick="window.print()" class="cms-btn btn-print" style="width:auto;">🖨️ Print Ledger</button>
+                </div>
+            </div>
+
+            <div class="toolbar no-print">
+                <input type="text" class="search-input" placeholder="🔍 Search Ledger..." onkeyup="filterTable('billing-records-body', this.value)">
+            </div>
+
+            <div class="table-responsive printable-area">
+                <table class="cms-table">
+                    <thead>
+                        <tr><th>Client</th><th>Case Ref</th><th>Total Fee</th><th>Paid</th><th>Balance</th></tr>
+                    </thead>
+                    <tbody id="billing-records-body">
+                        <!-- Loaded from LocalStorage or Default -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Locker Portion -->
+        <section id="portion-locker" class="portion no-print">
+            <div class="panel-card">
+                <div class="panel-header"><h2>📁 Evidence & Document Locker</h2></div>
+                <form id="locker-form" onsubmit="saveLocker(event)">
+                    <div class="form-row">
+                        <div class="form-field"><label>Client / Case Ref</label><input type="text" id="locker-client" placeholder="e.g. Case #45 - Ahmad Ali" required></div>
+                        <div class="form-field"><label>Document Type</label><input type="text" id="locker-type" placeholder="e.g. CNIC Copy, FIR, Fard" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field"><label>Storage Location / Drive Link</label><input type="text" id="locker-link" placeholder="e.g. Cabinet #2 File #A" required></div>
+                    </div>
+                    <button type="submit" class="cms-btn btn-navy">Save Record</button>
+                </form>
+            </div>
+
+            <div class="section-header"><h3>Stored Records Index</h3></div>
+            <div class="table-responsive">
+                <table class="cms-table">
+                    <thead>
+                        <tr><th>Client / Case Ref</th><th>Document Title</th><th>Storage Location / Link</th></tr>
+                    </thead>
+                    <tbody id="locker-records-body">
+                        <!-- Loaded from LocalStorage or Default -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Calculators Suite Portion -->
+        <section id="portion-calculator" class="portion no-print">
+            <div class="panel-card">
+                <div class="panel-header text-center">
+                    <h2>🏛️ CMS Judicial Calculators</h2>
+                </div>
+
+                <div class="calc-pills-nav">
+                    <button class="pill-btn active" onclick="switchCalcModule('gen', this)">🧮 Math</button>
+                    <button class="pill-btn" onclick="switchCalcModule('land', this)">🌾 Land Share</button>
+                    <button class="pill-btn" onclick="switchCalcModule('age', this)">📅 Age Counter</button>
+                    <button class="pill-btn" onclick="switchCalcModule('court', this)">⚖️ Court Fee</button>
+                </div>
+
+                <div class="calc-body-wrapper">
+                    <div id="module-gen" class="calc-module active">
+                        <div class="general-calc-ui">
+                            <div class="calc-screen">
+                                <div id="gen-history" class="screen-history"></div>
+                                <input type="text" id="gen-display" class="screen-input" readonly value="0">
+                            </div>
+                            <div class="calc-keypad">
+                                <button onclick="calcClearAll()" class="key key-action">AC</button>
+                                <button onclick="calcDeleteOne()" class="key key-action">DEL</button>
+                                <button onclick="calcInput('%')" class="key key-op">%</button>
+                                <button onclick="calcInput('/')" class="key key-op">÷</button>
+
+                                <button onclick="calcInput('7')" class="key">7</button>
+                                <button onclick="calcInput('8')" class="key">8</button>
+                                <button onclick="calcInput('9')" class="key">9</button>
+                                <button onclick="calcInput('*')" class="key key-op">×</button>
+
+                                <button onclick="calcInput('4')" class="key">4</button>
+                                <button onclick="calcInput('5')" class="key">5</button>
+                                <button onclick="calcInput('6')" class="key">6</button>
+                                <button onclick="calcInput('-')" class="key key-op">-</button>
+
+                                <button onclick="calcInput('1')" class="key">1</button>
+                                <button onclick="calcInput('2')" class="key">2</button>
+                                <button onclick="calcInput('3')" class="key">3</button>
+                                <button onclick="calcInput('+')" class="key key-op">+</button>
+
+                                <button onclick="calcInput('00')" class="key">00</button>
+                                <button onclick="calcInput('0')" class="key">0</button>
+                                <button onclick="calcInput('.')" class="key">.</button>
+                                <button onclick="calcEquals()" class="key key-equals">=</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="module-land" class="calc-module">
+                        <div class="module-card">
+                            <h3>Punjab Land Record Share Division</h3>
+                            <div class="form-row">
+                                <div class="form-field"><label>Total Kanal</label><input type="number" id="land-kanal" min="0" value="0"></div>
+                                <div class="form-field"><label>Total Marla</label><input type="number" id="land-marla" min="0" max="19" value="0"></div>
+                                <div class="form-field"><label>Total Sarsai</label><input type="number" id="land-sarsai" min="0" max="8" value="0"></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field"><label>Total Estate Shares</label><input type="number" id="land-total-shares" placeholder="e.g. 240"></div>
+                                <div class="form-field"><label>Litigant Shares</label><input type="number" id="land-user-shares" placeholder="e.g. 15"></div>
+                            </div>
+                            <button onclick="computeLandShare()" class="cms-btn btn-navy">Compute Share</button>
+                            <div id="land-output" class="res-box"></div>
+                        </div>
+                    </div>
+
+                    <div id="module-age" class="calc-module">
+                        <div class="module-card">
+                            <h3>Litigant Age Counter</h3>
+                            <div class="form-row">
+                                <div class="form-field"><label>Date of Birth</label><input type="date" id="dob-val"></div>
+                                <div class="form-field"><label>Target Date</label><input type="date" id="target-date-val"></div>
+                            </div>
+                            <button onclick="computeAge()" class="cms-btn btn-gold">Calculate Age</button>
+                            <div id="age-output" class="res-box"></div>
+                        </div>
+                    </div>
+
+                    <div id="module-court" class="calc-module">
+                        <div class="module-card">
+                            <h3>Court Stamp Duty & Expense Calculator</h3>
+                            <div class="form-row">
+                                <div class="form-field"><label>Stamp Duty Rate (%)</label><input type="number" id="court-stamp-rate" value="15"></div>
+                                <div class="form-field"><label>Claim Value (PKR)</label><input type="number" id="court-claim-val" placeholder="e.g. 500000"></div>
+                                <div class="form-field"><label>Doc Pages</label><input type="number" id="court-pages-val" placeholder="e.g. 12"></div>
+                            </div>
+                            <button onclick="computeCourtExpenses()" class="cms-btn btn-green">Calculate Expenses</button>
+                            <div id="court-output" class="res-box"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Document Generator Portion -->
+        <section id="portion-docs" class="portion">
+            <div class="panel-card no-print">
+                <div class="panel-header"><h2>📄 Legal Document Generator</h2></div>
+                <form onsubmit="generateDocument(event)">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Document Type</label>
+                            <select id="doc-type-select">
+                                <option value="wakalatnama">Wakalatnama / Power of Attorney</option>
+                                <option value="urgent">Urgent Form / Application</option>
+                                <option value="legal_notice">Legal Notice / Demand</option>
+                            </select>
+                        </div>
+                        <div class="form-field"><label>Court / Office Name</label><input type="text" id="doc-court" placeholder="e.g. Session Court, Attock" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field"><label>Party 1 (Client Full Name)</label><input type="text" id="doc-client" placeholder="e.g. Malik Amir" required></div>
+                        <div class="form-field"><label>Party 2 (Opposite Party)</label><input type="text" id="doc-opposite" placeholder="e.g. State" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field"><label>Case Ref / Subject Title</label><input type="text" id="doc-casetitle" placeholder="e.g. Criminal Appeal #12/2026" required></div>
+                    </div>
+                    <button type="submit" class="cms-btn btn-gold">Generate & Preview</button>
+                </form>
+            </div>
+
+            <div id="doc-print-template" class="printable-area">
+                <h2 id="print-doc-title">WAKALATNAMA / POWER OF ATTORNEY</h2>
+                <p><strong>IN THE COURT OF:</strong> <span id="w-court"></span></p>
+                <p><strong>CASE TITLE:</strong> <span id="w-client"></span> <i>VS</i> <span id="w-opposite"></span></p>
+                <p><strong>SUBJECT REF:</strong> <span id="w-casetitle"></span></p>
+                <br>
+                <p id="print-doc-body">I/We do hereby appoint and retain <strong>ADVOCATE IFTHEKHAR AHMAD KHAN</strong>, High Court, to appear and act for me/us in the above case.</p>
+                <br><br>
+                <div style="display:flex; justify-content:space-between; margin-top:40px;">
+                    <div>__________________<br><strong>Client Signature</strong></div>
+                    <div>__________________<br><strong>Advocate Signature</strong></div>
+                </div>
+            </div>
+            <button id="doc-print-btn" onclick="window.print()" class="cms-btn btn-print no-print" style="display:none; margin-top:15px;">🖨️ Print Prepared Document</button>
+        </section>
+
+        <!-- Legal Reference Portion -->
+        <section id="portion-library" class="portion no-print">
+            <div class="panel-card">
+                <div class="panel-header"><h2>📖 Advocate's Quick Reference</h2></div>
+                <div class="toolbar">
+                    <input type="text" class="search-input" placeholder="🔍 Search Sections or Laws..." onkeyup="filterLaws(this.value)">
+                </div>
+                <div id="laws-container">
+                    <div class="law-card">
+                        <h4>PPC Section 302 - Punishment of Qatl-i-Amd</h4>
+                        <p>Deals with death sentence, life imprisonment for murder.</p>
+                    </div>
+                    <div class="law-card">
+                        <h4>CrPC Section 497 - Bail in Non-Bailable Offenses</h4>
+                        <p>Conditions for granting bail in non-bailable cases.</p>
+                    </div>
+                    <div class="law-card">
+                        <h4>CPC Order 39 Rules 1 & 2 - Temporary Injunctions</h4>
+                        <p>Procedures for obtaining stay orders in civil suits.</p>
+                    </div>
+                    <div class="law-card">
+                        <h4>Limitation Act Article 152 - Civil Appeals</h4>
+                        <p>30 Days period for filing appeal against civil decree.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Helpdesk Portion -->
+        <section id="portion-assistant" class="portion no-print">
+            <div class="panel-card chat-wrapper">
+                <div class="panel-header"><h2>CMS Office Helpdesk</h2></div>
+                <div class="chat-display" id="chat-box">
+                    <div class="chat-bubble bot">Welcome to Office CMS. Ask any query regarding court cases or court divisions.</div>
+                </div>
+                <div class="chat-controls">
+                    <input type="text" id="chat-input" placeholder="Type query..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+                    <button onclick="sendChatMessage()" class="cms-btn btn-navy" style="width: auto;">Send</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
