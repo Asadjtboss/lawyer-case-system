@@ -3,67 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advocate Portal - Login</title>
-    <script src="https://tailwindcss.com"></script>
-    <!-- Custom Style Sheet Link -->
+    <title>Advocate Portal - Dashboard</title>
+    <!-- Sirf apni style.css use ho rahi hai -->
     <link rel="stylesheet" href="style.css">
-</head>
-<body class="h-screen flex items-center justify-center p-4">
-
-    <div class="glass-card p-10 rounded-2xl w-full max-w-md border border-slate-100">
-        <!-- Logo & Header -->
-        <div class="text-center mb-8">
-            <div class="bg-gradient-to-tr from-amber-600 to-amber-700 text-white w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl transform rotate-3 hover:rotate-0 transition duration-300">
-                <!-- Scale / Law Icon -->
-                <svg xmlns="http://w3.org" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-                </svg>
-            </div>
-            <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Advocate Legal Portal</h1>
-            <p class="text-slate-500 text-xs mt-1.5 uppercase tracking-wider font-semibold">Secure Practice Management</p>
-        </div>
-
-        <!-- Login Form -->
-        <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-6">
-            <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1.5">Username / Email</label>
-                <input type="text" id="username" required placeholder="admin" 
-                    class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:outline-none transition bg-slate-50/50">
-            </div>
-
-            <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1.5">Password</label>
-                <input type="password" id="password" required placeholder="••••••••" 
-                    class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:outline-none transition bg-slate-50/50">
-            </div>
-
-            <!-- Error Message -->
-            <div id="errorMessage" class="text-red-600 text-sm hidden font-semibold text-center bg-red-50 p-3 rounded-xl border border-red-200">
-                ⚠️ Invalid username or password!
-            </div>
-
-            <button type="submit" 
-                class="btn-primary w-full text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 uppercase tracking-wider text-sm">
-                Sign In Securely
-            </button>
-        </form>
-    </div>
-
     <script>
-        function handleLogin(event) {
-            event.preventDefault();
-            const usernameInput = document.getElementById('username').value.trim();
-            const passwordInput = document.getElementById('password').value;
-            const errorDiv = document.getElementById('errorMessage');
-
-            if (usernameInput === "admin" && passwordInput === "admin123") {
-                errorDiv.classList.add('hidden');
-                localStorage.setItem('isLoggedIn', 'true');
-                window.location.href = 'dashboard.html';
-            } else {
-                errorDiv.classList.remove('hidden');
-            }
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+        function handleLogout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
         }
     </script>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div>
+            <div class="sidebar-header">
+                <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                </svg>
+                <span>Advocate Desk</span>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="dashboard.html" class="active">📊 Dashboard</a>
+                <a href="diary.html">📅 Daily Case Diary</a>
+                <a href="clients.html">👥 Client Database</a>
+                <a href="billing.html">💳 Fee & Accounts</a>
+            </nav>
+        </div>
+
+        <div style="padding: 15px; border-top: 1px solid #334155;">
+            <button onclick="handleLogout()" class="btn-logout">🚪 Logout System</button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="main-content">
+        <header class="top-navbar">
+            <h2 style="font-weight: 700; color: #1e293b;">Welcome Back, Counselor</h2>
+            <div style="font-size: 0.9rem; font-weight: 500; color: #64748b;">
+                Logged in as: <span style="color: #d97706; font-weight: 700;">Admin</span>
+            </div>
+        </header>
+
+        <!-- Stats Cards Grid -->
+        <div class="grid-container">
+            <div class="stat-card">
+                <div>
+                    <div class="stat-title">Today's Hearings</div>
+                    <div class="stat-value">4</div>
+                </div>
+                <div class="stat-icon">📅</div>
+            </div>
+            <div class="stat-card">
+                <div>
+                    <div class="stat-title">Total Active Clients</div>
+                    <div class="stat-value">42</div>
+                </div>
+                <div class="stat-icon">👥</div>
+            </div>
+            <div class="stat-card">
+                <div>
+                    <div class="stat-title">Pending Cases</div>
+                    <div class="stat-value">18</div>
+                </div>
+                <div class="stat-icon">💼</div>
+            </div>
+            <div class="stat-card">
+                <div>
+                    <div class="stat-title">Pending Fees</div>
+                    <div class="stat-value" style="color: #be123c;">Rs. 85,000</div>
+                </div>
+                <div class="stat-icon">💰</div>
+            </div>
+        </div>
+
+        <!-- Quick Links Panel -->
+        <div class="action-panel">
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #1e293b;">Quick Navigation Panel</h3>
+            <div class="action-grid">
+                <a href="diary.html" class="action-btn">📒 Open Daily Diary</a>
+                <a href="clients.html" class="action-btn">📝 Add New Client</a>
+                <a href="billing.html" class="action-btn">💳 View Fee Status</a>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

@@ -1,49 +1,168 @@
-/* Google Professional Fonts */
+/* Google Fonts & Reset */
 @import url('https://googleapis.com');
 
 * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
     font-family: 'Inter', sans-serif;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease;
 }
 
-/* Luxury Law Gradient Background */
+/* Luxury Slate Background */
 body {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-}
-
-/* Premium Glassmorphism Cards */
-.glass-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
-}
-
-/* Gold/Amber Custom Input Fields */
-input:focus, select:focus {
-    border-color: #d97706 !important;
-    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2) !important;
-}
-
-/* Custom Table Styling */
-.custom-table th {
-    background-color: #1e293b;
+    background: #0f172a;
     color: #f8fafc;
-    letter-spacing: 0.05em;
+    min-height: 100vh;
+    display: flex;
 }
 
-.custom-table tr:hover {
-    background-color: #fdf8f2;
-    transform: scale(1.005);
+/* Custom Premium Sidebar */
+.sidebar {
+    width: 260px;
+    background: #1e293b;
+    border-right: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-/* Premium Buttons */
-.btn-primary {
-    background: linear-gradient(to right, #d97706, #b45309);
-    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+.sidebar-header {
+    padding: 20px;
+    background: #0f172a;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #f59e0b;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.btn-primary:hover {
-    background: linear-gradient(to right, #b45309, #92400e);
-    box-shadow: 0 6px 16px rgba(217, 119, 6, 0.4);
+/* Sidebar Logo Control */
+.sidebar-header svg {
+    width: 24px;
+    height: 24px;
+}
+
+.nav-links {
+    margin-top: 20px;
+    padding: 0 15px;
+}
+
+.nav-links a {
+    display: block;
+    padding: 12px 15px;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.nav-links a.active, .nav-links a:hover {
+    background: #a16207;
+    color: #fff;
+}
+
+.btn-logout {
+    background: #be123c;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Main Content Layout */
+.main-content {
+    flex-1: 1;
+    width: calc(100% - 260px);
+    background: #f1f5f9;
+    color: #1e293b;
+    overflow-y: auto;
+}
+
+.top-navbar {
+    background: white;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-b: 1px solid #e2e8f0;
+}
+
+/* Dashboard Statistics Grid */
+.grid-container {
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.stat-title {
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 5px;
+}
+
+.stat-icon {
+    font-size: 2rem;
+    background: #fef3c7;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* Quick Actions */
+.action-panel {
+    margin: 0 30px 30px 30px;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.action-btn {
+    display: block;
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #334155;
+    font-weight: 600;
+    background: #f8fafc;
+}
+
+.action-btn:hover {
+    border-color: #d97706;
+    background: #fffbeb;
+    color: #b45309;
 }
