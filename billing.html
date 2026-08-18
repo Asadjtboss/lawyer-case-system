@@ -3,68 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advocate Portal - Billing</title>
-    <script src="https://tailwindcss.com"></script>
+    <title>Advocate Portal - Fee & Accounts</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Fee Dashboard Layout Styling */
+        .content-box { padding: 30px; }
+        .table-card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
+        .table-title { padding: 20px; font-weight: bold; background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #1e293b; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { background: #1e293b; color: white; padding: 14px; font-size: 0.85rem; text-transform: uppercase; }
+        td { padding: 14px; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; color: #334155; }
+        tr:hover { background: #fffbeb; }
+        
+        /* Amount Color Status Indicators */
+        .text-paid { color: #16a34a; font-weight: 600; }
+        .text-pending { color: #dc2626; font-weight: 700; }
+        .text-clear { color: #64748b; font-weight: 600; }
+    </style>
     <script>
+        // Security Verification using JavaScript
         if (localStorage.getItem('isLoggedIn') !== 'true') { window.location.href = 'index.html'; }
+        function handleLogout() { localStorage.removeItem('isLoggedIn'); window.location.href = 'index.html'; }
     </script>
 </head>
-<body class="bg-slate-100 font-sans flex h-screen overflow-hidden">
+<body>
 
     <!-- SIDEBAR NAVIGATION -->
-    <div class="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between hidden md:flex">
+    <div class="sidebar">
         <div>
-            <div class="p-5 bg-slate-950 flex items-center space-x-3 text-white">
-                <svg xmlns="http://w3.org" class="h-6 w-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="sidebar-header">
+                <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
                 </svg>
-                <span class="font-bold text-lg tracking-wide">Advocate Desk</span>
+                <span>Advocate Desk</span>
             </div>
-            <nav class="mt-6 px-4 space-y-2">
-                <a href="dashboard.html" class="flex items-center space-x-3 hover:bg-slate-800 px-4 py-3 rounded-lg font-medium transition"><span>📊 Dashboard</span></a>
-                <a href="diary.html" class="flex items-center space-x-3 hover:bg-slate-800 px-4 py-3 rounded-lg font-medium transition"><span>📅 Daily Case Diary</span></a>
-                <a href="clients.html" class="flex items-center space-x-3 hover:bg-slate-800 px-4 py-3 rounded-lg font-medium transition"><span>👥 Client Database</span></a>
-                <a href="billing.html" class="flex items-center space-x-3 bg-amber-600 text-white px-4 py-3 rounded-lg font-medium transition"><span>💳 Fee & Accounts</span></a>
+            <nav class="nav-links">
+                <a href="dashboard.html">📊 Dashboard</a>
+                <a href="diary.html">📅 Daily Case Diary</a>
+                <a href="clients.html">👥 Client Database</a>
+                <a href="billing.html" class="active">💳 Fee & Accounts</a>
             </nav>
+        </div>
+        <div style="padding: 15px; border-top: 1px solid #334155;">
+            <button onclick="handleLogout()" class="btn-logout">🚪 Logout System</button>
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="flex-1 flex flex-col overflow-y-auto">
-        <header class="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center shadow-sm">
-            <h2 class="text-xl font-bold text-slate-800">💳 Fee Ledger & Billing</h2>
+    <!-- MAIN CONTENT VIEW -->
+    <div class="main-content">
+        <header class="top-navbar">
+            <h2 style="font-weight: 700;">💳 Fee Ledger & Accounts</h2>
+            <div style="font-size: 0.9rem; font-weight: 500; color: #64748b;">Financial Overview</div>
         </header>
 
-        <main class="p-8 space-y-8">
-            <!-- Account Overview Table -->
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                <div class="p-5 border-b bg-slate-50 font-bold text-slate-800">Financial Ledger</div>
-                <table class="w-full text-left border-collapse">
+        <div class="content-box">
+            <!-- Account Statement Ledger Card -->
+            <div class="table-card">
+                <div class="table-title">Client Payment Statements</div>
+                <table>
                     <thead>
-                        <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-bold border-b">
-                            <th class="p-4">Client / Case</th>
-                            <th class="p-4">Total Fee</th>
-                            <th class="p-4">Paid Amount</th>
-                            <th class="p-4">Remaining Balance</th>
+                        <tr>
+                            <th>Client / Case Info</th>
+                            <th>Total Fee Package</th>
+                            <th>Received (Paid)</th>
+                            <th>Remaining Balance</th>
                         </tr>
                     </thead>
-                    <tbody class="text-sm text-slate-600 divide-y">
+                    <tbody>
                         <tr>
-                            <td class="p-4 font-semibold text-slate-800">Kamran Khan (FESCO Case)</td>
-                            <td class="p-4">Rs. 50,000</td>
-                            <td class="p-4 text-green-600 font-medium">Rs. 30,000</td>
-                            <td class="p-4 text-rose-600 font-bold">Rs. 20,000</td>
+                            <td style="font-weight: 600;">Kamran Khan (FESCO Case)</td>
+                            <td>Rs. 50,000</td>
+                            <td class="text-paid">Rs. 30,000</td>
+                            <td class="text-pending">Rs. 20,000</td>
                         </tr>
                         <tr>
-                            <td class="p-4 font-semibold text-slate-800">Zubair Ahmad (Property)</td>
-                            <td class="p-4">Rs. 120,000</td>
-                            <td class="p-4 text-green-600 font-medium">Rs. 120,000</td>
-                            <td class="p-4 text-slate-500 font-bold">Rs. 0 (Clear)</td>
+                            <td style="font-weight: 600;">Zubair Ahmad (Property Dispute)</td>
+                            <td>Rs. 120,000</td>
+                            <td class="text-paid">Rs. 120,000</td>
+                            <td class="text-clear">Rs. 0 (Clear)</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </main>
+        </div>
     </div>
+
 </body>
 </html>
