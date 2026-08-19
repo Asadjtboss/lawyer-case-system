@@ -7,39 +7,50 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, #f5f7fb 0%, #edf8f4 100%);
+        }
+
+        .hadith-shell {
+            display: grid;
+            gap: 1rem;
+            padding-top: 0.25rem;
+        }
+
         .hadith-card {
-            background: var(--surface);
-            border: 1px solid var(--border-color);
+            background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(236,253,245,0.92));
+            border: 1px solid rgba(16, 185, 129, 0.2);
             border-top: 5px solid #10b981;
-            border-radius: 8px;
-            padding: 1.5rem;
+            border-radius: 20px;
+            padding: 1.6rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            margin-bottom: 1.5rem;
+            box-shadow: 0 18px 40px rgba(16, 185, 129, 0.08);
+            margin-bottom: 1rem;
         }
 
         .hadith-arabic {
             font-family: 'Amiri', serif;
-            font-size: 1.6rem;
-            line-height: 2.2;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            line-height: 2.1;
             color: #047857;
             direction: rtl;
             margin-bottom: 1rem;
-            padding: 10px;
+            padding: 12px 14px;
             background: rgba(16, 185, 129, 0.05);
-            border-radius: 6px;
+            border-radius: 12px;
         }
 
         .hadith-urdu {
-            font-size: 1.05rem;
-            line-height: 1.8;
+            font-size: 1.06rem;
+            line-height: 1.85;
             color: var(--text-primary);
             margin-bottom: 1rem;
             font-weight: 500;
         }
 
         .hadith-ref {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 700;
             color: #b45309;
             letter-spacing: 0.5px;
@@ -51,12 +62,101 @@
             justify-content: center;
             gap: 10px;
             margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .hadith-toolbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .category-chip {
+            border: 1px solid rgba(18, 58, 90, 0.18);
+            background: rgba(255,255,255,0.8);
+            color: var(--text-primary);
+            border-radius: 999px;
+            padding: 0.5rem 0.9rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .category-chip.active {
+            background: linear-gradient(135deg, #123a5a, #0f766e);
+            color: white;
+            border-color: transparent;
+        }
+
+        .hadith-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .mini-hadith {
+            background: rgba(255,255,255,0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1rem;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .mini-hadith:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(15, 23, 42, 0.08);
+        }
+
+        .mini-hadith .arabic {
+            font-family: 'Amiri', serif;
+            font-size: 1.4rem;
+            line-height: 1.9;
+            color: #0f766e;
+            direction: rtl;
+            text-align: right;
+            margin-bottom: 0.5rem;
+        }
+
+        .mini-hadith .urdu {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+        }
+
+        .mini-hadith .ref {
+            font-size: 0.72rem;
+            color: #b45309;
+            font-weight: 700;
+            margin-top: 0.75rem;
+        }
+
+        .main-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: transform 0.28s ease, opacity 0.28s ease;
+        }
+
+        .main-header.hide-header {
+            transform: translateY(-120%);
+            opacity: 0;
         }
     </style>
 </head>
 <body>
 
-    <header class="main-header">
+    <header class="main-header" id="mainHeader">
         <div class="brand-container">
             <div class="cms-logo">🕌</div>
             <div class="brand-titles">
@@ -70,84 +170,189 @@
 
         <div id="toast" class="toast-notification">Notification</div>
 
-        <!-- Daily Hadith Display Card -->
-        <div class="hadith-card">
-            <div class="court-badge gold" style="margin-bottom:12px;">HADITH OF THE DAY</div>
-            
-            <div id="hadith-arabic-text" class="hadith-arabic">
-                إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى
-            </div>
-            
-            <div id="hadith-urdu-text" class="hadith-urdu">
-                "Aamaal ka inhasaar sirf niyyaton par hai, aur har insaan ko wahi mile ga jis ki uss ne niyyat ki."
-            </div>
-            
-            <div id="hadith-reference" class="hadith-ref">
-                📖 Sahih Bukhari: 1
+        <div class="hadith-shell">
+            <div class="hadith-card">
+                <div class="court-badge gold" style="margin-bottom:12px;">HADITH OF THE DAY</div>
+                
+                <div id="hadith-arabic-text" class="hadith-arabic">
+                    إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى
+                </div>
+                
+                <div id="hadith-urdu-text" class="hadith-urdu">
+                    "Aamaal ka inhasaar sirf niyyaton par hai, aur har insaan ko wahi mile ga jis ki uss ne niyyat ki."
+                </div>
+                
+                <div id="hadith-reference" class="hadith-ref">
+                    📖 Sahih Bukhari: 1
+                </div>
+
+                <div class="hadith-actions">
+                    <button onclick="nextHadith()" class="cms-btn btn-navy" style="width:auto;">🔄 Change Hadith</button>
+                    <button onclick="copyHadith()" class="cms-btn btn-gold" style="width:auto;">📋 Copy Hadith</button>
+                </div>
+
+                <div class="hadith-toolbar" aria-label="Hadith categories">
+                    <button class="category-chip active" type="button" data-filter="all">All</button>
+                    <button class="category-chip" type="button" data-filter="faith">Faith</button>
+                    <button class="category-chip" type="button" data-filter="character">Character</button>
+                    <button class="category-chip" type="button" data-filter="charity">Charity</button>
+                </div>
             </div>
 
-            <div class="hadith-actions">
-                <button onclick="nextHadith()" class="cms-btn btn-navy" style="width:auto;">🔄 Change Hadith</button>
-                <button onclick="copyHadith()" class="cms-btn btn-gold" style="width:auto;">📋 Copy Hadith</button>
-            </div>
+            <div class="hadith-list" id="hadithList"></div>
         </div>
 
     </main>
 
     <script src="script.js"></script>
     <script>
-        // Hadith Collection
         const hadithList = [
             {
                 arabic: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى",
                 urdu: "Aamaal ka inhasaar sirf niyyaton par hai, aur har insaan ko wahi mile ga jis ki uss ne niyyat ki.",
-                ref: "Sahih Bukhari: 1"
+                ref: "Sahih Bukhari: 1",
+                category: "faith"
             },
             {
                 arabic: "الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ",
                 urdu: "Musalman woh hai jis ki zabaan aur haath se dusray musalman mahfooz rahein.",
-                ref: "Sahih Bukhari: 10"
+                ref: "Sahih Bukhari: 10",
+                category: "character"
             },
             {
                 arabic: "لاَ يَرْحَمُ اللَّهُ مَنْ لاَ يَرْحَمُ النَّاسَ",
                 urdu: "Allah uss shakhs par reham nahi farmata jo logon par reham nahi karta.",
-                ref: "Sahih Muslim: 2319"
+                ref: "Sahih Muslim: 2319",
+                category: "character"
             },
             {
                 arabic: "خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ",
                 urdu: "Tum mein se behtar woh hai jo Quran seekhe aur doosron ko sikhaye.",
-                ref: "Sahih Bukhari: 5027"
+                ref: "Sahih Bukhari: 5027",
+                category: "faith"
             },
             {
                 arabic: "إِنَّ الصِّدْقَ يَهْدِي إِلَى الْبِرِّ وَإِنَّ الْبِرَّ يَهْدِي إِلَى الْجَنَّةِ",
                 urdu: "Sachai naiki ki taraf le jaati hai aur naiki jannat ki taraf le jaati hai.",
-                ref: "Sahih Muslim: 2607"
+                ref: "Sahih Muslim: 2607",
+                category: "character"
+            },
+            {
+                arabic: "مَنْ عَمِلَ بِرِضَا اللَّهِ فَإِنَّمَا يَتَكَلَّفُ لِلْخَيْرِ",
+                urdu: "Jo shakhs Allah ki razamandi ke liye kaam kare, wahi asli neki ka kaam karta hai.",
+                ref: "Sunan Abi Dawood: 4681",
+                category: "faith"
+            },
+            {
+                arabic: "بِسْمِ اللَّهِ مَنْ تَوَكَّلَ عَلَى اللَّهِ فَهُوَ حَسْبُهُ",
+                urdu: "Allah par bharosa karne wala insaan ko Allah kafi hai.",
+                ref: "Sunan Tirmidhi: 2516",
+                category: "faith"
+            },
+            {
+                arabic: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ",
+                urdu: "Kaam sirf niyyat ke mutabiq hotay hain, aur har aadmi ko uss ki niyyat ka hi sawab milega.",
+                ref: "Sahih Bukhari: 1",
+                category: "faith"
+            },
+            {
+                arabic: "مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ",
+                urdu: "Sadaqa maal ko kam nahi karta, balke izafa deta hai.",
+                ref: "Sahih Muslim: 1018",
+                category: "charity"
+            },
+            {
+                arabic: "تَفَاءَلُوا بِالْخَيْرِ فَإِنَّهُ يَجِيءُ بِالسَّعَادَةِ",
+                urdu: "Khair ki dua aur husn-e-zann rakho, kyun ke yahi sukoon aur khushi laata hai.",
+                ref: "Jami' at-Tirmidhi: 2000",
+                category: "character"
             }
         ];
 
         let currentIndex = 0;
+        let activeFilter = 'all';
 
-        function nextHadith() {
-            currentIndex = (currentIndex + 1) % hadithList.length;
-            const h = hadithList[currentIndex];
-            
+        function renderHadithList() {
+            const list = document.getElementById('hadithList');
+            const filtered = activeFilter === 'all'
+                ? hadithList
+                : hadithList.filter(item => item.category === activeFilter);
+
+            list.innerHTML = filtered.map((item, index) => `
+                <div class="mini-hadith" data-index="${hadithList.indexOf(item)}">
+                    <div class="arabic">${item.arabic}</div>
+                    <div class="urdu">"${item.urdu}"</div>
+                    <div class="ref">📖 ${item.ref}</div>
+                </div>
+            `).join('');
+        }
+
+        function updateHadith(index) {
+            const h = hadithList[index];
             document.getElementById('hadith-arabic-text').innerText = h.arabic;
             document.getElementById('hadith-urdu-text').innerText = `"${h.urdu}"`;
             document.getElementById('hadith-reference').innerText = `📖 ${h.ref}`;
-            
-            showToast("Next Hadith Loaded!");
+        }
+
+        function setFilter(filter) {
+            activeFilter = filter;
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                chip.classList.toggle('active', chip.dataset.filter === filter);
+            });
+            renderHadithList();
+
+            const filteredValues = activeFilter === 'all' ? hadithList : hadithList.filter(item => item.category === activeFilter);
+            if (filteredValues.length) {
+                currentIndex = hadithList.indexOf(filteredValues[0]);
+                updateHadith(currentIndex);
+            }
+        }
+
+        function nextHadith() {
+            const visible = activeFilter === 'all' ? hadithList : hadithList.filter(item => item.category === activeFilter);
+            const currentVisibleIndex = visible.findIndex(item => hadithList.indexOf(item) === currentIndex);
+            const nextItem = visible[(currentVisibleIndex + 1) % visible.length];
+            currentIndex = hadithList.indexOf(nextItem);
+            updateHadith(currentIndex);
+            showToast('Next Hadith Loaded!');
         }
 
         function copyHadith() {
             const arabic = document.getElementById('hadith-arabic-text').innerText;
             const urdu = document.getElementById('hadith-urdu-text').innerText;
             const ref = document.getElementById('hadith-reference').innerText;
-            
             const fullText = `${arabic}\n\n${urdu}\n\n${ref}`;
             navigator.clipboard.writeText(fullText);
-            
-            showToast("Hadith copied to clipboard!");
+            showToast('Hadith copied to clipboard!');
         }
+
+        document.getElementById('hadithList').addEventListener('click', function (event) {
+            const card = event.target.closest('.mini-hadith');
+            if (!card) return;
+            currentIndex = Number(card.dataset.index);
+            updateHadith(currentIndex);
+            showToast('Hadith selected!');
+        });
+
+        document.querySelectorAll('.category-chip').forEach(button => {
+            button.addEventListener('click', () => setFilter(button.dataset.filter));
+        });
+
+        const header = document.getElementById('mainHeader');
+        let lastScrollTop = 0;
+
+        window.addEventListener('scroll', function () {
+            const currentScroll = window.scrollY || document.documentElement.scrollTop;
+            if (currentScroll > lastScrollTop && currentScroll > 80) {
+                header.classList.add('hide-header');
+            } else {
+                header.classList.remove('hide-header');
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        });
+
+        renderHadithList();
+        updateHadith(currentIndex);
     </script>
 </body>
 </html>

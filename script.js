@@ -186,6 +186,104 @@ function saveUsers(users) {
     localStorage.setItem('cms_users', JSON.stringify(users));
 }
 
+function ensureSeedCaseList() {
+    const seed = [
+        { case_title: 'Atta Muhammad vs Ali khan', date_diary: '03-07-2025', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '211549325', sign: null },
+        { case_title: 'Muhammad Taimour vs Adil Saleem', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: null, sign: null },
+        { case_title: 'Ateeq UR Rehman vs Abdul Khaliq', date_diary: null, date_of_decisions: null, court: 'ASJ Mr. Jahan Zaib', cms: '68309825', sign: null },
+        { case_title: 'Muhammad Taimour vs Rakheema Bibi', date_diary: null, date_of_decisions: '17-02-2026(Dismissed)', court: 'Najaam Ayub Shahab', cms: '323149825', sign: null },
+        { case_title: 'Muhammad Taimour vs Yasir', date_diary: null, date_of_decisions: null, court: 'Najaam Ayub Shahab', cms: null, sign: null },
+        { case_title: 'State vs Ameer khan', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: null, sign: null },
+        { case_title: 'Ahmad khan vs Aytabaar khan', date_diary: null, date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: null, sign: null },
+        { case_title: 'State vs Sajjad Ahmad', date_diary: '19-09-2025', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '282356225', sign: null },
+        { case_title: 'State vs Aamir Saeed', date_diary: '10-02-2024', date_of_decisions: null, court: 'ASJ Mr. Jahan Zaib', cms: '76698424', sign: null },
+        { case_title: 'Samina Hussain vs Shoiab Anwar', date_diary: '18-10-2025', date_of_decisions: null, court: 'Najaam Ayub Shahab', cms: null, sign: null },
+        { case_title: 'State vs Hazrat Mehmood', date_diary: '11-11-2025', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '339393025', sign: null },
+        { case_title: 'Ayesha Ghaffar vs Arshad Saeed', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '159185525', sign: null },
+        { case_title: 'State vs Ifraheem', date_diary: null, date_of_decisions: null, court: 'ASJ Mr. Jahan Zaib', cms: null, sign: null },
+        { case_title: 'Fareena vs Zilkaifal', date_diary: '21-11-2025', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '47002722', sign: null },
+        { case_title: 'Saleem Iqbalaa vs Mohsin Jamaal', date_diary: '09-10-2025', date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: null, sign: null },
+        { case_title: 'Sania Kusar vs Sectary Union Council', date_diary: '21-09-2025', date_of_decisions: null, court: 'Najaam Ayub Shahab', cms: '294196725', sign: null },
+        { case_title: 'Shakeela Naaz vs Public at Large', date_diary: null, date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '321752225', sign: null },
+        { case_title: 'Amjid Iqbal vs Khalida Bibi', date_diary: null, date_of_decisions: null, court: 'Najaam Ayub Shahab', cms: '73685925', sign: null },
+        { case_title: 'Khalida Bibi vs Amjid Iqbal', date_diary: null, date_of_decisions: null, court: 'Najaam Ayub Shahab', cms: '366592824', sign: null },
+        { case_title: 'State vs Ghaffar Ahmed', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: null, sign: null },
+        { case_title: 'Gull Mer-jan vs Mesan khan', date_diary: null, date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '321782125', sign: null },
+        { case_title: 'Khatam Un Nissa vs Saddam Hussain', date_diary: null, date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '211661925', sign: null },
+        { case_title: 'Robina Shaheen vs Nadeem ur Rehman', date_diary: '29-09-2025', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '294294125', sign: null },
+        { case_title: 'Naeem vs Mousam', date_diary: '05-08-2025', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: null, sign: null },
+        { case_title: 'Mousam vs Naeem', date_diary: '05-', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: null, sign: null },
+        { case_title: 'Naeem vs Ateeq ur Rehmaan', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: null, sign: null },
+        { case_title: 'Abdul Aziz vs Khursheed', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '297999623', sign: null },
+        { case_title: 'Khursheed vs Abdul Aziz', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '24957023', sign: null },
+        { case_title: 'Mehwish Ijaz vs Falak shair', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: null, sign: null },
+        { case_title: 'Kamran Ashraaf vs Khalda bibi', date_diary: '20-02-2024', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: null, sign: null },
+        { case_title: 'Gull Ammer vs Hussain Gull', date_diary: '24-02-2025', date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: null, sign: null },
+        { case_title: 'Shazia Sultan vs Sajid Nafees', date_diary: '13-12-2024', date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '372230624', sign: null },
+        { case_title: 'Abdullah vs Amaan Ullah', date_diary: '20-02-2025', date_of_decisions: null, court: 'ASJ Mr. Jahan Zaib', cms: '68309825', sign: null },
+        { case_title: 'State vs Asad Ullah', date_diary: '02-08-2025', date_of_decisions: null, court: 'ASJ Mr. Jahan Zaib', cms: '275991825', sign: null },
+        { case_title: 'State vs Abdullah', date_diary: null, date_of_decisions: null, court: 'ASJ Mr. Jahan Zaib', cms: null, sign: null },
+        { case_title: 'Shaheen Akhtaar vs Waheed Ullah Other', date_diary: '18-10-2024', date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '202103224', sign: null },
+        { case_title: 'Nasreen Akhtar vs Saif Ullah', date_diary: '13-06-2025', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '190181325', sign: null },
+        { case_title: 'Sania Khousar vs Manaan Javeed', date_diary: '11-03-2025', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '96528425', sign: null },
+        { case_title: 'Muhammad Qayyum vs M. Hussain other', date_diary: '13-06-2025', date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '201131925', sign: null },
+        { case_title: 'Shareen Khan vs Sayd Khan', date_diary: null, date_of_decisions: null, court: 'AC', cms: null, sign: null },
+        { case_title: 'Ammer khan vs POP(province of Punjab)', date_diary: null, date_of_decisions: null, court: null, cms: '164723225', sign: null },
+        { case_title: 'Niyaaz Manaah vs Saalbi bibi', date_diary: '13-06-2025', date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '201122025', sign: null },
+        { case_title: 'Nasreen Akhtar vs Public at large', date_diary: '16-01-2026', date_of_decisions: null, court: 'Yousuf Abdur Rehamn', cms: '16353326', sign: null },
+        { case_title: 'Farhat bibi vs Usman Mehmood', date_diary: '03-09-2026', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '239028024', sign: null },
+        { case_title: 'Tahir Farooq vs Taaj Muhammad other', date_diary: '22-01-2026', date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '39053026', sign: null },
+        { case_title: 'Amna Bibi vs Sahib Gull other', date_diary: null, date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '35272226', sign: null },
+        { case_title: 'Kamran Ashraaf vs Khalda bibi', date_diary: '20-02-2024', date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '242674724', sign: null },
+        { case_title: 'Najmaah Iqbal other vs Zahid Kareem', date_diary: '05-11-2025', date_of_decisions: null, court: 'Najaam Ayub Shahab', cms: '340898225', sign: null },
+        { case_title: 'Raees Khan vs Hakeem Khan', date_diary: '20-02-2025', date_of_decisions: null, court: 'AC', cms: null, sign: null },
+        { case_title: 'Mian khan other vs Islam other', date_diary: null, date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '274007325', sign: null },
+        { case_title: 'Saddam Hussain vs Khatam Un Nissa', date_diary: '16-01-2026', date_of_decisions: null, court: 'Yousuf Abdur Rehman', cms: '16367226', sign: null },
+        { case_title: 'Mohsin Jamaala vs Saleem Iqbalaa', date_diary: '14-11-2023', date_of_decisions: '07-07-2025', court: 'Yousuf Abdur Rehman', cms: null, sign: null },
+        { case_title: 'Muhammad Taimour vs Hikmah Bibi', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '150425824', sign: null },
+        { case_title: 'Muhammad Taimour vs Muhammad Saleem', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '150420024', sign: null },
+        { case_title: 'Muhammad Taimour vs Samia lariab', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '150406524', sign: null },
+        { case_title: 'Muhammad Taimour vs Muhammad Saeed', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '150408924', sign: null },
+        { case_title: 'Muhammad Taimour vs Muhammad Ameen', date_diary: null, date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '150436324', sign: null },
+        { case_title: 'Sumaira Yasmeen vs Abid Hussain', date_diary: '23-04-2025', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: '139414825', sign: null },
+        { case_title: 'State vs Muhammad Aqeel', date_diary: '22-01-26', date_of_decisions: null, court: 'Sayeda Hifza Bukhaari', cms: null, sign: null },
+        { case_title: 'Umer Bilal VS Sumaira Naseem', date_diary: null, date_of_decisions: null, court: 'ASJ Mr. Jahan Zaib', cms: '20154026', sign: null },
+        { case_title: 'Tasmiyeah BiBi vs Sami Ullah', date_diary: null, date_of_decisions: null, court: 'Abdullah Khan Attock', cms: null, sign: null },
+        { case_title: 'Miyaan Khan vs Islam khan (etc)', date_diary: '18-10-2025', date_of_decisions: null, court: 'Yousuf Abdul Rehman', cms: '274007325', sign: null }
+    ];
+
+    const existing = Array.isArray(cmsSafeRead('cms_diary_data', [])) ? cmsSafeRead('cms_diary_data', []) : [];
+    const seen = new Set(existing.map(item => (item.title || '').trim().toLowerCase()));
+    const normalized = seed
+        .map(item => {
+            const courtValue = (item.court || '').trim();
+            const normalizedCourt = courtValue === 'Ac' ? 'AC'
+                : courtValue === 'Yousuf Abdul Rehman' || courtValue === 'Yousuf Abdur Rehamn' ? 'Yousuf Abdur Rehman'
+                : courtValue || 'Unassigned Court';
+            const diaryValue = (item.date_diary || '').trim();
+            const decisionValue = (item.date_of_decisions || '').trim();
+            const outputDate = /^\d{2}-\d{2}-\d{4}$/.test(diaryValue)
+                ? diaryValue
+                : /^\d{2}-\d{2}-\d{4}$/.test(decisionValue)
+                    ? decisionValue
+                    : diaryValue && diaryValue.includes('-') && diaryValue.length >= 6 ? diaryValue : 'N/A';
+            const title = (item.case_title || '').trim();
+            return {
+                date: outputDate,
+                title,
+                court: normalizedCourt,
+                stage: decisionValue ? 'Decision Recorded' : (diaryValue ? 'Diary Hearing' : 'Pending'),
+                status: 'Pending',
+                owner: 'advocate'
+            };
+        })
+        .filter(item => item.title && !seen.has(item.title.trim().toLowerCase()));
+
+    if (normalized.length) {
+        localStorage.setItem('cms_diary_data', JSON.stringify([...normalized, ...existing]));
+    }
+}
+
 function ensureDefaultUser() {
     const users = getUsers();
     const hasAdvocate = users.some(user => user.username.toLowerCase() === 'advocate');
@@ -847,10 +945,12 @@ function sendChatMessage() {
 }
 
 ensureDefaultUser();
+ensureSeedCaseList();
 
 // Initial Load Handler
 document.addEventListener('DOMContentLoaded', () => {
     ensureDefaultUser();
+    ensureSeedCaseList();
     window.currentDiaryCourtFilter = 'All Courts';
 
     // Load Saved Theme
