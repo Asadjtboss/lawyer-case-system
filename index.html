@@ -10,12 +10,14 @@
 <body>
 
     <div class="gov-top-bar no-print">
-        <span>CMS EXECUTIVE ADVOCATE PRACTICE PORTAL</span>
+        <span>CMS JUDICIARY PRACTICE PORTAL</span>
         <span>ATTOCK DIVISION</span>
+        <span class="gov-contact-link">
+            <a href="https://dsj.punjab.gov.pk/" target="_blank" rel="noopener noreferrer">Punjab District &amp; Sessions Courts</a>
+        </span>
         <span class="gov-contact-link">
             <a href="https://wa.me/923035962727" target="_blank" rel="noopener noreferrer">WhatsApp: +92 303 5962727</a>
         </span>
-        <span class="gov-contact-link">Email: To be added later</span>
     </div>
 
     <header class="main-header no-print">
@@ -23,19 +25,20 @@
             <div class="cms-logo">🏛️</div>
             <div class="brand-titles">
                 <h1>ADVOCATE IFTHEKHAR AHMAD KHAN</h1>
-                <p>Case Management System</p>
+                <p>Punjab Judiciary Case Management System</p>
             </div>
         </div>
 
         <nav class="top-nav">
             <button class="nav-btn active" onclick="showPortion('dashboard', this)">📊 Dashboard</button>
-            <button class="nav-btn" onclick="showPortion('diary', this)">⚖️ Cause List</button>
-            <button class="nav-btn" onclick="showPortion('billing', this)">📜 Billing</button>
+            <button class="nav-btn" onclick="showPortion('diary', this)">⚖️ Case List</button>
             <button class="nav-btn" onclick="showPortion('locker', this)">📁 Locker</button>
             <button class="nav-btn" onclick="showPortion('calculator', this)">🧮 Calculators</button>
             <button class="nav-btn" onclick="showPortion('docs', this)">📄 Doc Generator</button>
             <button class="nav-btn" onclick="showPortion('library', this)">📖 Legal Reference</button>
+            <button class="nav-btn" onclick="showPortion('vacancies', this)">💼 Vacancies</button>
             <button class="nav-btn" onclick="showPortion('assistant', this)">🤖 Helpdesk</button>
+            <button class="nav-btn" onclick="showPortion('billing', this)">📜 Billing</button>
             <button id="theme-toggle-btn" class="nav-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
         </nav>
     </header>
@@ -50,18 +53,17 @@
 
         <section class="hero-panel no-print">
             <div class="hero-copy">
-                <span class="eyebrow">Practice Management</span>
-                <h2>Professional case management for efficient, reliable advocacy.</h2>
+                <span class="eyebrow">Official Practice Management</span>
+                <h2>Professional case management aligned with judicial workflow standards.</h2>
                 <p>
-                    A secure, organized workspace to manage hearings, deadlines, billing, and case documents. Designed for
-                    clear workflows, accurate record-keeping, and faster preparation — so legal teams can concentrate on
-                    strategy and client outcomes.
-                </p>
+                   A secure and structured platform to manage hearings, legal deadlines, billing, and evidence files with the professionalism expected in a district judiciary setup.
+               </p>
                 <div class="hero-actions">
-                    <span class="tag-badge">Cause List</span>
+                    <span class="tag-badge">Case List</span>
                     <span class="tag-badge">Billing</span>
                     <span class="tag-badge">Evidence Locker</span>
                     <span class="tag-badge">Legal Research</span>
+                    <a href="courts.html" class="tag-badge tag-link" target="_blank" rel="noopener noreferrer">🏛️ Court Directory</a>
                 </div>
             </div>
             <div class="hero-metrics">
@@ -83,7 +85,7 @@
         <section class="feature-strip no-print">
             <div class="feature-card">
                 <span class="feature-icon">⚖️</span>
-                <h3>Cause List Control</h3>
+                <h3>Case List Control</h3>
                 <p>Track daily proceedings, hearing dates, and court stages from a single dashboard.</p>
             </div>
             <div class="feature-card">
@@ -100,6 +102,11 @@
                 <span class="feature-icon">📚</span>
                 <h3>Reference Library</h3>
                 <p>Store case law, procedural notes, and legal guidance for quick access during work.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💼</span>
+                <h3>Vacancy Desk</h3>
+                <p>Publish legal vacancies, track deadlines, and keep hiring openings organized.</p>
             </div>
         </section>
 
@@ -183,7 +190,7 @@
                         <span id="user-role-label">Case Manager</span>
                     </div>
                     <div class="auth-actions">
-                        <button type="button" onclick="showPortion('diary', document.querySelectorAll('.nav-btn')[1])" class="cms-btn btn-green">My Cases</button>
+                        <button type="button" id="case-access-btn" onclick="showPortion('diary', document.querySelectorAll('.nav-btn')[1])" class="cms-btn btn-green">My Cases</button>
                         <button type="button" onclick="logoutUser()" class="cms-btn btn-print">Logout</button>
                     </div>
                 </div>
@@ -204,7 +211,7 @@
         <!-- Cause List / Diary Portion -->
         <section id="portion-diary" class="portion">
             <div class="panel-card no-print">
-                <div class="panel-header"><h2>Record Entry & Set Limitation Target</h2></div>
+                <div class="panel-header"><h2>Case Record Entry & Limitation Target</h2></div>
                 <form id="diary-form" onsubmit="saveDiary(event)">
                     <div class="form-row">
                         <div class="form-field"><label>Next Hearing Date</label><input type="date" id="diary-date" required onchange="updateLimitationCounter(this.value)"></div>
@@ -214,21 +221,23 @@
                         <div class="form-field">
                             <label>Court Division</label>
                             <select id="diary-court" required>
+                                <option>ASJ Mr. Jahan Zaib</option>
                                 <option>District & Session Judge Attock</option>
                                 <option>Civil Judge Hifsa Bukhari (INJRA Division)</option>
                                 <option>Civil Judge Yousuf Abdur Rehman (Jand Division)</option>
                                 <option>Civil Judge Najaam Ayub (Basaal)</option>
+                                <option>Sayeda Hifza Bukhaari</option>
                                 <option>Sub-Division Pindi Gheb</option>
                             </select>
                         </div>
                         <div class="form-field"><label>Proceeding Stage</label><input type="text" id="diary-stage" placeholder="e.g. Evidentiary Hearing" required></div>
                     </div>
-                    <button type="submit" class="cms-btn btn-navy">Save to Cause List</button>
+                    <button type="submit" class="cms-btn btn-navy">Save to Case List</button>
                 </form>
             </div>
 
             <div class="section-header no-print">
-                <h3>Daily Cause List Directory</h3>
+                <h3>Daily Case List Directory</h3>
                 <div style="display:flex; gap:8px;">
                     <button onclick="exportTableToCSV('cause-list.csv', 'diary-records-body')" class="cms-btn btn-gold" style="width:auto;">📥 Export Excel</button>
                     <button onclick="window.print()" class="cms-btn btn-print" style="width:auto;">🖨️ Print List</button>
@@ -236,60 +245,11 @@
             </div>
 
             <div class="toolbar no-print">
-                <input type="text" class="search-input" placeholder="🔍 Search by Case or Court..." onkeyup="filterTable('diary-records-body', this.value)">
+                <input id="diary-search" type="text" class="search-input" placeholder="🔍 Search by Case or Court..." onkeyup="filterDiaryGroups(this.value)">
             </div>
+            <div id="court-filter-tabs" class="court-filter-tabs no-print"></div>
 
-            <div class="table-responsive printable-area">
-                <table class="cms-table">
-                    <thead>
-                        <tr><th>Date</th><th>Case Title / Ref</th><th>Court Division</th><th>Proceeding Stage</th><th>Status</th><th>Action</th></tr>
-                    </thead>
-                    <tbody id="diary-records-body">
-                        <!-- Loaded from LocalStorage or Default -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Billing Register Portion -->
-        <section id="portion-billing" class="portion">
-            <div class="panel-card no-print">
-                <div class="panel-header"><h2>Financial Ledger Entry</h2></div>
-                <form id="billing-form" onsubmit="saveBilling(event)">
-                    <div class="form-row">
-                        <div class="form-field"><label>Client Name</label><input type="text" id="bill-client" required></div>
-                        <div class="form-field"><label>Case Details</label><input type="text" id="bill-case" required></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-field"><label>Total Fee (PKR)</label><input type="number" id="bill-amount" required></div>
-                        <div class="form-field"><label>Paid Amount (PKR)</label><input type="number" id="bill-paid" required></div>
-                    </div>
-                    <button type="submit" class="cms-btn btn-green">Update Billing</button>
-                </form>
-            </div>
-
-            <div class="section-header no-print">
-                <h3>Financial Audit Ledger</h3>
-                <div style="display:flex; gap:8px;">
-                    <button onclick="exportTableToCSV('billing-ledger.csv', 'billing-records-body')" class="cms-btn btn-gold" style="width:auto;">📥 Export Excel</button>
-                    <button onclick="window.print()" class="cms-btn btn-print" style="width:auto;">🖨️ Print Ledger</button>
-                </div>
-            </div>
-
-            <div class="toolbar no-print">
-                <input type="text" class="search-input" placeholder="🔍 Search Ledger..." onkeyup="filterTable('billing-records-body', this.value)">
-            </div>
-
-            <div class="table-responsive printable-area">
-                <table class="cms-table">
-                    <thead>
-                        <tr><th>Client</th><th>Case Ref</th><th>Total Fee</th><th>Paid</th><th>Balance</th></tr>
-                    </thead>
-                    <tbody id="billing-records-body">
-                        <!-- Loaded from LocalStorage or Default -->
-                    </tbody>
-                </table>
-            </div>
+            <div id="diary-groups" class="judge-case-groups printable-area"></div>
         </section>
 
         <!-- Locker Portion -->
@@ -501,6 +461,36 @@
             </div>
         </section>
 
+        <!-- Vacancy Portion -->
+        <section id="portion-vacancies" class="portion no-print">
+            <div class="panel-card vacancy-layout">
+                <div class="vacancy-form-wrap">
+                    <div class="panel-header"><h2>💼 Recruitment & Vacancy Board</h2></div>
+                    <form id="vacancy-form" onsubmit="saveVacancyForm(event)">
+                        <div class="form-row">
+                            <div class="form-field"><label>Position Title</label><input type="text" id="vacancy-title" placeholder="e.g. Junior Litigation Associate" required></div>
+                            <div class="form-field"><label>Location</label><input type="text" id="vacancy-location" placeholder="e.g. Attock" required></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field"><label>Job Type</label><input type="text" id="vacancy-type" placeholder="Full-Time / Internship" required></div>
+                            <div class="form-field"><label>Deadline</label><input type="date" id="vacancy-deadline" required></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field"><label>Brief Description</label><textarea id="vacancy-summary" rows="3" placeholder="Describe the role and responsibilities" required></textarea></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field"><label>Requirements (One per line)</label><textarea id="vacancy-requirements" rows="4" placeholder="LLB / law graduate&#10;Strong drafting skills&#10;Civil practice knowledge"></textarea></div>
+                        </div>
+                        <button type="submit" class="cms-btn btn-navy">Add Vacancy</button>
+                    </form>
+                </div>
+                <div class="vacancy-list-wrap">
+                    <div class="panel-header"><h2>Open Positions</h2></div>
+                    <div id="vacancy-list" class="vacancy-list"></div>
+                </div>
+            </div>
+        </section>
+
         <!-- Helpdesk Portion -->
         <section id="portion-assistant" class="portion no-print">
             <div class="panel-card chat-wrapper">
@@ -515,9 +505,78 @@
             </div>
         </section>
 
+        <!-- Billing Register Portion -->
+        <section id="portion-billing" class="portion">
+            <div class="panel-card no-print">
+                <div class="panel-header"><h2>Financial Ledger Entry</h2></div>
+                <form id="billing-form" onsubmit="saveBilling(event)">
+                    <div class="form-row">
+                        <div class="form-field"><label>Client Name</label><input type="text" id="bill-client" required></div>
+                        <div class="form-field"><label>Case Details</label><input type="text" id="bill-case" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field"><label>Total Fee (PKR)</label><input type="number" id="bill-amount" required></div>
+                        <div class="form-field"><label>Paid Amount (PKR)</label><input type="number" id="bill-paid" required></div>
+                    </div>
+                    <button type="submit" class="cms-btn btn-green">Update Billing</button>
+                </form>
+            </div>
+
+            <div class="section-header no-print">
+                <h3>Financial Audit Ledger</h3>
+                <div style="display:flex; gap:8px;">
+                    <button onclick="exportTableToCSV('billing-ledger.csv', 'billing-records-body')" class="cms-btn btn-gold" style="width:auto;">📥 Export Excel</button>
+                    <button onclick="window.print()" class="cms-btn btn-print" style="width:auto;">🖨️ Print Ledger</button>
+                </div>
+            </div>
+
+            <div class="toolbar no-print">
+                <input type="text" class="search-input" placeholder="🔍 Search Ledger..." onkeyup="filterTable('billing-records-body', this.value)">
+            </div>
+
+            <div class="table-responsive printable-area">
+                <table class="cms-table">
+                    <thead>
+                        <tr><th>Client</th><th>Case Ref</th><th>Total Fee</th><th>Paid</th><th>Balance</th></tr>
+                    </thead>
+                    <tbody id="billing-records-body">
+                        <!-- Loaded from LocalStorage or Default -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="contact-panel no-print">
+            <div class="contact-grid">
+                <div>
+                    <h3>Office Contacts & Support</h3>
+                    <p>For urgent court coordination, case updates, client appointments, or documentation support, contact the legal office directly.</p>
+                    <ul class="contact-list">
+                        <li><strong>Phone:</strong> +92 303 5962727</li>
+                        <li><strong>Website:</strong> dsj.punjab.gov.pk</li>
+                        <li><strong>Office:</strong> District & Sessions Courts, Attock Division</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <ul class="contact-list">
+                        <li><a href="https://dsj.punjab.gov.pk/" target="_blank" rel="noopener noreferrer">Punjab DSJ Portal</a></li>
+                        <li><a href="https://wa.me/923035962727" target="_blank" rel="noopener noreferrer">WhatsApp Support</a></li>
+                        <li><a href="#" onclick="focusAssistant(); return false;">Legal Desk Assistant</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
     </main>
 
+    <footer class="footer-bar no-print">
+        CMS Judiciary Practice Portal • Advocate Ifthekhar Ahmad Khan • Attock Division
+    </footer>
+
+    <script src="data.js"></script>
     <script src="script.js"></script>
+    <script src="vacancies.js"></script>
 </body>
 </html>
 

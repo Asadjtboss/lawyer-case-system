@@ -1,6 +1,17 @@
 // -------------------------------------------------------------
 // 1. NAVIGATION & THEME SWITCHER
 // -------------------------------------------------------------
+const cmsSafeRead = (key, fallback) => {
+    try {
+        const raw = localStorage.getItem(key);
+        if (raw === null || raw === undefined || raw === '') return fallback;
+        const parsed = JSON.parse(raw);
+        return parsed === null || parsed === undefined ? fallback : parsed;
+    } catch (error) {
+        return fallback;
+    }
+};
+
 function showPortion(portionId, btnElement) {
     document.querySelectorAll('.portion').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -28,6 +39,14 @@ function showToast(message) {
     setTimeout(() => { 
         toast.className = toast.className.replace("show", ""); 
     }, 3000);
+}
+
+function initializeCardAnimations() {
+    const animatedNodes = document.querySelectorAll('.panel-card, .stat-card, .feature-card, .cms-court-card, .law-card, .vacancy-card, .vacancy-form-wrap, .vacancy-list-wrap');
+    animatedNodes.forEach((node, index) => {
+        node.classList.add('animate-in');
+        node.style.animationDelay = `${index * 50}ms`;
+    });
 }
 
 function focusAssistant() {
@@ -129,24 +148,38 @@ function askAssistant() {
     input.value = '';
     box.scrollTop = box.scrollHeight;
 }
+function isAdminUser(user) {
+    if (!user) return false;
+    return user.role === 'Admin' || user.username && user.username.toLowerCase() === 'admin';
+}
+
 function getCurrentUser() {
     const raw = localStorage.getItem('cms_current_user');
     if (!raw) return null;
-    try {
-        return JSON.parse(raw);
-    } catch (error) {
-        return null;
-    }
+    return cmsSafeRead('cms_current_user', null);
 }
 
 function getUsers() {
-    const raw = localStorage.getItem('cms_users');
-    if (!raw) return [];
-    try {
-        return JSON.parse(raw);
-    } catch (error) {
-        return [];
+    return cmsSafeRead('cms_users', window.CMS_CORE ? window.CMS_CORE.defaults.users : []);
+}
+
+function getDefaultDiaryList() {
+    if (window.CMS_CORE && window.CMS_CORE.defaults && Array.isArray(window.CMS_CORE.defaults.diary)) {
+        return window.CMS_CORE.defaults.diary;
     }
+
+    return [
+        { date: '2026-08-25', title: 'Civil Suit #45/2026', court: 'Civil Judge Hifsa Bukhari (INJRA Division)', stage: 'Arguments Hearing', status: 'Pending', owner: 'advocate' },
+        { date: '2026-08-28', title: 'Bail App #12/2026', court: 'District & Session Judge Attock', stage: 'Prosecution Response', status: 'Hearing Listed', owner: 'advocate' },
+        { date: '2026-08-20', title: 'Civil Appeal #101/2026', court: 'ASJ Mr. Jahan Zaib', stage: 'Appeal Hearing', status: 'Pending', owner: 'advocate' },
+        { date: '2026-08-22', title: 'Criminal Revision #38/2026', court: 'District & Session Judge Attock', stage: 'Notice Stage', status: 'In Progress', owner: 'advocate' },
+        { date: '2026-08-18', title: 'Land Mutation #77/2026', court: 'Civil Judge Yousuf Abdur Rehman (Jand Division)', stage: 'Mutation Evidence', status: 'Pending', owner: 'advocate' },
+        { date: '2026-08-17', title: 'Family Suit #14/2026', court: 'Civil Judge Najaam Ayub (Basaal)', stage: 'Evidence Recording', status: 'Hearing Listed', owner: 'advocate' },
+        { date: '2026-08-15', title: 'Recovery Suit #84/2026', court: 'Sub-Division Pindi Gheb', stage: 'Written Statement', status: 'Pending', owner: 'advocate' },
+        { date: '2026-08-10', title: 'Execution Petition #19/2026', court: 'Civil Judge Hifsa Bukhari (INJRA Division)', stage: 'Execution Proceedings', status: 'Closed', owner: 'advocate' },
+        { date: '2026-08-11', title: 'Guardianship Petition #22/2026', court: 'Sayeda Hifza Bukhaari', stage: 'SJ Hearing', status: 'Pending', owner: 'advocate' },
+        { date: '2026-08-13', title: 'Rent Appeal #55/2026', court: 'Civil Judge Yousuf Abdur Rehman (Jand Division)', stage: 'Arguments', status: 'In Progress', owner: 'advocate' }
+    ];
 }
 
 function saveUsers(users) {
@@ -155,16 +188,27 @@ function saveUsers(users) {
 
 function ensureDefaultUser() {
     const users = getUsers();
-    const exists = users.some(user => user.username.toLowerCase() === 'advocate');
-    if (!exists) {
+    const hasAdvocate = users.some(user => user.username.toLowerCase() === 'advocate');
+    if (!hasAdvocate) {
         users.push({
             username: 'advocate',
             password: 'admin123',
             fullName: 'Advocate Ifthekhar Ahmad Khan',
             role: 'Advocate'
         });
-        saveUsers(users);
     }
+
+    const hasAdmin = users.some(user => user.username.toLowerCase() === 'admin');
+    if (!hasAdmin) {
+        users.push({
+            username: 'admin',
+            password: 'admin123',
+            fullName: 'Administrator',
+            role: 'Admin'
+        });
+    }
+
+    saveUsers(users);
 }
 
 function updateAuthUI() {
@@ -175,6 +219,7 @@ function updateAuthUI() {
     const welcomeName = document.getElementById('logged-user-name');
     const roleLabel = document.getElementById('user-role-label');
     const summary = document.getElementById('status-summary');
+    const accessBtn = document.getElementById('case-access-btn');
 
     if (loggedOut && loggedIn) {
         loggedOut.classList.toggle('hidden', !!user);
@@ -182,8 +227,8 @@ function updateAuthUI() {
     }
 
     if (badge) {
-        badge.textContent = user ? 'User Logged In' : 'Guest Access';
-        badge.className = 'auth-badge ' + (user ? 'user' : 'guest');
+        badge.textContent = user ? (isAdminUser(user) ? 'Admin Logged In' : 'User Logged In') : 'Guest Access';
+        badge.className = 'auth-badge ' + (user ? (isAdminUser(user) ? 'admin' : 'user') : 'guest');
     }
 
     if (welcomeName && user) {
@@ -194,24 +239,29 @@ function updateAuthUI() {
         roleLabel.textContent = user.role || 'Case Manager';
     }
 
+    if (accessBtn && user) {
+        accessBtn.textContent = isAdminUser(user) ? 'View All Cases' : 'My Cases';
+    }
+
     if (summary) {
         if (!user) {
             summary.textContent = 'Login to view your personal case status updates.';
             return;
         }
 
-        const defaultDiary = [
-            { date: '2026-08-25', title: 'Civil Suit #45/2026', court: 'Civil Judge Hifsa Bukhari (INJRA Division)', stage: 'Arguments Hearing', status: 'Pending', owner: 'advocate' },
-            { date: '2026-08-28', title: 'Bail App #12/2026', court: 'District & Session Judge Attock', stage: 'Prosecution Response', status: 'Hearing Listed', owner: 'advocate' }
-        ];
-        const storedDiary = JSON.parse(localStorage.getItem('cms_diary_data') || 'null');
+        const defaultDiary = getDefaultDiaryList();
+        const storedDiary = cmsSafeRead('cms_diary_data', defaultDiary);
         const allDiary = Array.isArray(storedDiary) && storedDiary.length ? storedDiary : defaultDiary;
-        const userDiary = allDiary.filter(item => !item.owner || item.owner === user.username);
+        const isAdmin = isAdminUser(user);
+        const userDiary = isAdmin
+            ? allDiary
+            : allDiary.filter(item => !item.owner || item.owner === user.username);
         const pending = userDiary.filter(item => (item.status || 'Pending') === 'Pending').length;
         const progress = userDiary.filter(item => (item.status || 'Pending') === 'In Progress').length;
         const hearing = userDiary.filter(item => (item.status || 'Pending') === 'Hearing Listed').length;
         const closed = userDiary.filter(item => (item.status || 'Pending') === 'Closed').length;
-        summary.textContent = `${userDiary.length} personal matters: ${pending} pending, ${progress} in progress, ${hearing} hearing, ${closed} closed.`;
+        const label = isAdmin ? 'all matters' : 'personal matters';
+        summary.textContent = `${userDiary.length} ${label}: ${pending} pending, ${progress} in progress, ${hearing} hearing, ${closed} closed.`;
     }
 }
 
@@ -253,7 +303,7 @@ function loginUser() {
     const users = getUsers();
     const matchedUser = users.find(user => user.username.toLowerCase() === username.toLowerCase() && user.password === password);
     if (!matchedUser) {
-        showToast('Invalid username or password. Use advocate / admin123');
+        showToast('Invalid username or password. Use admin / admin123 or advocate / admin123');
         return;
     }
 
@@ -277,15 +327,16 @@ function logoutUser() {
 }
 
 function getVisibleDiaryEntries() {
-    const defaultDiary = [
-        { date: '2026-08-25', title: 'Civil Suit #45/2026', court: 'Civil Judge Hifsa Bukhari (INJRA Division)', stage: 'Arguments Hearing', status: 'Pending', owner: 'advocate' },
-        { date: '2026-08-28', title: 'Bail App #12/2026', court: 'District & Session Judge Attock', stage: 'Prosecution Response', status: 'Hearing Listed', owner: 'advocate' }
-    ];
-    const storedDiary = JSON.parse(localStorage.getItem('cms_diary_data') || 'null');
+    const defaultDiary = getDefaultDiaryList();
+    const storedDiary = cmsSafeRead('cms_diary_data', defaultDiary);
     const all = Array.isArray(storedDiary) && storedDiary.length ? storedDiary : defaultDiary;
     const user = getCurrentUser();
 
     if (!user) {
+        return all.map((item, index) => ({ item, index }));
+    }
+
+    if (isAdminUser(user)) {
         return all.map((item, index) => ({ item, index }));
     }
 
@@ -308,11 +359,8 @@ function updateDiaryStatus(visibleIndex) {
         return;
     }
 
-    const defaultDiary = [
-        { date: '2026-08-25', title: 'Civil Suit #45/2026', court: 'Civil Judge Hifsa Bukhari (INJRA Division)', stage: 'Arguments Hearing', status: 'Pending', owner: 'advocate' },
-        { date: '2026-08-28', title: 'Bail App #12/2026', court: 'District & Session Judge Attock', stage: 'Prosecution Response', status: 'Hearing Listed', owner: 'advocate' }
-    ];
-    const storedDiary = JSON.parse(localStorage.getItem('cms_diary_data') || 'null');
+    const defaultDiary = getDefaultDiaryList();
+    const storedDiary = cmsSafeRead('cms_diary_data', defaultDiary);
     const all = Array.isArray(storedDiary) && storedDiary.length ? storedDiary : defaultDiary;
     const currentStatus = all[targetEntry.index].status || 'Pending';
     all[targetEntry.index].status = getNextStatus(currentStatus);
@@ -330,11 +378,8 @@ function deleteDiaryRecord(visibleIndex) {
     const confirmed = window.confirm('Delete this case record?');
     if (!confirmed) return;
 
-    const defaultDiary = [
-        { date: '2026-08-25', title: 'Civil Suit #45/2026', court: 'Civil Judge Hifsa Bukhari (INJRA Division)', stage: 'Arguments Hearing', status: 'Pending', owner: 'advocate' },
-        { date: '2026-08-28', title: 'Bail App #12/2026', court: 'District & Session Judge Attock', stage: 'Prosecution Response', status: 'Hearing Listed', owner: 'advocate' }
-    ];
-    const storedDiary = JSON.parse(localStorage.getItem('cms_diary_data') || 'null');
+    const defaultDiary = getDefaultDiaryList();
+    const storedDiary = cmsSafeRead('cms_diary_data', defaultDiary);
     const all = Array.isArray(storedDiary) && storedDiary.length ? storedDiary : defaultDiary;
     all.splice(targetEntry.index, 1);
     localStorage.setItem('cms_diary_data', JSON.stringify(all));
@@ -362,48 +407,88 @@ function saveDiary(e) {
         status: 'Pending',
         owner: user ? user.username : 'guest'
     };
-    let list = JSON.parse(localStorage.getItem('cms_diary_data')) || [];
+    let list = cmsSafeRead('cms_diary_data', []);
     list.unshift(record);
     localStorage.setItem('cms_diary_data', JSON.stringify(list));
 
     renderDiaryTable();
     updateAuthUI();
     document.getElementById('diary-form').reset();
-    showToast("Cause List Entry Saved!");
+    showToast("Case List entry saved!");
 }
 
 function renderDiaryTable() {
-    const defaultList = [
-        { date: '2026-08-25', title: 'Civil Suit #45/2026', court: 'Civil Judge Hifsa Bukhari (INJRA Division)', stage: 'Arguments Hearing', status: 'Pending', owner: 'advocate' },
-        { date: '2026-08-28', title: 'Bail App #12/2026', court: 'District & Session Judge Attock', stage: 'Prosecution Response', status: 'Hearing Listed', owner: 'advocate' }
-    ];
-    const storedList = JSON.parse(localStorage.getItem('cms_diary_data') || 'null');
+    const defaultList = getDefaultDiaryList();
+    const storedList = cmsSafeRead('cms_diary_data', defaultList);
     const allList = Array.isArray(storedList) && storedList.length ? storedList : defaultList;
 
     const user = getCurrentUser();
-    const list = user
-        ? allList.filter(item => !item.owner || item.owner === user.username)
-        : allList;
+    const visibleEntries = allList
+        .map((item, originalIndex) => ({ item, originalIndex }))
+        .filter(({ item }) => !user || isAdminUser(user) || !item.owner || item.owner === user.username);
+    const list = visibleEntries.map(({ item, originalIndex }) => ({ ...item, __index: originalIndex }));
 
-    const tbody = document.getElementById('diary-records-body');
-    if (!tbody) return;
+    const groupsWrap = document.getElementById('diary-groups');
+    if (groupsWrap) {
+        const grouped = list.reduce((acc, item) => {
+            const courtName = item.court || 'Unassigned Court';
+            if (!acc[courtName]) acc[courtName] = [];
+            acc[courtName].push(item);
+            return acc;
+        }, {});
 
-    tbody.innerHTML = list.map((item, index) => {
-        const status = item.status || 'Pending';
-        const statusClass = status.toLowerCase().replace(/\s+/g, '-');
-        const nextStatus = getNextStatus(status);
-        return `<tr>
-            <td>${item.date}</td>
-            <td><strong>${item.title}</strong></td>
-            <td>${item.court}</td>
-            <td>${item.stage}</td>
-            <td><span class="status-pill ${statusClass}">${status}</span></td>
-            <td>
-                <button type="button" class="table-action status" onclick="updateDiaryStatus(${index})">Set ${nextStatus}</button>
-                <button type="button" class="table-action delete" onclick="deleteDiaryRecord(${index})">Delete</button>
-            </td>
-        </tr>`;
-    }).join('');
+        const groupHtml = Object.entries(grouped).map(([courtName, entries]) => {
+            const rows = entries.map(({ __index, date, title, stage, status }) => {
+                const statusClass = (status || 'Pending').toLowerCase().replace(/\s+/g, '-');
+                const nextStatus = getNextStatus(status);
+                return `
+                    <tr>
+                        <td>${date}</td>
+                        <td><strong>${title}</strong></td>
+                        <td>${stage}</td>
+                        <td><span class="status-pill ${statusClass}">${status || 'Pending'}</span></td>
+                        <td>
+                            <button type="button" class="table-action status" onclick="updateDiaryStatus(${__index})">Set ${nextStatus}</button>
+                            <button type="button" class="table-action delete" onclick="deleteDiaryRecord(${__index})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            const courtClass = courtName.toLowerCase().includes('session') ? 'court-session'
+                : courtName.toLowerCase().includes('hifsa') || courtName.toLowerCase().includes('injra') ? 'court-civil'
+                : courtName.toLowerCase().includes('yousuf') || courtName.toLowerCase().includes('jand') ? 'court-jand'
+                : courtName.toLowerCase().includes('najaam') || courtName.toLowerCase().includes('basaal') ? 'court-basal'
+                : 'court-default';
+
+            return `
+                <div class="judge-case-panel ${courtClass}" data-court="${courtName}">
+                    <div class="judge-case-header">
+                        <span class="court-badge">${courtName.split('(')[0].trim()}</span>
+                        <h4>${courtName}</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="cms-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Case Title / Ref</th>
+                                    <th>Proceeding Stage</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>${rows}</tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        groupsWrap.innerHTML = groupHtml || '<div class="vacancy-empty">No case records found for this judge section.</div>';
+        renderCourtFilterTabs(Object.keys(grouped));
+        filterDiaryGroups(document.getElementById('diary-search')?.value || '', window.currentDiaryCourtFilter || 'All Courts');
+    }
 
     const countEl = document.getElementById('dash-active-count');
     if (countEl) countEl.innerText = list.length;
@@ -418,7 +503,7 @@ function saveBilling(e) {
     const user = getCurrentUser();
 
     const record = { client, caseRef, total, paid, owner: user ? user.username : 'guest' };
-    let list = JSON.parse(localStorage.getItem('cms_billing_data')) || [];
+    let list = cmsSafeRead('cms_billing_data', []);
     list.unshift(record);
     localStorage.setItem('cms_billing_data', JSON.stringify(list));
 
@@ -433,11 +518,11 @@ function renderBillingTable() {
         { client: 'Ahmad Ali', caseRef: 'Land Claim Ref #88', total: 150000, paid: 100000, owner: 'advocate' },
         { client: 'Tariq Mahmood', caseRef: 'Bail Matter #104', total: 60000, paid: 60000, owner: 'advocate' }
     ];
-    const storedList = JSON.parse(localStorage.getItem('cms_billing_data') || 'null');
+    const storedList = cmsSafeRead('cms_billing_data', defaultList);
     const list = Array.isArray(storedList) && storedList.length ? storedList : defaultList;
 
     const user = getCurrentUser();
-    const filteredList = user ? list.filter(item => !item.owner || item.owner === user.username) : list;
+    const filteredList = user ? (isAdminUser(user) ? list : list.filter(item => !item.owner || item.owner === user.username)) : list;
 
     const tbody = document.getElementById('billing-records-body');
     if (!tbody) return;
@@ -458,7 +543,7 @@ function saveLocker(e) {
     const user = getCurrentUser();
 
     const record = { client, type, link, owner: user ? user.username : 'guest' };
-    let list = JSON.parse(localStorage.getItem('cms_locker_data')) || [];
+    let list = cmsSafeRead('cms_locker_data', []);
     list.unshift(record);
     localStorage.setItem('cms_locker_data', JSON.stringify(list));
 
@@ -472,11 +557,11 @@ function renderLockerTable() {
     const defaultList = [
         { client: 'Ahmad Ali (#88)', type: 'Fard Malkiyat & Registry Copies', link: 'Physical Cabinet B - File #14', owner: 'advocate' }
     ];
-    const storedList = JSON.parse(localStorage.getItem('cms_locker_data') || 'null');
+    const storedList = cmsSafeRead('cms_locker_data', defaultList);
     const list = Array.isArray(storedList) && storedList.length ? storedList : defaultList;
 
     const user = getCurrentUser();
-    const filteredList = user ? list.filter(item => !item.owner || item.owner === user.username) : list;
+    const filteredList = user ? (isAdminUser(user) ? list : list.filter(item => !item.owner || item.owner === user.username)) : list;
 
     const tbody = document.getElementById('locker-records-body');
     if (!tbody) return;
@@ -492,6 +577,41 @@ function filterTable(tableBodyId, query) {
     const rows = document.querySelectorAll(`#${tableBodyId} tr`);
     rows.forEach(row => {
         row.style.display = row.innerText.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
+    });
+}
+
+function renderCourtFilterTabs(courts) {
+    const wrap = document.getElementById('court-filter-tabs');
+    if (!wrap) return;
+
+    const allTabs = ['All Courts', ...courts];
+    const selectedCourt = window.currentDiaryCourtFilter || 'All Courts';
+    wrap.innerHTML = allTabs.map((court) => {
+        const isActive = court === selectedCourt ? 'active' : '';
+        return `<button type="button" class="court-filter-btn ${isActive}" data-court="${court}">${court}</button>`;
+    }).join('');
+
+    wrap.querySelectorAll('.court-filter-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+            const selected = button.getAttribute('data-court');
+            window.currentDiaryCourtFilter = selected;
+            filterDiaryGroups(document.getElementById('diary-search')?.value || '', selected);
+            renderCourtFilterTabs(courts);
+        });
+    });
+}
+
+function filterDiaryGroups(query, selectedCourt = window.currentDiaryCourtFilter || 'All Courts') {
+    const panels = document.querySelectorAll('.judge-case-panel');
+    const term = (query || '').toLowerCase();
+    const selected = selectedCourt === 'All Courts' ? null : selectedCourt;
+
+    panels.forEach(panel => {
+        const panelCourt = panel.getAttribute('data-court') || panel.querySelector('h4')?.textContent?.trim() || '';
+        const text = panel.innerText.toLowerCase();
+        const matchesCourt = !selected || panelCourt === selected;
+        const matchesQuery = !term || text.includes(term);
+        panel.style.display = matchesCourt && matchesQuery ? '' : 'none';
     });
 }
 
@@ -689,9 +809,12 @@ function sendChatMessage() {
     }, 300);
 }
 
+ensureDefaultUser();
+
 // Initial Load Handler
 document.addEventListener('DOMContentLoaded', () => {
     ensureDefaultUser();
+    window.currentDiaryCourtFilter = 'All Courts';
 
     // Load Saved Theme
     if (localStorage.getItem('cms_theme') === 'dark') {
@@ -711,4 +834,8 @@ document.addEventListener('DOMContentLoaded', () => {
     renderDiaryTable();
     renderBillingTable();
     renderLockerTable();
+    initializeCardAnimations();
+    if (typeof window.renderVacancies === 'function') {
+        window.renderVacancies();
+    }
 });
