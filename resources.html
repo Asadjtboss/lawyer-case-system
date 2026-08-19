@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advocate Resources - CMS Judiciary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+            color: #102b4f;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .resource-header {
+            background: linear-gradient(120deg, #0b1f39 0%, #143a61 40%, #0f766e 100%);
+            color: #fff;
+            padding: 1.5rem 1rem;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+        }
+
+        .resource-header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .resource-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+        }
+
+        .resource-logo {
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.18);
+            font-size: 1.7rem;
+        }
+
+        .resource-brand h1 {
+            margin: 0;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.2rem, 2vw, 2rem);
+        }
+
+        .resource-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .resource-link {
+            padding: 0.7rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.18);
+            color: #fff;
+        }
+
+        .resource-wrap {
+            max-width: 1200px;
+            margin: 1.5rem auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .resource-search {
+            flex: 1;
+            min-width: 220px;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(148,163,184,0.4);
+            background: rgba(248,250,252,0.95);
+            font-size: 0.95rem;
+        }
+
+        .category-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.55rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid rgba(148,163,184,0.34);
+            background: #f8fafc;
+            color: #334155;
+            font-size: 0.76rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+        }
+
+        .category-chip.active {
+            background: linear-gradient(135deg, #102b4f 0%, #0f766e 100%);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .practice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .practice-pack {
+            background: rgba(255,255,255,0.94);
+            border: 1px solid rgba(148,163,184,0.22);
+            border-radius: 18px;
+            padding: 1rem;
+            box-shadow: 0 12px 26px rgba(15, 23, 42, 0.04);
+        }
+
+        .practice-pack h3 {
+            margin: 0.4rem 0 0.6rem;
+            font-size: 1.1rem;
+        }
+
+        .practice-pack ul {
+            margin: 0;
+            padding-left: 1.2rem;
+            color: #334155;
+            line-height: 1.8;
+        }
+
+        .template-shell {
+            background: rgba(255,255,255,0.94);
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            border-radius: 20px;
+            padding: 1rem;
+            box-shadow: 0 18px 34px rgba(15, 23, 42, 0.05);
+        }
+
+        .template-tabs {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .template-tab {
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            background: #f8fafc;
+            color: #334155;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .template-tab.active {
+            background: linear-gradient(135deg, #102b4f 0%, #0f766e 100%);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .template-panels {
+            position: relative;
+        }
+
+        .template-panel {
+            display: none;
+            background: linear-gradient(180deg, rgba(248,250,252,1), rgba(241,245,249,0.95));
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 18px;
+            padding: 1rem 1.1rem;
+        }
+
+        .template-panel.active {
+            display: block;
+            animation: fadeInUp 0.2s ease;
+        }
+
+        .template-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.8rem;
+        }
+
+        .template-body {
+            color: #1e293b;
+            line-height: 1.8;
+        }
+
+        .template-body p {
+            margin: 0.4rem 0;
+        }
+
+        .template-actions {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #0f766e 0%, #0f172a 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 0.7rem 1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .resource-card {
+            background: rgba(255,255,255,0.94);
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            border-radius: 18px;
+            padding: 1.1rem;
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.06);
+        }
+
+        .resource-card h3 {
+            margin-top: 0;
+            margin-bottom: 0.7rem;
+            font-size: 1.2rem;
+        }
+
+        .resource-type {
+            display: inline-block;
+            padding: 0.34rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(15, 118, 110, 0.1);
+            color: #0f766e;
+            border: 1px solid rgba(15, 118, 110, 0.18);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .resource-card p {
+            color: #425166;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .resource-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem;
+            display: grid;
+            gap: 0.55rem;
+        }
+
+        .resource-list li {
+            background: #f8fafc;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 10px;
+            padding: 0.7rem 0.8rem;
+            color: #102b4f;
+            font-weight: 600;
+        }
+
+        .resource-btn {
+            display: inline-block;
+            padding: 0.7rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0f172a 0%, #0f766e 100%);
+            color: #fff;
+            border: none;
+        }
+
+        .resource-btn.gold {
+            background: linear-gradient(135deg, #c89b3c 0%, #b45309 100%);
+        }
+
+        .resource-section {
+            margin-top: 2rem;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: clamp(1.5rem, 2vw, 2.2rem);
+        }
+
+        .blog-item {
+            display: grid;
+            gap: 0.5rem;
+            padding: 1rem;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.9);
+            border: 1px solid rgba(148,163,184,0.2);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(15, 118, 110, 0.1);
+            color: #0f766e;
+            border: 1px solid rgba(15, 118, 110, 0.18);
+            padding: 0.35rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .blog-item h4 {
+            margin: 0;
+            font-size: 1.08rem;
+        }
+
+        .blog-item p {
+            margin: 0;
+            line-height: 1.7;
+            color: #425166;
+        }
+
+        .print-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(200, 155, 60, 0.12);
+            border: 1px solid rgba(200, 155, 60, 0.28);
+            color: #8a5d0a;
+            border-radius: 999px;
+            padding: 0.45rem 0.8rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="resource-header">
+        <div class="resource-header-inner">
+            <div class="resource-brand">
+                <div class="resource-logo">📚</div>
+                <div>
+                    <h1>ADVOCATE RESOURCES</h1>
+                    <div class="small-text">Drafting Tools • Print Ready Forms • Blog & Essays</div>
+                </div>
+            </div>
+            <div class="resource-actions">
+                <a class="resource-link" href="index.html">Main Portal</a>
+                <a class="resource-link" href="courts.html">Court Directory</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="resource-wrap">
+        <section class="resource-section">
+            <div class="section-head">
+                <h2>Legal Drafting Library</h2>
+            </div>
+            <div class="resource-toolbar">
+                <input id="resourceSearch" class="resource-search" type="text" placeholder="Search templates, forms, and notes..." onkeyup="filterResources(this.value)">
+                <button class="category-chip active" data-category="all" type="button" onclick="setResourceCategory('all')">All</button>
+                <button class="category-chip" data-category="draft" type="button" onclick="setResourceCategory('draft')">Draft</button>
+                <button class="category-chip" data-category="print" type="button" onclick="setResourceCategory('print')">Print</button>
+                <button class="category-chip" data-category="essay" type="button" onclick="setResourceCategory('essay')">Essays</button>
+                <button class="category-chip" data-category="workflow" type="button" onclick="setResourceCategory('workflow')">Workflow</button>
+            </div>
+            <div class="resource-grid">
+                <article class="resource-card" data-category="draft" data-keywords="wakalatnama power attorney client representation court signature">
+                    <div class="resource-type">Draft</div>
+                    <h3>Wakalatnama</h3>
+                    <p>Attorney form for client representation in civil, criminal, and appellate matters before the court.</p>
+                    <ul class="resource-list">
+                        <li>Client and advocate details</li>
+                        <li>Case title and court name</li>
+                        <li>Signature block and approval notes</li>
+                    </ul>
+                    <a href="index.html#portion-docs" class="resource-btn">Open Generator</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="bail petition criminal release grounds detention flight risk">
+                    <div class="resource-type">Draft</div>
+                    <h3>Bail Petition</h3>
+                    <p>Ready structure for bail applications covering facts, legal grounds, and compliance with criminal procedure.</p>
+                    <ul class="resource-list">
+                        <li>Grounds for release</li>
+                        <li>Precedent paragraph</li>
+                        <li>PRB and compliance annexure</li>
+                    </ul>
+                    <a href="index.html#portion-docs" class="resource-btn">Use Template</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="affidavit miscellaneous injunction mutation verification sworn statement">
+                    <div class="resource-type">Draft</div>
+                    <h3>Affidavit / Misc. Application</h3>
+                    <p>Simple and formal affidavit format for injunction, mutation, and miscellaneous judicial requests.</p>
+                    <ul class="resource-list">
+                        <li>Verification clause</li>
+                        <li>Sworn statement</li>
+                        <li>Court use annexure</li>
+                    </ul>
+                    <a href="index.html#portion-docs" class="resource-btn">Prepare Draft</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="injunction stay restrain order relief temporary injunction civil suit">
+                    <div class="resource-type">Draft</div>
+                    <h3>Temporary Injunction Petition</h3>
+                    <p>Draft for interim relief, stay order, and protection against interference pending final adjudication.</p>
+                    <ul class="resource-list">
+                        <li>Urgent relief grounds</li>
+                        <li>Prima facie case</li>
+                        <li>Balance of convenience</li>
+                    </ul>
+                    <a href="#legal-essays" class="resource-btn">Review Form</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="civil appeal revision petition review application statutory right">
+                    <div class="resource-type">Draft</div>
+                    <h3>Appeal / Revision Draft</h3>
+                    <p>Formal appellate draft covering grounds of challenge, legal error, and requested remedy before the superior forum.</p>
+                    <ul class="resource-list">
+                        <li>Grounds of appeal</li>
+                        <li>Question of law</li>
+                        <li>Relief sought</li>
+                    </ul>
+                    <a href="#legal-essays" class="resource-btn">Use Draft</a>
+                </article>
+
+                <article class="resource-card" data-category="print" data-keywords="letterhead cover sheet court print document first page">
+                    <div class="resource-type">Print</div>
+                    <h3>Letterhead / Court Cover Sheet</h3>
+                    <p>Professional first-page cover for petitions, legal notices, and office communications.</p>
+                    <ul class="resource-list">
+                        <li>Advocate name and office info</li>
+                        <li>Case title and court reference</li>
+                        <li>Clean legal formatting</li>
+                    </ul>
+                    <a href="index.html#portion-docs" class="resource-btn gold">Preview Print</a>
+                </article>
+
+                <article class="resource-card" data-category="print" data-keywords="hearing summary checklist next date action record briefing">
+                    <div class="resource-type">Print</div>
+                    <h3>Hearing Summary Sheet</h3>
+                    <p>Quick print sheet for hearing briefs, next date notes, and effective client reporting.</p>
+                    <ul class="resource-list">
+                        <li>Case summary</li>
+                        <li>Next date and sequence</li>
+                        <li>Action checklist</li>
+                    </ul>
+                    <a href="index.html#portion-docs" class="resource-btn gold">Print Format</a>
+                </article>
+
+                <article class="resource-card" data-category="essay" data-keywords="bail principles pakistan detain fairness procedural law">
+                    <div class="resource-type">Essay</div>
+                    <h3>Understanding Bail Principles</h3>
+                    <p>Key considerations of detention, judicial discretion, and procedural fairness in bail jurisprudence.</p>
+                    <ul class="resource-list">
+                        <li>Bail law analysis</li>
+                        <li>Judicial fairness</li>
+                        <li>Practice note</li>
+                    </ul>
+                    <a href="#legal-essays" class="resource-btn">Read Essay</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="legal notice demand notice demand letter defect cure defect notice">
+                    <div class="resource-type">Draft</div>
+                    <h3>Legal Notice / Demand Notice</h3>
+                    <p>Strong demand notice structure for recovery, cheating, tenancy disputes, and breach-based legal claims.</p>
+                    <ul class="resource-list">
+                        <li>Cause and demand</li>
+                        <li>Time period for compliance</li>
+                        <li>Legal consequences</li>
+                    </ul>
+                    <a href="#legal-essays" class="resource-btn">Draft Notice</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="resource-section">
+            <div class="section-head">
+                <h2>Waseeqa-Style Drafting Bank</h2>
+            </div>
+            <div class="resource-grid">
+                <article class="resource-card" data-category="draft" data-keywords="divorce notice talaq first notice format urdu family legal notice">
+                    <div class="resource-type">Draft</div>
+                    <h3>First Divorce Notice</h3>
+                    <p>Short and formal notice format for initiating family settlement and legal communication under family law matters.</p>
+                    <ul class="resource-list">
+                        <li>Summons and demand</li>
+                        <li>Family law context</li>
+                        <li>Legal communication</li>
+                    </ul>
+                    <a href="#" class="resource-btn">Preview Draft</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="rent agreement tenancy lease urdu contract monthly payment">
+                    <div class="resource-type">Draft</div>
+                    <h3>Rent / Lease Agreement</h3>
+                    <p>Model rental agreement covering rent, duration, use, maintenance, and termination obligations.</p>
+                    <ul class="resource-list">
+                        <li>Monthly rent terms</li>
+                        <li>Lease duration</li>
+                        <li>Termination clauses</li>
+                    </ul>
+                    <a href="#" class="resource-btn">Preview Draft</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="property sale agreement sale deed transfer ownership property dispute">
+                    <div class="resource-type">Draft</div>
+                    <h3>Property Sale Agreement</h3>
+                    <p>Sale deed format for property transfer, payment schedule, possession, and registration condition.</p>
+                    <ul class="resource-list">
+                        <li>Property identification</li>
+                        <li>Payment structure</li>
+                        <li>Registration and possession</li>
+                    </ul>
+                    <a href="#" class="resource-btn">Preview Draft</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="general power of attorney gpa attorney delegation legal authority sale property">
+                    <div class="resource-type">Draft</div>
+                    <h3>General Power of Attorney</h3>
+                    <p>General attorney form for representation, property handling, and legal transaction authority.</p>
+                    <ul class="resource-list">
+                        <li>Authority grant</li>
+                        <li>Property / legal acts</li>
+                        <li>Execution clause</li>
+                    </ul>
+                    <a href="#" class="resource-btn">Preview Draft</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="police application complaint fir 406 PPC report station law">
+                    <div class="resource-type">Draft</div>
+                    <h3>Police Station Application</h3>
+                    <p>Formal application for complaint, record management, and police representation under standard procedure.</p>
+                    <ul class="resource-list">
+                        <li>Application and prayer</li>
+                        <li>Facts and evidence</li>
+                        <li>Police action request</li>
+                    </ul>
+                    <a href="#" class="resource-btn">Preview Draft</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="assistant commissioner application mutation revenue land record appeal">
+                    <div class="resource-type">Draft</div>
+                    <h3>Assistant Commissioner Application</h3>
+                    <p>Revenue/officer application format for mutation, correction, and administrative grievance matters.</p>
+                    <ul class="resource-list">
+                        <li>Subject and relief</li>
+                        <li>Revenue record reference</li>
+                        <li>Administrative request</li>
+                    </ul>
+                    <a href="#" class="resource-btn">Preview Draft</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="vehicle sale agreement transfer registration registration letter car bike">
+                    <div class="resource-type">Draft</div>
+                    <h3>Vehicle Sale Agreement</h3>
+                    <p>Vehicle transfer agreement covering sale terms, possession, price, and compliance responsibilities.</p>
+                    <ul class="resource-list">
+                        <li>Vehicle details</li>
+                        <li>Transfer conditions</li>
+                        <li>Signature and witness</li>
+                    </ul>
+                    <a href="#" class="resource-btn">Preview Draft</a>
+                </article>
+
+                <article class="resource-card" data-category="draft" data-keywords="affidavit visa education immigration family property purpose document verification">
+                    <div class="resource-type">Draft</div>
+                    <h3>Visa / Immigration Affidavit</h3>
+                    <p>Short affidavit format used for sponsoring, wealth proof, educational, or immigration-related support.</p>
+                    <ul class="resource-list">
+                        <li>Declaration language</li>
+                        <li>Verification clause</li>
+                        <li>Purpose and facts</li>
+                    </ul>
+                    <a href="#" class="resource-btn">Preview Draft</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="resource-section">
+            <div class="section-head">
+                <h2>Print-Ready Legal Forms</h2>
+            </div>
+            <div class="resource-grid">
+                <article class="resource-card">
+                    <div class="print-note">📄 Print Ready</div>
+                    <h3>Letterhead / Court Cover Sheet</h3>
+                    <p>Professional first-page cover for petitions, legal notices, and office communications.</p>
+                    <ul class="resource-list">
+                        <li>Advocate name and office info</li>
+                        <li>Case title and court reference</li>
+                        <li>Clean legal formatting</li>
+                    </ul>
+                    <a href="index.html#portion-docs" class="resource-btn gold">Preview Print</a>
+                </article>
+
+                <article class="resource-card">
+                    <div class="print-note">🖨️ Office Print</div>
+                    <h3>Hearing Summary Sheet</h3>
+                    <p>Quick print sheet for hearing briefs, next date notes, and effective client reporting.</p>
+                    <ul class="resource-list">
+                        <li>Case summary</li>
+                        <li>Next date and sequence</li>
+                        <li>Action checklist</li>
+                    </ul>
+                    <a href="index.html#portion-docs" class="resource-btn gold">Print Format</a>
+                </article>
+
+                <article class="resource-card">
+                    <div class="print-note">📁 File Archive</div>
+                    <h3>Case Index / Filing Checklist</h3>
+                    <p>Packaging checklist for maintaining compliant records before filing or hearing.</p>
+                    <ul class="resource-list">
+                        <li>Document checklist</li>
+                        <li>Evidence labels</li>
+                        <li>Ready-to-file index</li>
+                    </ul>
+                    <a href="index.html#portion-locker" class="resource-btn gold">Open Locker</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="resource-section">
+            <div class="section-head">
+                <h2>Advocate Drafting Library</h2>
+            </div>
+
+            <div class="template-shell">
+                <div class="template-tabs">
+                    <button class="template-tab active" data-target="bail">Bail Petition</button>
+                    <button class="template-tab" data-target="civil">Civil Suit</button>
+                    <button class="template-tab" data-target="affidavit">Affidavit</button>
+                    <button class="template-tab" data-target="wakalat">Wakalatnama</button>
+                    <button class="template-tab" data-target="rent">Rent Agreement</button>
+                    <button class="template-tab" data-target="notice">Legal Notice</button>
+                    <button class="template-tab" data-target="review">Review Petition</button>
+                    <button class="template-tab" data-target="gpa">GPA</button>
+                </div>
+
+                <div class="template-panels">
+                    <article class="template-panel active" id="tpl-bail">
+                        <div class="template-head">
+                            <span class="tag">Petition</span>
+                            <h3>Bail Application Draft</h3>
+                        </div>
+                        <div class="template-body">
+                            <p><strong>IN THE COURT OF:</strong> Hon'ble Sessions Judge, Attock</p>
+                            <p><strong>CASE TITLE:</strong> Mst. A vs State</p>
+                            <p><strong>APPLICATION FOR BAIL:</strong> Applicant/Accused respectfully submits that the applicant is innocent and has been falsely implicated.</p>
+                            <p>The applicant is neither a previous convict nor a flight risk. The allegations are not supported by concrete evidence and the investigation is complete. The applicant undertakes to appear before the court as and when required and to comply with all legal conditions.</p>
+                            <p>It is therefore prayed that the applicant may be admitted to bail subject to such terms and conditions as this Hon'ble Court deems fit and proper in the interests of justice.</p>
+                        </div>
+                        <div class="template-actions">
+                            <button class="copy-btn" type="button" data-copy="IN THE COURT OF: Hon'ble Sessions Judge, Attock\nCASE TITLE: Mst. A vs State\nAPPLICATION FOR BAIL: Applicant/Accused respectfully submits that the applicant is innocent and has been falsely implicated. The applicant is neither a previous convict nor a flight risk. The allegations are not supported by concrete evidence and the investigation is complete. It is therefore prayed that the applicant may be admitted to bail subject to such terms and conditions as this Hon'ble Court deems fit and proper in the interests of justice.">Copy Text</button>
+                            <button class="resource-btn" onclick="window.print()">Print Draft</button>
+                        </div>
+                    </article>
+
+                    <article class="template-panel" id="tpl-civil">
+                        <div class="template-head">
+                            <span class="tag">Civil</span>
+                            <h3>Civil Suit Title / Writ Draft</h3>
+                        </div>
+                        <div class="template-body">
+                            <p><strong>IN THE COURT OF:</strong> Civil Judge, Attock</p>
+                            <p><strong>PLAINTIFF:</strong> [Name], son of [Parent], resident of [Address]</p>
+                            <p><strong>DEFENDANT:</strong> [Name], resident of [Address]</p>
+                            <p>The plaintiff states that the subject property is in his lawful possession and ownership. The defendant has interfered with lawful possession and created a threat of dispossession without any legal basis. The claim is supported by documentary evidence, site inspection, and witness testimony.</p>
+                            <p>It is therefore prayed that the suit be decreed in favour of the plaintiff, the defendant be restrained from interference, and all consequential relief be granted.</p>
+                        </div>
+                        <div class="template-actions">
+                            <button class="copy-btn" type="button" data-copy="IN THE COURT OF: Civil Judge, Attock\nPLAINTIFF: [Name], son of [Parent], resident of [Address]\nDEFENDANT: [Name], resident of [Address]\nThe plaintiff states that the subject property is in his lawful possession and ownership. The defendant has interfered with lawful possession and created a threat of dispossession without any legal basis. The claim is supported by documentary evidence, site inspection, and witness testimony. It is therefore prayed that the suit be decreed in favour of the plaintiff, the defendant be restrained from interference, and all consequential relief be granted.">Copy Text</button>
+                            <button class="resource-btn" onclick="window.print()">Print Draft</button>
+                        </div>
+                    </article>
+
+                    <article class="template-panel" id="tpl-affidavit">
+                        <div class="template-head">
+                            <span class="tag">Affidavit</span>
+                            <h3>Affidavit / Verification Draft</h3>
+                        </div>
+                        <div class="template-body">
+                            <p><strong>Affidavit:</strong> I, [Name], son of [Parent], resident of [Address], do hereby solemnly affirm and declare that:</p>
+                            <p>1. The contents mentioned in the accompanying application are true and correct to the best of my knowledge and belief.</p>
+                            <p>2. I am the lawful owner/authorised person in respect of the subject matter and I am competent to swear this affidavit.</p>
+                            <p>3. I have not concealed any material fact and no part of the statement is false or misleading.</p>
+                            <p>DEPONENT</p>
+                            <p>VERIFICATION: Verified at [City] on [Date] that the contents are true and correct.</p>
+                        </div>
+                        <div class="template-actions">
+                            <button class="copy-btn" type="button" data-copy="Affidavit: I, [Name], son of [Parent], resident of [Address], do hereby solemnly affirm and declare that:\n1. The contents mentioned in the accompanying application are true and correct to the best of my knowledge and belief.\n2. I am the lawful owner/authorised person in respect of the subject matter and I am competent to swear this affidavit.\n3. I have not concealed any material fact and no part of the statement is false or misleading.\nVERIFICATION: Verified at [City] on [Date] that the contents are true and correct.">Copy Text</button>
+                            <button class="resource-btn" onclick="window.print()">Print Draft</button>
+                        </div>
+                    </article>
+
+                    <article class="template-panel" id="tpl-wakalat">
+                        <div class="template-head">
+                            <span class="tag">Power of Attorney</span>
+                            <h3>Wakalatnama Draft</h3>
+                        </div>
+                        <div class="template-body">
+                            <p>I/We, [Client Name], do hereby appoint and retain Advocate Ifthekhar Ahmad Khan, duly enrolled with the High Court, to appear, plead, argue, and act for me/us in the matter titled [Case Number / Title].</p>
+                            <p>The advocate shall have full authority to sign, file, plead, produce evidence, apply for adjournments, and pursue the matter before the competent court or authority.</p>
+                            <p>I/We confirm that the advocate is authorised to represent us and take all necessary steps in the interest of the case.</p>
+                            <p>Client Signature</p>
+                            <p>Advocate Signature</p>
+                        </div>
+                        <div class="template-actions">
+                            <button class="copy-btn" type="button" data-copy="I/We, [Client Name], do hereby appoint and retain Advocate Ifthekhar Ahmad Khan, duly enrolled with the High Court, to appear, plead, argue, and act for me/us in the matter titled [Case Number / Title]. The advocate shall have full authority to sign, file, plead, produce evidence, apply for adjournments, and pursue the matter before the competent court or authority. I/We confirm that the advocate is authorised to represent us and take all necessary steps in the interest of the case. Client Signature. Advocate Signature.">Copy Text</button>
+                            <button class="resource-btn" onclick="window.print()">Print Draft</button>
+                        </div>
+                    </article>
+
+                    <article class="template-panel" id="tpl-rent">
+                        <div class="template-head">
+                            <span class="tag">Contract</span>
+                            <h3>Rent / Lease Agreement</h3>
+                        </div>
+                        <div class="template-body">
+                            <p><strong>RENT AGREEMENT:</strong> This deed is made between [Landlord Name], owner of property located at [Address], and [Tenant Name], resident of [Address].</p>
+                            <p>The tenant shall occupy the premises for a term of [X] months/years on a monthly rent of [PKR Amount] payable by the [date] of each month.</p>
+                            <p>The tenant shall use the premises for residential/commercial purposes only and shall maintain the property in good condition. The landlord shall provide peaceful possession and the tenant shall not sub-let without written consent.</p>
+                            <p>The agreement may be terminated by notice of [X] days in writing. This deed shall be binding upon the parties and their legal heirs.</p>
+                        </div>
+                        <div class="template-actions">
+                            <button class="copy-btn" type="button" data-copy="RENT AGREEMENT: This deed is made between [Landlord Name], owner of property located at [Address], and [Tenant Name], resident of [Address]. The tenant shall occupy the premises for a term of [X] months/years on a monthly rent of [PKR Amount] payable by the [date] of each month. The tenant shall use the premises for residential/commercial purposes only and shall maintain the property in good condition. The landlord shall provide peaceful possession and the tenant shall not sub-let without written consent. The agreement may be terminated by notice of [X] days in writing. This deed shall be binding upon the parties and their legal heirs.">Copy Text</button>
+                            <button class="resource-btn" onclick="window.print()">Print Draft</button>
+                        </div>
+                    </article>
+
+                    <article class="template-panel" id="tpl-notice">
+                        <div class="template-head">
+                            <span class="tag">Notice</span>
+                            <h3>Legal Notice Draft</h3>
+                        </div>
+                        <div class="template-body">
+                            <p><strong>LEGAL NOTICE:</strong> Through this notice, [Receiver Name] is called upon to perform/cease the act described below within [X] days from the receipt of this notice.</p>
+                            <p>It is stated that the undersigned has suffered loss and injury due to the acts/omissions of the addressee and the same are unlawful, unjustified, and contrary to law.</p>
+                            <p>Failure to comply shall leave the undersigned with no option but to initiate appropriate legal proceedings including but not limited to filing a civil/criminal complaint before the competent forum.</p>
+                            <p>Yours faithfully, [Advocate Name], Advocate.</p>
+                        </div>
+                        <div class="template-actions">
+                            <button class="copy-btn" type="button" data-copy="LEGAL NOTICE: Through this notice, [Receiver Name] is called upon to perform/cease the act described below within [X] days from the receipt of this notice. It is stated that the undersigned has suffered loss and injury due to the acts/omissions of the addressee and the same are unlawful, unjustified, and contrary to law. Failure to comply shall leave the undersigned with no option but to initiate appropriate legal proceedings including but limited to filing a civil/criminal complaint before the competent forum. Yours faithfully, [Advocate Name], Advocate.">Copy Text</button>
+                            <button class="resource-btn" onclick="window.print()">Print Draft</button>
+                        </div>
+                    </article>
+
+                    <article class="template-panel" id="tpl-review">
+                        <div class="template-head">
+                            <span class="tag">Appeal</span>
+                            <h3>Review Petition Draft</h3>
+                        </div>
+                        <div class="template-body">
+                            <p><strong>IN THE HONOURABLE HIGH COURT OF [Province]:</strong> Review Petition No. ___ of ___</p>
+                            <p><strong>Petitioner:</strong> [Name], son of [Parent], resident of [Address]</p>
+                            <p><strong>Respondent:</strong> [Name], resident of [Address]</p>
+                            <p>The petitioner respectfully submits that the Hon'ble Court, while deciding the matter, has committed an error apparent on the face of the record which requires correction in the interest of justice.</p>
+                            <p>The impugned order suffers from material factual and legal misapprehension and the petitioner has no efficacious alternative remedy except this review petition. It is therefore prayed that the order be reviewed and the relief sought be granted.</p>
+                        </div>
+                        <div class="template-actions">
+                            <button class="copy-btn" type="button" data-copy="IN THE HONOURABLE HIGH COURT OF [Province]: Review Petition No. ___ of ___
+Petitioner: [Name], son of [Parent], resident of [Address]
+Respondent: [Name], resident of [Address]
+The petitioner respectfully submits that the Hon'ble Court, while deciding the matter, has committed an error apparent on the face of the record which requires correction in the interest of justice. The impugned order suffers from material factual and legal misapprehension and the petitioner has no efficacious alternative remedy except this review petition. It is therefore prayed that the order be reviewed and the relief sought be granted.">Copy Text</button>
+                            <button class="resource-btn" onclick="window.print()">Print Draft</button>
+                        </div>
+                    </article>
+
+                    <article class="template-panel" id="tpl-gpa">
+                        <div class="template-head">
+                            <span class="tag">Authority</span>
+                            <h3>General Power of Attorney</h3>
+                        </div>
+                        <div class="template-body">
+                            <p><strong>GENERAL POWER OF ATTORNEY:</strong> I, [Principal Name], son of [Parent], resident of [Address], do hereby appoint and authorise [Attorney Name] to act on my behalf in all matters concerning [property/business/case].</p>
+                            <p>The attorney shall have full authority to represent me before all courts, offices, departments, and authorities, to sign documents, receive payments, and do all acts necessary for the effective handling of the matter.</p>
+                            <p>I confirm that all acts done by my attorney shall bind me and my heirs, successors, and legal representatives.</p>
+                        </div>
+                        <div class="template-actions">
+                            <button class="copy-btn" type="button" data-copy="GENERAL POWER OF ATTORNEY: I, [Principal Name], son of [Parent], resident of [Address], do hereby appoint and authorise [Attorney Name] to act on my behalf in all matters concerning [property/business/case]. The attorney shall have full authority to represent me before all courts, offices, departments, and authorities, to sign documents, receive payments, and do all acts necessary for the effective handling of the matter. I confirm that all acts done by my attorney shall bind me and my heirs, successors, and legal representatives.">Copy Text</button>
+                            <button class="resource-btn" onclick="window.print()">Print Draft</button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="resource-section">
+            <div class="section-head">
+                <h2>Practice Workflow Packs</h2>
+            </div>
+            <div class="practice-grid">
+                <article class="practice-pack" data-category="workflow" data-keywords="civil procedure filing injunction evidence hearing checklist">
+                    <span class="tag">Civil</span>
+                    <h3>Civil Litigation Pack</h3>
+                    <ul>
+                        <li>Check cause of action and limitation</li>
+                        <li>Prepare plaint and documents</li>
+                        <li>Review interim injunction basis</li>
+                        <li>Draft evidence matrix before hearing</li>
+                    </ul>
+                </article>
+
+                <article class="practice-pack" data-category="workflow" data-keywords="criminal bail case diary statement police custody witness evidence">
+                    <span class="tag">Criminal</span>
+                    <h3>Criminal Practice Pack</h3>
+                    <ul>
+                        <li>Review FIR and legal grounds</li>
+                        <li>Check bail conditions and remand</li>
+                        <li>Prepare cross-examination notes</li>
+                        <li>Track prosecution evidence logically</li>
+                    </ul>
+                </article>
+
+                <article class="practice-pack" data-category="workflow" data-keywords="family matters guardianship khula maintenance evidence reconciliation">
+                    <span class="tag">Family</span>
+                    <h3>Family Matters Pack</h3>
+                    <ul>
+                        <li>Verify marriage, custody, and residence records</li>
+                        <li>Prepare maintaining evidence papers</li>
+                        <li>Check legal notices and date tracking</li>
+                        <li>Prepare mediation and compliance summary</li>
+                    </ul>
+                </article>
+
+                <article class="practice-pack" data-category="workflow" data-keywords="appeal revision review grounds challenge file records judicial review">
+                    <span class="tag">Appeal</span>
+                    <h3>Appeal & Revision Pack</h3>
+                    <ul>
+                        <li>Map lower court order and errors</li>
+                        <li>Frame grounds with legal authority</li>
+                        <li>Prepare paper-book index and annexures</li>
+                        <li>Set relief and prayer clearly</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="resource-section" id="legal-essays">
+            <div class="section-head">
+                <h2>Legal Blog & Essays</h2>
+            </div>
+            <div class="resource-grid">
+                <article class="blog-item" data-category="essay" data-keywords="bail principles pakistan detention law fair trial">
+                    <span class="tag">Essay</span>
+                    <h4>Understanding Bail Principles in Pakistan</h4>
+                    <p>Why temporal detention, statutory discretion, and procedural fairness matter in bail jurisprudence.</p>
+                </article>
+
+                <article class="blog-item" data-category="essay" data-keywords="civil suit brief cause of action evidence injunction">
+                    <span class="tag">Case Note</span>
+                    <h4>How to Build a Strong Civil Suit Brief</h4>
+                    <p>Facts, cause of action, evidence chain, injunction theory, and timely relief planning for civil claims.</p>
+                </article>
+
+                <article class="blog-item" data-category="essay" data-keywords="evidence document integrity litigation authenticity exhibits marking">
+                    <span class="tag">Research</span>
+                    <h4>Evidence and Document Integrity in Litigation</h4>
+                    <p>Maintaining authenticity, marking exhibits, and aligning documentary proof with procedural requirements.</p>
+                </article>
+
+                <article class="blog-item" data-category="essay" data-keywords="client communication legal practice ethics updates restrained communication">
+                    <span class="tag">Practice</span>
+                    <h4>Client Communication That Protects Your Practice</h4>
+                    <p>How to keep updates concise, confident, and legally accurate without overpromising or creating confusion.</p>
+                </article>
+
+                <article class="blog-item" data-category="essay" data-keywords="injunction arguments civil procedure remedy balancing convenience">
+                    <span class="tag">Practice</span>
+                    <h4>How to Prepare a Persuasive Injunction Application</h4>
+                    <p>Set out the prima facie case, irreparable loss, and balance of convenience in a clear litigation sequence.</p>
+                </article>
+
+                <article class="blog-item" data-category="essay" data-keywords="legal notice reply court record research filing pressure">
+                    <span class="tag">Legal Note</span>
+                    <h4>Drafting a Strong Legal Notice and Follow-Up Reply</h4>
+                    <p>Ensure precision, legal clarity, and a timeline for compliance that keeps the matter on the right track.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const templateTabs = document.querySelectorAll('.template-tab');
+        const templatePanels = document.querySelectorAll('.template-panel');
+        const resourceCards = document.querySelectorAll('.resource-card, .blog-item, .practice-pack');
+        const categoryChips = document.querySelectorAll('.category-chip');
+        let activeCategory = 'all';
+
+        function showTemplate(targetId) {
+            templateTabs.forEach(tab => tab.classList.toggle('active', tab.dataset.target === targetId));
+            templatePanels.forEach(panel => panel.classList.toggle('active', panel.id === 'tpl-' + targetId));
+        }
+
+        function setResourceCategory(category) {
+            activeCategory = category;
+            categoryChips.forEach(chip => chip.classList.toggle('active', chip.dataset.category === category));
+            filterResources(document.getElementById('resourceSearch')?.value || '');
+        }
+
+        function filterResources(query) {
+            const value = (query || '').toLowerCase().trim();
+            resourceCards.forEach(card => {
+                const text = ((card.textContent || '') + ' ' + (card.dataset.keywords || '')).toLowerCase();
+                const matchesSearch = !value || text.includes(value);
+                const matchesCategory = activeCategory === 'all' || card.dataset.category === activeCategory;
+                const show = matchesSearch && matchesCategory;
+                card.style.display = show ? '' : 'none';
+            });
+        }
+
+        templateTabs.forEach(tab => {
+            tab.addEventListener('click', () => showTemplate(tab.dataset.target));
+        });
+
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', async () => {
+                const text = button.dataset.copy || '';
+                if (!text) return;
+                try {
+                    await navigator.clipboard.writeText(text);
+                    button.textContent = 'Copied';
+                    setTimeout(() => { button.textContent = 'Copy Text'; }, 1500);
+                } catch (error) {
+                    button.textContent = 'Copy Failed';
+                    setTimeout(() => { button.textContent = 'Copy Text'; }, 1500);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

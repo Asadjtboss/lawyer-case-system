@@ -36,9 +36,13 @@
             <button class="nav-btn" onclick="showPortion('calculator', this)">🧮 Calculators</button>
             <button class="nav-btn" onclick="showPortion('docs', this)">📄 Doc Generator</button>
             <button class="nav-btn" onclick="showPortion('library', this)">📖 Legal Reference</button>
+            <button class="nav-btn" onclick="showPortion('resources', this)">📚 Resources</button>
             <button class="nav-btn" onclick="showPortion('vacancies', this)">💼 Vacancies</button>
             <button class="nav-btn" onclick="showPortion('assistant', this)">🤖 Helpdesk</button>
             <button class="nav-btn" onclick="showPortion('billing', this)">📜 Billing</button>
+            <a href="clients.html" target="_blank" rel="noopener noreferrer" class="nav-btn" style="text-decoration:none; display:inline-flex; align-items:center;">👥 Clients</a>
+            <a href="filings.html" target="_blank" rel="noopener noreferrer" class="nav-btn" style="text-decoration:none; display:inline-flex; align-items:center;">📦 Filings</a>
+            <a href="forms.html" target="_blank" rel="noopener noreferrer" class="nav-btn" style="text-decoration:none; display:inline-flex; align-items:center;">🧾 Forms</a>
             <button id="theme-toggle-btn" class="nav-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
         </nav>
     </header>
@@ -64,6 +68,10 @@
                     <span class="tag-badge">Evidence Locker</span>
                     <span class="tag-badge">Legal Research</span>
                     <a href="courts.html" class="tag-badge tag-link" target="_blank" rel="noopener noreferrer">🏛️ Court Directory</a>
+                    <a href="clients.html" class="tag-badge tag-link" target="_blank" rel="noopener noreferrer">👥 Client Desk</a>
+                    <a href="filings.html" class="tag-badge tag-link" target="_blank" rel="noopener noreferrer">📦 Filing Register</a>
+                    <a href="forms.html" class="tag-badge tag-link" target="_blank" rel="noopener noreferrer">🧾 Office Forms</a>
+                    <a href="resources.html" class="tag-badge tag-link" target="_blank" rel="noopener noreferrer">📚 Practice Resources</a>
                 </div>
             </div>
             <div class="hero-metrics">
@@ -107,6 +115,21 @@
                 <span class="feature-icon">💼</span>
                 <h3>Vacancy Desk</h3>
                 <p>Publish legal vacancies, track deadlines, and keep hiring openings organized.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">👥</span>
+                <h3>Client Desk</h3>
+                <p>Maintain client contact records, case matters, and follow-up timeline in one place.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📦</span>
+                <h3>Filing Register</h3>
+                <p>Track submissions, court filings, review dates, and compliance notes efficiently.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🧾</span>
+                <h3>Office Forms</h3>
+                <p>Use ready legal forms, notices, hearing memos, and client instruction templates.</p>
             </div>
         </section>
 
@@ -402,6 +425,8 @@
                                 <option value="wakalatnama">Wakalatnama / Power of Attorney</option>
                                 <option value="urgent">Urgent Form / Application</option>
                                 <option value="legal_notice">Legal Notice / Demand</option>
+                                <option value="affidavit">Affidavit</option>
+                                <option value="petition">Petition / Application</option>
                             </select>
                         </div>
                         <div class="form-field"><label>Court / Office Name</label><input type="text" id="doc-court" placeholder="e.g. Session Court, Attock" required></div>
@@ -457,6 +482,54 @@
                         <h4>Limitation Act Article 152 - Civil Appeals</h4>
                         <p>30 Days period for filing appeal against civil decree.</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portion-resources" class="portion no-print">
+            <div class="panel-card">
+                <div class="panel-header"><h2>📚 Advocate Practice Resources</h2></div>
+                <div class="feature-strip">
+                    <div class="feature-card">
+                        <span class="feature-icon">📝</span>
+                        <h3>Drafting Templates</h3>
+                        <p>Wakalatnama, bail applications, suits, affidavit, and miscellaneous pleadings ready for quick legal drafting.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🖨️</span>
+                        <h3>Print Forms</h3>
+                        <p>Letterheads, court cover sheets, hearing summaries, and filing checklists for office-ready print use.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">📖</span>
+                        <h3>Legal Essays & Blog</h3>
+                        <p>Short research notes, legal explanations, and practice guidance for case planning and client briefing.</p>
+                    </div>
+                </div>
+                <div class="workflow-checklist">
+                    <div class="workflow-step">
+                        <div class="step-no">1</div>
+                        <h4>Case Intake</h4>
+                        <p>Confirm client identity, legal issue, court, and filing deadline before starting work.</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-no">2</div>
+                        <h4>Evidence Review</h4>
+                        <p>Match facts with files, affidavits, registry notes, and documentary proof before arguments.</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-no">3</div>
+                        <h4>Hearing Brief</h4>
+                        <p>Prepare a short brief with issues, prayer, legal basis, and next court action.</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-no">4</div>
+                        <h4>Follow-Up</h4>
+                        <p>Send client updates, mark the next date, and store final notes in the office archive.</p>
+                    </div>
+                </div>
+                <div class="toolbar" style="justify-content: center; margin-top: 1rem;">
+                    <a href="resources.html" class="cms-btn btn-navy" target="_blank" rel="noopener noreferrer" style="width:auto; text-decoration:none;">Open Full Resource Library</a>
                 </div>
             </div>
         </section>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filing Register - CMS Judiciary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+            color: #132b4d;
+        }
+        .page-shell {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.25rem 1rem 2rem;
+        }
+        .topbar {
+            background: linear-gradient(120deg, #0b1f39 0%, #143a61 40%, #0f766e 100%);
+            color: white;
+            padding: 1rem 1.2rem;
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+        }
+        .topbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .brand-mark {
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            font-size: 1.6rem;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.18);
+        }
+        .brand h1 {
+            margin: 0;
+            font-size: clamp(1.2rem, 2vw, 1.9rem);
+            font-family: 'Cinzel', serif;
+        }
+        .panel-card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 20px;
+            border: 1px solid rgba(148,163,184,0.22);
+            box-shadow: 0 18px 34px rgba(15,23,42,0.06);
+            padding: 1rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.8rem;
+        }
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            margin-bottom: 0.8rem;
+        }
+        .form-field label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .form-field input,
+        .form-field select {
+            padding: 0.8rem 0.9rem;
+            border: 1px solid rgba(148,163,184,0.4);
+            border-radius: 12px;
+            background: #f8fafc;
+            font: inherit;
+            color: #0f172a;
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 0.8rem 0.9rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(148,163,184,0.2);
+            vertical-align: top;
+        }
+        th {
+            background: #eef6ff;
+            color: #0f172a;
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            padding: 0.28rem 0.65rem;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .pending { background: rgba(245,158,11,0.12); color: #9a5d00; }
+        .filed { background: rgba(34,197,94,0.12); color: #166534; }
+        .review { background: rgba(59,130,246,0.12); color: #1d4ed8; }
+        .urgent { background: rgba(239,68,68,0.12); color: #b91c1c; }
+        @media (max-width: 720px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">
+                <div class="brand-mark">📦</div>
+                <h1>Filing Register</h1>
+            </div>
+            <a href="index.html" class="cms-btn btn-gold" style="width:auto; text-decoration:none;">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <main class="page-shell">
+        <section class="panel-card" style="margin-bottom:1rem;">
+            <div class="panel-header">
+                <h2>Log new filing / compliance item</h2>
+            </div>
+            <form id="filing-form">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Case / File Ref</label>
+                        <input type="text" id="filing-case" required placeholder="e.g. Suit #78/2026">
+                    </div>
+                    <div class="form-field">
+                        <label>Forum / Court</label>
+                        <input type="text" id="filing-court" required placeholder="e.g. Civil Judge Attock">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Filing Date</label>
+                        <input type="date" id="filing-date" required>
+                    </div>
+                    <div class="form-field">
+                        <label>Status</label>
+                        <select id="filing-status">
+                            <option value="Pending">Pending</option>
+                            <option value="Filed">Filed</option>
+                            <option value="Review">Review</option>
+                            <option value="Urgent">Urgent</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label>Checklist / Note</label>
+                    <input type="text" id="filing-note" placeholder="e.g. Draft ready, affidavit attached, fee paid">
+                </div>
+                <button type="submit" class="cms-btn btn-navy">Save Filing Record</button>
+            </form>
+        </section>
+
+        <section class="panel-card">
+            <div class="panel-header">
+                <h2>Register Summary</h2>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Case Ref</th>
+                            <th>Court</th>
+                            <th>Filing Date</th>
+                            <th>Status</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filing-table-body"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const STORAGE_KEY = 'cms_filings_data';
+        const seedFilings = [
+            { caseRef: 'Civil Suit #45/2026', court: 'Civil Judge Attock', date: '2026-08-18', status: 'Filed', note: 'Pleading filed and copy served' },
+            { caseRef: 'Bail App #12/2026', court: 'District & Sessions Court', date: '2026-08-22', status: 'Urgent', note: 'Urgent hearing requested' },
+            { caseRef: 'Land Mutation #88/2026', court: 'Revenue Office Attock', date: '2026-08-27', status: 'Review', note: 'Need final registry verification' }
+        ];
+
+        function getFilings() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return seedFilings;
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) && parsed.length ? parsed : seedFilings;
+            } catch (error) {
+                return seedFilings;
+            }
+        }
+
+        function saveFilings(items) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+        }
+
+        function renderFilings() {
+            const tbody = document.getElementById('filing-table-body');
+            const items = getFilings();
+            tbody.innerHTML = items.map(item => `
+                <tr>
+                    <td>${item.caseRef}</td>
+                    <td>${item.court}</td>
+                    <td>${item.date}</td>
+                    <td><span class="status-pill ${item.status.toLowerCase()}">${item.status}</span></td>
+                    <td>${item.note || '—'}</td>
+                </tr>
+            `).join('');
+        }
+
+        document.getElementById('filing-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const filing = {
+                caseRef: document.getElementById('filing-case').value.trim(),
+                court: document.getElementById('filing-court').value.trim(),
+                date: document.getElementById('filing-date').value,
+                status: document.getElementById('filing-status').value,
+                note: document.getElementById('filing-note').value.trim()
+            };
+            if (!filing.caseRef || !filing.court || !filing.date) return;
+            const list = getFilings();
+            list.unshift(filing);
+            saveFilings(list);
+            renderFilings();
+            this.reset();
+        });
+
+        renderFilings();
+    </script>
+</body>
+</html>

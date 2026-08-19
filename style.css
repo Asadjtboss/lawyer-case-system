@@ -341,6 +341,47 @@ body {
     border-color: rgba(197, 138, 29, 0.35);
 }
 
+.workflow-checklist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.9rem;
+    margin-top: 1rem;
+}
+
+.workflow-step {
+    background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248,250,252,0.92));
+    border: 1px solid rgba(148,163,184,0.2);
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.04);
+}
+
+.workflow-step .step-no {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #102b4f 0%, #0f766e 100%);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 800;
+    margin-bottom: 0.7rem;
+}
+
+.workflow-step h4 {
+    margin: 0 0 0.45rem;
+    font-size: 1rem;
+}
+
+.workflow-step p {
+    margin: 0;
+    font-size: 0.83rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
 .feature-icon {
     width: 46px;
     height: 46px;

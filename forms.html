@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آفس فارمز - CMS Judiciary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, #f8fafc 0%, #eef6f3 100%);
+            color: #132b4d;
+        }
+        .page-shell {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.25rem 1rem 2rem;
+        }
+        .topbar {
+            background: linear-gradient(120deg, #0b1f39 0%, #143a61 40%, #0f766e 100%);
+            color: white;
+            padding: 1rem 1.2rem;
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+        }
+        .topbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .brand-mark {
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            font-size: 1.6rem;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.18);
+        }
+        .brand h1 {
+            margin: 0;
+            font-size: clamp(1.2rem, 2vw, 1.9rem);
+            font-family: 'Cinzel', serif;
+        }
+        .forms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1.2rem;
+        }
+        .form-card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 18px;
+            border: 1px solid rgba(148,163,184,0.22);
+            box-shadow: 0 18px 34px rgba(15,23,42,0.06);
+            padding: 1rem;
+            display: grid;
+            gap: 0.8rem;
+        }
+        .template-box {
+            background: #f8fafc;
+            border: 1px solid rgba(148,163,184,0.24);
+            border-radius: 12px;
+            padding: 0.8rem;
+            line-height: 1.7;
+            color: #1e293b;
+            white-space: pre-line;
+            min-height: 210px;
+        }
+        .urdoc-sample {
+            background: #fff;
+            border: 2px solid #111;
+            padding: 1rem 0.8rem 0.6rem;
+            min-height: 620px;
+            position: relative;
+            font-family: 'Noto Nastaliq Urdu', 'Georgia', serif;
+            color: #111;
+            line-height: 1.7;
+        }
+        .urdoc-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 0.8rem;
+            border-bottom: 2px solid #111;
+            padding-bottom: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .urdoc-box {
+            width: 190px;
+            height: 70px;
+            border: 2px solid #111;
+            display: grid;
+            place-items: center;
+            font-size: 1.15rem;
+            font-weight: 700;
+            background: rgba(0,0,0,0.02);
+        }
+        .urdoc-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            line-height: 1.1;
+            text-align: center;
+            flex: 1;
+            margin: 0 0.5rem;
+        }
+        .urdoc-line {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 1fr;
+            gap: 0.8rem;
+            align-items: end;
+            margin: 0.6rem 0 0.3rem;
+        }
+        .urdoc-line .label {
+            font-size: 0.8rem;
+            display: inline-block;
+            min-width: 74px;
+        }
+        .urdoc-line .line {
+            border-bottom: 2px solid #111;
+            min-height: 24px;
+            display: inline-block;
+            width: 100%;
+        }
+        .urdoc-body {
+            margin-top: 1rem;
+            padding: 0 0.3rem;
+            font-size: 0.88rem;
+            line-height: 1.9;
+            text-align: justify;
+        }
+        .urdoc-body p {
+            margin: 0.5rem 0;
+        }
+        .urdoc-signs {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 2.6rem;
+            gap: 1rem;
+            padding: 0 0.2rem;
+        }
+        .signature-block {
+            width: 140px;
+            text-align: center;
+        }
+        .signature-box {
+            border-top: 2px solid #111;
+            margin-top: 2rem;
+            padding-top: 0.4rem;
+            font-size: 0.8rem;
+        }
+        .toolbar {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+        }
+        button {
+            cursor: pointer;
+        }
+        @media (max-width: 720px) {
+            .toolbar { flex-direction: column; }
+            .urdoc-line { grid-template-columns: 1fr; }
+            .urdoc-box { width: 150px; height: 62px; }
+            .urdoc-signs { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">
+                <div class="brand-mark">🧾</div>
+                <h1>آفس فارمز</h1>
+            </div>
+            <a href="index.html" class="cms-btn btn-gold" style="width:auto; text-decoration:none;">ڈیش بورڈ پر واپس</a>
+        </div>
+    </div>
+
+    <main class="page-shell">
+        <div class="forms-grid">
+            <section class="form-card">
+                <h3>وکالت نامہ</h3>
+                <div class="urdoc-sample" id="tmpl-wakalat">
+                    <div class="urdoc-header">
+                        <div class="urdoc-box">کورت فیس</div>
+                        <div class="urdoc-title">وکالت نامہ</div>
+                    </div>
+
+                    <div class="urdoc-line">
+                        <div class="label">بیعت نام</div>
+                        <div class="line"></div>
+                        <div class="label" style="text-align:right;">تاریخ</div>
+                    </div>
+                    <div class="urdoc-line">
+                        <div class="label">نام</div>
+                        <div class="line"></div>
+                        <div class="label" style="text-align:right;">مقدمہ</div>
+                    </div>
+                    <div class="urdoc-line">
+                        <div class="label">مستند</div>
+                        <div class="line"></div>
+                        <div class="label" style="text-align:right;">وکیل</div>
+                    </div>
+
+                    <div class="urdoc-body">
+                        <p>میں/ہم ________ صاحب/صاحبا ________ نے اپنی مرضی سے ________ کو اپنے وکیل و نمائندے کے طور پر مقرر کیا ہے کہ وہ میرے/ہماری طرف سے ________ عدالت میں تمام قانونی کارروائیاں، دلالت، استدلال، دفاع، اور دیگر مناسب اقدامات کرے گا۔</p>
+                    </div>
+
+                    <div class="urdoc-signs">
+                        <div class="signature-block">
+                            <div class="signature-box">مشتری/کلائنٹ</div>
+                        </div>
+                        <div class="signature-block">
+                            <div class="signature-box">وکیل</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="toolbar">
+                    <button class="cms-btn btn-navy" onclick="copyTemplate('tmpl-wakalat')">Copy</button>
+                    <button class="cms-btn btn-gold" onclick="printCard('tmpl-wakalat')">Print</button>
+                </div>
+            </section>
+
+            <section class="form-card">
+                <h3>Legal Notice</h3>
+                <div class="urdoc-sample" id="tmpl-notice">
+                    <div class="urdoc-header">
+                        <div class="urdoc-box">نوٹ</div>
+                        <div class="urdoc-title">Legal Notice</div>
+                    </div>
+                    <div class="urdoc-line">
+                        <div class="label">تاریخ</div>
+                        <div class="line"></div>
+                        <div class="label" style="text-align:right;">مشتری</div>
+                    </div>
+                    <div class="urdoc-body">
+                        <p>Take notice that the undersigned has caused to be served upon you regarding the matter of ________.</p>
+                        <p>Please arrange to settle the same within ________ days, failing which legal proceedings shall be initiated.</p>
+                    </div>
+                    <div class="urdoc-signs">
+                        <div class="signature-block">
+                            <div class="signature-box">Advocate</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="toolbar">
+                    <button class="cms-btn btn-navy" onclick="copyTemplate('tmpl-notice')">Copy</button>
+                    <button class="cms-btn btn-gold" onclick="printCard('tmpl-notice')">Print</button>
+                </div>
+            </section>
+
+            <section class="form-card">
+                <h3>Affidavit</h3>
+                <div class="urdoc-sample" id="tmpl-affidavit">
+                    <div class="urdoc-header">
+                        <div class="urdoc-box">Affidavit</div>
+                        <div class="urdoc-title">Affidavit</div>
+                    </div>
+                    <div class="urdoc-line">
+                        <div class="label">نام</div>
+                        <div class="line"></div>
+                        <div class="label" style="text-align:right;">تاریخ</div>
+                    </div>
+                    <div class="urdoc-body">
+                        <p>I, ________, do hereby solemnly affirm and state that ________.</p>
+                        <p>This affidavit is true to the best of my knowledge, information, and belief.</p>
+                    </div>
+                    <div class="urdoc-signs">
+                        <div class="signature-block">
+                            <div class="signature-box">Deponent</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="toolbar">
+                    <button class="cms-btn btn-navy" onclick="copyTemplate('tmpl-affidavit')">Copy</button>
+                    <button class="cms-btn btn-gold" onclick="printCard('tmpl-affidavit')">Print</button>
+                </div>
+            </section>
+
+            <section class="form-card">
+                <h3>Petition / Application</h3>
+                <div class="urdoc-sample" id="tmpl-petition">
+                    <div class="urdoc-header">
+                        <div class="urdoc-box">Application</div>
+                        <div class="urdoc-title">Application</div>
+                    </div>
+                    <div class="urdoc-line">
+                        <div class="label">Case</div>
+                        <div class="line"></div>
+                        <div class="label" style="text-align:right;">Court</div>
+                    </div>
+                    <div class="urdoc-body">
+                        <p>Respectfully submitted that the applicant seeks ________ before this Hon'ble Court.</p>
+                        <p>It is therefore prayed that the Hon'ble Court may be pleased to ________.</p>
+                    </div>
+                    <div class="urdoc-signs">
+                        <div class="signature-block">
+                            <div class="signature-box">Applicant</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="toolbar">
+                    <button class="cms-btn btn-navy" onclick="copyTemplate('tmpl-petition')">Copy</button>
+                    <button class="cms-btn btn-gold" onclick="printCard('tmpl-petition')">Print</button>
+                </div>
+            </section>
+
+            <section class="form-card">
+               <h3>دعا نامہ</h3>
+               <div class="template-box" id="tmpl-maintenance">عدالت ________
+مقدمہ: ________
+مدعی/مدعیہ: ________
+مدعا علیہ: ________
+
+مدعی/مدعیہ کی طرف سے عرض یہ ہے کہ وہ قانونی طور پر نفقات اور معاونت کے مستحق ہے، کیونکہ مدعا علیہ نے اپنی کفایت شعاری کے باوجود مدعی/مدعیہ اور ان کے انحصار کرنے والوں کے لئے نفقات فراہم نہیں کیا۔
+مدعی/مدعیہ خود اپنی کفالت نہیں کر سکتی اور کھانے، رہائش، طبی اخراجات اور بچوں کی تعلیم کے لیے مناسب مالی مدد کی ضرورت ہے۔
+لہذا درخواستی ہے کہ محترم عدالت عادلانہ اور مناسب نفقات اور دیگر ایسے سہولیات عطا فرمائے جو انصاف کے مطابق مناسب ہوں۔</div>
+               <div class="toolbar">
+                   <button class="cms-btn btn-navy" onclick="copyTemplate('tmpl-maintenance')">کاپی</button>
+                   <button class="cms-btn btn-gold" onclick="printCard('tmpl-maintenance')">پرنٹ</button>
+               </div>
+           </section>
+
+           <section class="form-card">
+               <h3>نظر ثانی کی درخواست</h3>
+               <div class="template-box" id="tmpl-review">محترم اعلیٰ عدالت ________
+نظر ثانی کیس نمبر ________ سال ________
+
+مدعی: ________
+مدعا علیہ: ________
+
+مدعی کی طرف سے عرض ہے کہ تاریخ ________ کو جاری شدہ فیصلہ ریکارڈ کے سامنے واضح غلطی پر مشتمل ہے۔ یہ معاملہ اہم حقائق اور قانونی دلائل کو مدنظر رکھے بغیر فیصلے پر پہنچا ہے۔ مدعی کے پاس اس نظر ثانی کے علاوہ کوئی مؤثر و مناسب چارہ نہیں ہے۔
+لہذا درخواست ہے کہ خلاف ورزی شدہ فیصلہ کو نظر ثانی کر کے مدعی کے حق میں مناسب فیصلہ دیا جائے، تاکہ انصاف کی روح کے مطابق فیصلہ منظور ہو۔</div>
+               <div class="toolbar">
+                   <button class="cms-btn btn-navy" onclick="copyTemplate('tmpl-review')">کاپی</button>
+                   <button class="cms-btn btn-gold" onclick="printCard('tmpl-review')">پرنٹ</button>
+               </div>
+           </section>
+
+           <section class="form-card">
+               <h3>ثبت نام / ریکارڈ اصلاح کی درخواست</h3>
+               <div class="template-box" id="tmpl-mutation">محترم اسسٹنٹ کمشنر / ریونیو آفیسر،
+ضلع ________،
+
+مضمون: زمین ________ کے ریکارڈ میں انتقال / اصلاح کا مرحلہ
+
+درخواست گزار کی طرف سے عرض ہے کہ یہ زمین ________ کے نام ریکارڈ میں درج تھی، مگر موجودہ ریکارڈ میں حقیقی ملکیت اور قبضہ ظاہر نہیں ہو رہا۔ درخواست گزار حقیقی مالک / قبضہ دار ہے اور ریکارڈ میں درست اندراج کی درخواست کرتا ہے۔
+لہذا درخواست ہے کہ محترم محکمہ ریکارڈ کا جائزہ لے کر درخواست گزار کے نام پر مناسب ریکارڈ سازی/اصلاح کی اجازت دے۔</div>
+               <div class="toolbar">
+                   <button class="cms-btn btn-navy" onclick="copyTemplate('tmpl-mutation')">کاپی</button>
+                   <button class="cms-btn btn-gold" onclick="printCard('tmpl-mutation')">پرنٹ</button>
+               </div>
+           </section>
+
+           <section class="form-card">
+               <h3>اسٹے کی درخواست</h3>
+               <div class="template-box" id="tmpl-stay">عدالت ________
+کیس نمبر ________
+
+درخواست گزار: ________
+
+درخواست گزار کی طرف سے عرض ہے کہ یہ معاملہ زیرِ فیصلہ ہے اور اگر موقت اسٹے نہ دیا گیا تو اسے غیر قابلِ اصلاح نقصان اور تکلیف ہوگی۔ انصاف کا توازن درخواست گزار کے حق میں ہے اور وہ عدالت کے ارشاد کے مطابق کوئی بھی ضمانت پیش کرنے کے لیے تیار ہے۔
+لہذا درخواست ہے کہ خلاف ورزی شدہ حکم/عمل کو فائنل فیصلہ تک کے لیے معطل رکھا جائے۔</div>
+               <div class="toolbar">
+                   <button class="cms-btn btn-navy" onclick="copyTemplate('tmpl-stay')">کاپی</button>
+                   <button class="cms-btn btn-gold" onclick="printCard('tmpl-stay')">پرنٹ</button>
+               </div>
+           </section>
+
+           <section class="form-card">
+               <h3>ہیئرنگ میمو</h3>
+               <div class="template-box" id="tmpl-hearing">کیس حوالہ: ________
+عدالت: ________
+مسئلہ: ________
+درخواست: ________
+حالت: ________
+کلیدی نکات: 1. حقائق اور تاریخیں۔ 2. ریکارڈ میں ثبوت۔ 3. مطلوبہ سہولت۔ 4. متعلقہ قانون اور حوالہ جات۔</div>
+               <div class="toolbar">
+                   <button class="cms-btn btn-navy" onclick="copyTemplate('tmpl-hearing')">کاپی</button>
+                   <button class="cms-btn btn-gold" onclick="printCard('tmpl-hearing')">پرنٹ</button>
+               </div>
+           </section>
+
+           <section class="form-card">
+               <h3>کلائنٹ ہدایات شیٹ</h3>
+               <div class="template-box" id="tmpl-client">کلائنٹ کا نام: ________
+معاملہ: ________
+درکار دستاویزات: شناختی کارڈ، ٹائٹل ڈِیڈ، ایف آئی آر، رسیدیں، معاہدہ، طاقت نامہ وغیرہ۔
+اگلا قدم: ________
+فالو اپ تاریخ: ________
+اہم نوٹ: اگلی سماعت میں اصل اور کاپیاں ساتھ لائیں۔</div>
+               <div class="toolbar">
+                   <button class="cms-btn btn-navy" onclick="copyTemplate('tmpl-client')">کاپی</button>
+                   <button class="cms-btn btn-gold" onclick="printCard('tmpl-client')">پرنٹ</button>
+               </div>
+           </section>
+        </div>
+    </main>
+
+    <script>
+        async function copyTemplate(id) {
+            const el = document.getElementById(id);
+            const text = el.textContent.trim();
+            try {
+                await navigator.clipboard.writeText(text);
+                alert('فارم کاپی ہو گیا۔');
+            } catch (error) {
+                const temp = document.createElement('textarea');
+                temp.value = text;
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand('copy');
+                temp.remove();
+                alert('فارم کاپی ہو گیا۔');
+            }
+        }
+ 
+        function printCard(id) {
+            const el = document.getElementById(id);
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>فارم پرنٹ</title><style>body{font-family:Arial,sans-serif;padding:24px;line-height:1.8;} p{white-space:pre-wrap;}</style></head><body>' + '<p>' + el.textContent.replace(/\n/g, '<br>') + '</p>' + '</body></html>');
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+        }
+    </script>
+</body>
+</html>

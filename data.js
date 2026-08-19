@@ -153,6 +153,44 @@
         }
     ];
 
+    const defaultClients = [
+        {
+            name: 'Ahmad Ali',
+            phone: '0300-1122334',
+            matter: 'Land / Mutation',
+            court: 'Civil Judge Attock',
+            file: 'Mutation #88/2026',
+            followup: '2026-08-28',
+            status: 'Active'
+        },
+        {
+            name: 'Sana Khan',
+            phone: '0333-4455667',
+            matter: 'Family Matter',
+            court: 'Family Court Attock',
+            file: 'Family Suit #14/2026',
+            followup: '2026-08-25',
+            status: 'Pending'
+        }
+    ];
+
+    const defaultFilings = [
+        {
+            caseRef: 'Civil Suit #45/2026',
+            court: 'Civil Judge Attock',
+            date: '2026-08-18',
+            status: 'Filed',
+            note: 'Pleading filed and copy served'
+        },
+        {
+            caseRef: 'Bail App #12/2026',
+            court: 'District & Sessions Court',
+            date: '2026-08-22',
+            status: 'Urgent',
+            note: 'Urgent hearing requested'
+        }
+    ];
+
     window.CMS_CORE = {
         safeParse,
         defaults: {
@@ -160,7 +198,9 @@
             diary: defaultDiary,
             billing: defaultBilling,
             locker: defaultLocker,
-            vacancies: defaultVacancies
+            vacancies: defaultVacancies,
+            clients: defaultClients,
+            filings: defaultFilings
         }
     };
 }());

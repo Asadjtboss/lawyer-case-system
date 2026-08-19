@@ -7,42 +7,248 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Court Filter Tabs */
+        :root {
+            --court-bg: linear-gradient(135deg, #f8fafc 0%, #eef4ff 100%);
+            --court-surface: rgba(255,255,255,0.92);
+            --court-border: rgba(15, 23, 42, 0.08);
+            --court-navy: #0f172a;
+            --court-gold: #c89b3c;
+            --court-green: #0f766e;
+            --court-muted: #475569;
+            --court-soft: rgba(15, 23, 42, 0.04);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(180deg, #f1f5f9 0%, #ebf2ff 100%);
+            color: var(--court-navy);
+        }
+
+        .main-header {
+            background: linear-gradient(120deg, #0b1f39 0%, #143a61 40%, #0f766e 100%);
+            color: #fff;
+            padding: 1.2rem 1.5rem 1.4rem;
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.18);
+        }
+
+        .brand-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cms-logo {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.18);
+            font-size: 1.8rem;
+        }
+
+        .brand-titles h1 {
+            margin: 0;
+            font-size: clamp(1.25rem, 2vw, 2rem);
+            letter-spacing: 0.06em;
+        }
+
+        .brand-titles p {
+            margin: 0.2rem 0 0;
+            color: rgba(255,255,255,0.78);
+            font-size: 0.9rem;
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 1.4rem auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .court-shell {
+            background: var(--court-surface);
+            border: 1px solid var(--court-border);
+            border-radius: 22px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+            padding: 1.1rem;
+        }
+
+        .search-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 220px;
+            padding: 0.9rem 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            border-radius: 12px;
+            background: rgba(248, 250, 252, 0.9);
+            font-size: 0.98rem;
+            color: var(--court-navy);
+        }
+
         .court-tabs {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 1.2rem;
             flex-wrap: wrap;
         }
 
         .tab-btn {
-            padding: 8px 16px;
-            border: 1px solid var(--border-color, #cbd5e1);
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.5);
             background: #f8fafc;
-            border-radius: 6px;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
+            font-weight: 700;
+            color: var(--court-muted);
+            transition: all 0.2s ease;
         }
 
-        .tab-btn.active, .tab-btn:hover {
-            background: #1e3a8a;
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: linear-gradient(135deg, #102b4f 0%, #0f766e 100%);
             color: white;
-            border-color: #1e3a8a;
+            border-color: transparent;
+            box-shadow: 0 12px 22px rgba(15, 23, 42, 0.15);
         }
 
         .court-section {
-            display: none; /* Hide all sections by default */
+            display: none;
+            animation: fadeIn 0.35s ease;
         }
 
         .court-section.active {
-            display: block; /* Show active section */
-            animation: fadeIn 0.4s ease-in-out;
+            display: block;
+        }
+
+        .court-panel {
+            background: var(--court-bg);
+            border: 1px solid var(--court-border);
+            border-radius: 18px;
+            padding: 1.2rem;
+        }
+
+        .court-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+            padding-bottom: 0.9rem;
+        }
+
+        .court-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.42rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(200, 155, 60, 0.12);
+            color: #8a5d0a;
+            border: 1px solid rgba(200, 155, 60, 0.28);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .court-title {
+            margin: 0.3rem 0 0;
+            font-size: clamp(1.4rem, 2vw, 2rem);
+        }
+
+        .court-subtitle {
+            margin: 0.15rem 0 0;
+            color: var(--court-muted);
+        }
+
+        .court-stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .court-stat {
+            background: rgba(255,255,255,0.7);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+        }
+
+        .court-stat-label {
+            display: block;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--court-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .court-stat strong {
+            font-size: 1.15rem;
+        }
+
+        .court-detail-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .detail-card {
+            background: rgba(255,255,255,0.72);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+        }
+
+        .detail-card h4 {
+            margin: 0 0 0.45rem;
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--court-green);
+        }
+
+        .detail-card p {
+            margin: 0;
+            line-height: 1.6;
+            color: var(--court-navy);
         }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 700px) {
+            .brand-container {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .search-row {
+                align-items: stretch;
+            }
+            .search-input {
+                width: 100%;
+            }
+            .court-header {
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
@@ -59,87 +265,211 @@
     </header>
 
     <main class="content-container">
+        <div class="court-shell">
+            <div class="search-row">
+                <input id="courtSearch" class="search-input" type="text" placeholder="Search court, judge, or division..." onkeyup="filterCourtTabs(this.value)">
+            </div>
 
-        <!-- Division Tabs -->
-        <div class="court-tabs">
-            <button class="tab-btn active" onclick="showCourt('attock', event)">Attock HQ</button>
-            <button class="tab-btn" onclick="showCourt('injra', event)">Injra</button>
-            <button class="tab-btn" onclick="showCourt('jand', event)">Jand</button>
-            <button class="tab-btn" onclick="showCourt('fatehjang', event)">Fateh Jang</button>
-            <button class="tab-btn" onclick="showCourt('hassanabdal', event)">Hassan Abdal</button>
-            <button class="tab-btn" onclick="showCourt('pindigheb', event)">Pindi Gheb</button>
-        </div>
+            <div class="court-tabs">
+                <button class="tab-btn active" data-court="attock" onclick="showCourt('attock', event)">Attock HQ</button>
+                <button class="tab-btn" data-court="injra" onclick="showCourt('injra', event)">Injra</button>
+                <button class="tab-btn" data-court="jand" onclick="showCourt('jand', event)">Jand</button>
+                <button class="tab-btn" data-court="fatehjang" onclick="showCourt('fatehjang', event)">Fateh Jang</button>
+                <button class="tab-btn" data-court="hassanabdal" onclick="showCourt('hassanabdal', event)">Hassan Abdal</button>
+                <button class="tab-btn" data-court="pindigheb" onclick="showCourt('pindigheb', event)">Pindi Gheb</button>
+            </div>
 
-        <!-- 1. Attock HQ Portion -->
-        <div id="attock" class="court-section active">
-            <div class="cms-card">
-                <span class="court-badge">Session Division</span>
-                <h3>District & Session Judge</h3>
-                <p>Attock HQ Court Complex</p>
+            <div id="attock" class="court-section active">
+                <div class="court-panel">
+                    <div class="court-header">
+                        <div>
+                            <span class="court-badge">Session Division</span>
+                            <h3 class="court-title">District &amp; Session Judge</h3>
+                            <p class="court-subtitle">Attock HQ Court Complex</p>
+                        </div>
+                    </div>
+                    <div class="court-stat-grid">
+                        <div class="court-stat"><span class="court-stat-label">Office</span><strong>Attock</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Jurisdiction</span><strong>Session Matters</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Case Type</span><strong>Criminal / Civil</strong></div>
+                    </div>
+                    <div class="court-detail-list">
+                        <div class="detail-card"><h4>Judicial Office</h4><p>District &amp; Sessions Court, Attock</p></div>
+                        <div class="detail-card"><h4>Jurisdiction</h4><p>All session, criminal, and civil proceedings within the district headquarters.</p></div>
+                        <div class="detail-card"><h4>Practice Note</h4><p>Ideal for bail matters, criminal revisions, and major district-level litigation.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="injra" class="court-section">
+                <div class="court-panel">
+                    <div class="court-header">
+                        <div>
+                            <span class="court-badge">INJRA Division</span>
+                            <h3 class="court-title">Civil Judge Hifsa Bukhari</h3>
+                            <p class="court-subtitle">Civil &amp; Land Records Suits</p>
+                        </div>
+                    </div>
+                    <div class="court-stat-grid">
+                        <div class="court-stat"><span class="court-stat-label">Office</span><strong>INJRA</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Focus</span><strong>Land / Civil</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Case Type</span><strong>Land, suits, deeds</strong></div>
+                    </div>
+                    <div class="court-detail-list">
+                        <div class="detail-card"><h4>Judicial Office</h4><p>Additional Civil Judge / INJRA bench</p></div>
+                        <div class="detail-card"><h4>Jurisdiction</h4><p>Property disputes, title claims, mutation disputes, and civil suits.</p></div>
+                        <div class="detail-card"><h4>Practice Note</h4><p>Strongly relevant for docketing, evidence listing, and land-record matters.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="jand" class="court-section">
+                <div class="court-panel">
+                    <div class="court-header">
+                        <div>
+                            <span class="court-badge">Jand Division</span>
+                            <h3 class="court-title">Civil Judge Yousuf Abdur Rehman</h3>
+                            <p class="court-subtitle">Jand Sub-Division Court</p>
+                        </div>
+                    </div>
+                    <div class="court-stat-grid">
+                        <div class="court-stat"><span class="court-stat-label">Office</span><strong>Jand</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Focus</span><strong>Sub-division</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Case Type</span><strong>Civil / rent</strong></div>
+                    </div>
+                    <div class="court-detail-list">
+                        <div class="detail-card"><h4>Judicial Office</h4><p>Sub-Division Judicial Complex, Jand</p></div>
+                        <div class="detail-card"><h4>Jurisdiction</h4><p>Civil matters, rent disputes, and local judicial proceedings in the sub-division.</p></div>
+                        <div class="detail-card"><h4>Practice Note</h4><p>Useful for regular civil hearings and local procedure tracking.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="fatehjang" class="court-section">
+                <div class="court-panel">
+                    <div class="court-header">
+                        <div>
+                            <span class="court-badge">Fateh Jang</span>
+                            <h3 class="court-title">Civil Judge Najaam Ayub</h3>
+                            <p class="court-subtitle">Family &amp; Civil Matters</p>
+                        </div>
+                    </div>
+                    <div class="court-stat-grid">
+                        <div class="court-stat"><span class="court-stat-label">Office</span><strong>Fateh Jang</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Focus</span><strong>Family / Civil</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Case Type</span><strong>Family matters</strong></div>
+                    </div>
+                    <div class="court-detail-list">
+                        <div class="detail-card"><h4>Judicial Office</h4><p>Fateh Jang Civil / Family Court</p></div>
+                        <div class="detail-card"><h4>Jurisdiction</h4><p>Family disputes, civil plaints, and local judicial affairs.</p></div>
+                        <div class="detail-card"><h4>Practice Note</h4><p>Best for family-civil admissions, evidence recording, and procedural scheduling.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hassanabdal" class="court-section">
+                <div class="court-panel">
+                    <div class="court-header">
+                        <div>
+                            <span class="court-badge">Hassan Abdal</span>
+                            <h3 class="court-title">Senior Civil Judge</h3>
+                            <p class="court-subtitle">Hassan Abdal Division</p>
+                        </div>
+                    </div>
+                    <div class="court-stat-grid">
+                        <div class="court-stat"><span class="court-stat-label">Office</span><strong>Hassan Abdal</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Focus</span><strong>Senior judicial</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Case Type</span><strong>Regular civil</strong></div>
+                    </div>
+                    <div class="court-detail-list">
+                        <div class="detail-card"><h4>Judicial Office</h4><p>Senior Civil Judge, Hassan Abdal</p></div>
+                        <div class="detail-card"><h4>Jurisdiction</h4><p>Senior-level civil and procedural matters for the division.</p></div>
+                        <div class="detail-card"><h4>Practice Note</h4><p>Useful for more formal adjudicative referrals and senior civil hearings.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pindigheb" class="court-section">
+                <div class="court-panel">
+                    <div class="court-header">
+                        <div>
+                            <span class="court-badge">Pindi Gheb</span>
+                            <h3 class="court-title">Additional Session Judge</h3>
+                            <p class="court-subtitle">Pindi Gheb Sub-Division</p>
+                        </div>
+                    </div>
+                    <div class="court-stat-grid">
+                        <div class="court-stat"><span class="court-stat-label">Office</span><strong>Pindi Gheb</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Focus</span><strong>Session work</strong></div>
+                        <div class="court-stat"><span class="court-stat-label">Case Type</span><strong>Criminal / revision</strong></div>
+                    </div>
+                    <div class="court-detail-list">
+                        <div class="detail-card"><h4>Judicial Office</h4><p>Additional Sessions Court, Pindi Gheb</p></div>
+                        <div class="detail-card"><h4>Jurisdiction</h4><p>Criminal, revision, and district-level matters in the sub-division.</p></div>
+                        <div class="detail-card"><h4>Practice Note</h4><p>Helpful for coordination, notice preparation, and hearing calendars.</p></div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- 2. Injra Portion -->
-        <div id="injra" class="court-section">
-            <div class="cms-card">
-                <span class="court-badge">INJRA Division</span>
-                <h3>Civil Judge Hifsa Bukhari</h3>
-                <p>Civil & Land Records Suits</p>
-            </div>
-        </div>
-
-        <!-- 3. Jand Portion -->
-        <div id="jand" class="court-section">
-            <div class="cms-card">
-                <span class="court-badge">Jand Division</span>
-                <h3>Civil Judge Yousuf Abdur Rehman</h3>
-                <p>Jand Sub-Division Court</p>
-            </div>
-        </div>
-
-        <!-- 4. Fateh Jang Portion -->
-        <div id="fatehjang" class="court-section">
-            <div class="cms-card">
-                <span class="court-badge">Fateh Jang</span>
-                <h3>Civil Judge Najaam Ayub</h3>
-                <p>Family & Civil Matters</p>
-            </div>
-        </div>
-
-        <!-- 5. Hassan Abdal Portion -->
-        <div id="hassanabdal" class="court-section">
-            <div class="cms-card">
-                <span class="court-badge">Hassan Abdal</span>
-                <h3>Senior Civil Judge</h3>
-                <p>Hassan Abdal Division</p>
-            </div>
-        </div>
-
-        <!-- 6. Pindi Gheb Portion -->
-        <div id="pindigheb" class="court-section">
-            <div class="cms-card">
-                <span class="court-badge">Pindi Gheb</span>
-                <h3>Additional Session Judge</h3>
-                <p>Pindi Gheb Sub-Division</p>
-            </div>
-        </div>
-
     </main>
 
     <script>
         function showCourt(courtId, ev) {
-            // Hide all sections
             const sections = document.querySelectorAll('.court-section');
-            sections.forEach(sec => sec.classList.remove('active'));
+            sections.forEach(sec => {
+                const shouldShow = sec.id === courtId;
+                sec.classList.toggle('active', shouldShow);
+                sec.hidden = !shouldShow;
+            });
 
-            // Deactivate all buttons
             const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-
-            // Show selected section and activate button
-            document.getElementById(courtId).classList.add('active');
-            if (ev && ev.currentTarget) ev.currentTarget.classList.add('active');
+            buttons.forEach(btn => {
+                const isActive = btn === (ev && ev.currentTarget ? ev.currentTarget : null);
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
         }
+
+        function filterCourtTabs(query) {
+            const value = (query || '').toLowerCase().trim();
+            const tabs = document.querySelectorAll('.tab-btn');
+            const sections = document.querySelectorAll('.court-section');
+            const sectionMatches = {};
+            let firstMatch = null;
+
+            sections.forEach(section => {
+                const sectionText = (section.textContent || '').toLowerCase();
+                const sectionMatch = !value || sectionText.includes(value) || section.id.toLowerCase().includes(value);
+                sectionMatches[section.id] = sectionMatch;
+                if (sectionMatch && !firstMatch) firstMatch = section.id;
+                section.hidden = !sectionMatch;
+                section.classList.toggle('active', sectionMatch && !firstMatch ? true : sectionMatch && section.id === firstMatch);
+            });
+
+            tabs.forEach(tab => {
+                const text = (tab.textContent || '').toLowerCase();
+                const matched = !value || sectionMatches[tab.dataset.court] || text.includes(value) || (tab.dataset.court || '').includes(value);
+                tab.style.display = matched ? '' : 'none';
+            });
+
+            if (firstMatch) {
+                const matchingTab = document.querySelector('.tab-btn[data-court="' + firstMatch + '"]');
+                showCourt(firstMatch, { currentTarget: matchingTab || tabs[0] });
+            } else {
+                sections.forEach(section => {
+                    section.hidden = true;
+                    section.classList.remove('active');
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const defaultSection = document.querySelector('.court-section.active');
+            if (defaultSection) defaultSection.hidden = false;
+            document.querySelectorAll('.tab-btn').forEach((btn, index) => {
+                btn.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+            });
+        });
     </script>
 </body>
 </html>

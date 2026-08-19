@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Desk - CMS Judiciary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, #f7fafc 0%, #eef5ff 100%);
+            color: #132b4d;
+        }
+        .page-shell {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.25rem 1rem 2rem;
+        }
+        .topbar {
+            background: linear-gradient(120deg, #0b1f39 0%, #143a61 40%, #0f766e 100%);
+            color: white;
+            padding: 1rem 1.2rem;
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+        }
+        .topbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .brand-mark {
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            font-size: 1.6rem;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.18);
+        }
+        .brand h1 {
+            margin: 0;
+            font-size: clamp(1.2rem, 2vw, 1.9rem);
+            font-family: 'Cinzel', serif;
+        }
+        .page-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1.7fr;
+            gap: 1rem;
+            margin-top: 1.2rem;
+        }
+        .panel-card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid rgba(148,163,184,0.2);
+            box-shadow: 0 18px 34px rgba(15,23,42,0.06);
+        }
+        .panel-header h2 {
+            margin: 0 0 0.75rem;
+            font-size: 1.15rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.8rem;
+        }
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            margin-bottom: 0.8rem;
+        }
+        .form-field label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .form-field input,
+        .form-field select {
+            padding: 0.8rem 0.9rem;
+            border: 1px solid rgba(148,163,184,0.4);
+            border-radius: 12px;
+            background: #f8fafc;
+            font: inherit;
+            color: #0f172a;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.7rem;
+            margin-top: 1rem;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(15,23,42,0.04), rgba(14,116,144,0.06));
+            border: 1px solid rgba(148,163,184,0.18);
+            border-radius: 16px;
+            padding: 0.85rem 0.8rem;
+        }
+        .stat-card strong {
+            display: block;
+            font-size: 1.25rem;
+            margin-top: 0.35rem;
+        }
+        .client-list {
+            display: grid;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .client-card {
+            border: 1px solid rgba(148,163,184,0.2);
+            border-radius: 16px;
+            padding: 0.9rem 1rem;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            display: grid;
+            gap: 0.45rem;
+        }
+        .client-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .client-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.28rem 0.65rem;
+            border-radius: 999px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            background: rgba(15,118,110,0.12);
+            color: #0f766e;
+        }
+        @media (max-width: 860px) {
+            .page-grid { grid-template-columns: 1fr; }
+            .form-row, .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">
+                <div class="brand-mark">👥</div>
+                <h1>Client Desk</h1>
+            </div>
+            <a href="index.html" class="cms-btn btn-gold" style="width:auto; text-decoration:none;">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <main class="page-shell">
+        <div class="page-grid">
+            <section class="panel-card">
+                <div class="panel-header">
+                    <h2>Add Client & Matter</h2>
+                </div>
+                <form id="client-form">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Client Name</label>
+                            <input type="text" id="client-name" placeholder="e.g. Ahmad Ali" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Phone</label>
+                            <input type="text" id="client-phone" placeholder="e.g. 0300-1234567">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Matter Type</label>
+                            <select id="client-matter">
+                                <option>Civil Suit</option>
+                                <option>Family Matter</option>
+                                <option>Criminal Defense</option>
+                                <option>Land / Mutation</option>
+                                <option>Appeal / Revision</option>
+                                <option>General Consultation</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>Court / Forum</label>
+                            <input type="text" id="client-court" placeholder="e.g. Civil Judge Attock">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Case / File Ref</label>
+                            <input type="text" id="client-file" placeholder="e.g. Civil Suit #45/2026">
+                        </div>
+                        <div class="form-field">
+                            <label>Next Follow-Up</label>
+                            <input type="date" id="client-followup">
+                        </div>
+                    </div>
+                    <button type="submit" class="cms-btn btn-navy">Save Client Record</button>
+                </form>
+            </section>
+
+            <section class="panel-card">
+                <div class="panel-header">
+                    <h2>Client Overview</h2>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span>Total Clients</span>
+                        <strong id="total-clients">0</strong>
+                    </div>
+                    <div class="stat-card">
+                        <span>Follow Up Due</span>
+                        <strong id="due-followups">0</strong>
+                    </div>
+                    <div class="stat-card">
+                        <span>Active Matters</span>
+                        <strong id="active-matters">0</strong>
+                    </div>
+                </div>
+                <div id="client-list" class="client-list"></div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const seedClients = [
+            { name: 'Ahmad Ali', phone: '0300-1122334', matter: 'Land / Mutation', court: 'Civil Judge Attock', file: 'Mutation #88/2026', followup: '2026-08-28', status: 'Active' },
+            { name: 'Sana Khan', phone: '0333-4455667', matter: 'Family Matter', court: 'Family Court Attock', file: 'Family Suit #14/2026', followup: '2026-08-25', status: 'Pending' },
+            { name: 'Muhammad Younas', phone: '0312-9988772', matter: 'Criminal Defense', court: 'District & Sessions Court', file: 'Bail App #12/2026', followup: '2026-08-30', status: 'Urgent' }
+        ];
+
+        const STORAGE_KEY = 'cms_clients_data';
+
+        function getClients() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return seedClients;
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) && parsed.length ? parsed : seedClients;
+            } catch (error) {
+                return seedClients;
+            }
+        }
+
+        function saveClients(list) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        }
+
+        function renderClients() {
+            const clients = getClients();
+            const listEl = document.getElementById('client-list');
+            listEl.innerHTML = clients.map(client => `
+                <div class="client-card">
+                    <div class="client-top">
+                        <strong>${client.name}</strong>
+                        <span class="client-badge">${client.status || 'Active'}</span>
+                    </div>
+                    <div><strong>Matter:</strong> ${client.matter}</div>
+                    <div><strong>Case Ref:</strong> ${client.file}</div>
+                    <div><strong>Court:</strong> ${client.court}</div>
+                    <div><strong>Phone:</strong> ${client.phone || 'N/A'}</div>
+                    <div><strong>Next Follow Up:</strong> ${client.followup || 'Not set'}</div>
+                </div>
+            `).join('') || '<p>No clients added yet.</p>';
+
+            document.getElementById('total-clients').textContent = clients.length;
+            document.getElementById('due-followups').textContent = clients.filter(c => c.followup).length;
+            document.getElementById('active-matters').textContent = clients.filter(c => (c.status || 'Active') !== 'Closed').length;
+        }
+
+        document.getElementById('client-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const client = {
+                name: document.getElementById('client-name').value.trim(),
+                phone: document.getElementById('client-phone').value.trim(),
+                matter: document.getElementById('client-matter').value,
+                court: document.getElementById('client-court').value.trim(),
+                file: document.getElementById('client-file').value.trim(),
+                followup: document.getElementById('client-followup').value,
+                status: 'Active'
+            };
+
+            if (!client.name) return;
+            const clients = getClients();
+            clients.unshift(client);
+            saveClients(clients);
+            renderClients();
+            this.reset();
+        });
+
+        renderClients();
+    </script>
+</body>
+</html>

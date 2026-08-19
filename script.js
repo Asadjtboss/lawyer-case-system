@@ -773,14 +773,51 @@ function generateDocument(e) {
     document.getElementById('w-casetitle').innerText = casetitle;
 
     if (type === 'wakalatnama') {
-        document.getElementById('print-doc-title').innerText = 'WAKALATNAMA / POWER OF ATTORNEY';
-        document.getElementById('print-doc-body').innerHTML = 'I/We do hereby appoint and retain <strong>ADVOCATE IFTHEKHAR AHMAD KHAN</strong>, High Court, to appear and act for me/us in the above case.';
+        document.getElementById('print-doc-title').innerText = 'وکالت نامہ / WAKALATNAMA';
+        document.getElementById('print-doc-body').innerHTML = `
+            <div style="border:2px solid #111; padding:1rem; background:#fff; font-family:'Noto Nastaliq Urdu','Georgia',serif; color:#111; line-height:1.7;">
+                <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:0.8rem; border-bottom:2px solid #111; padding-bottom:0.8rem; margin-bottom:0.8rem;">
+                    <div style="width:180px; height:70px; border:2px solid #111; display:grid; place-items:center; font-size:1rem;">کورت فیس</div>
+                    <div style="flex:1; text-align:center; font-size:2.6rem; font-weight:700;">وکالت نامہ</div>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1.2fr 1fr; gap:0.7rem; margin:0.6rem 0;">
+                    <div>بیعت نام</div>
+                    <div style="border-bottom:2px solid #111;"></div>
+                    <div style="text-align:right;">تاریخ</div>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1.2fr 1fr; gap:0.7rem; margin:0.5rem 0;">
+                    <div>نام</div>
+                    <div style="border-bottom:2px solid #111;"><strong>${client || '________________'}</strong></div>
+                    <div style="text-align:right;">مقدمہ</div>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1.2fr 1fr; gap:0.7rem; margin:0.5rem 0 0.8rem;">
+                    <div>مستند</div>
+                    <div style="border-bottom:2px solid #111;"><strong>${court || '________________'}</strong></div>
+                    <div style="text-align:right;">وکیل</div>
+                </div>
+                <p style="text-align:justify; font-size:0.9rem; margin:0.5rem 0;">میں/ہم <strong>${client || '________________'}</strong> صاحب/صاحبا نے اپنی مرضی سے <strong>ADVOCATE IFTHEKHAR AHMAD KHAN</strong> کو اپنے وکیل و نمائندے کے طور پر مقرر کیا ہے کہ وہ میرے/ہماری طرف سے <strong>${casetitle || '________________'}</strong> کے مقدمہ میں <strong>${court || '________________'}</strong> عدالت میں تمام قانونی کارروائیاں، دلالت، استدلال، دفاع اور دیگر مناسب اقدامات کرے گا۔</p>
+                <div style="display:flex; justify-content:space-between; margin-top:2.5rem;">
+                    <div style="width:150px; text-align:center;">
+                        <div style="border-top:2px solid #111; margin-top:2rem; padding-top:0.5rem;">مشتری/کلائنٹ</div>
+                    </div>
+                    <div style="width:150px; text-align:center;">
+                        <div style="border-top:2px solid #111; margin-top:2rem; padding-top:0.5rem;">وکیل</div>
+                    </div>
+                </div>
+            </div>
+        `;
     } else if (type === 'urgent') {
         document.getElementById('print-doc-title').innerText = 'APPLICATION FOR URGENT HEARING';
         document.getElementById('print-doc-body').innerHTML = 'It is respectfully prayed that the titled matter involves urgent interim relief issues, and may kindly be fixed for immediate hearing today.';
     } else if (type === 'legal_notice') {
         document.getElementById('print-doc-title').innerText = 'FORMAL LEGAL NOTICE';
-        document.getElementById('print-doc-body').innerHTML = 'Take notice that my client calls upon you to settle the outstanding dispute within 14 days of receipt of this notice.';
+        document.getElementById('print-doc-body').innerHTML = `Take notice that the undersigned has caused to be served upon you regarding ${casetitle || 'the matter'} before ${court || 'the competent forum'}. Please settle the same within 14 days, otherwise legal action shall be initiated.`;
+    } else if (type === 'affidavit') {
+        document.getElementById('print-doc-title').innerText = 'AFFIDAVIT';
+        document.getElementById('print-doc-body').innerHTML = `I, <strong>${client || '________________'}</strong>, do hereby solemnly affirm and state that ${casetitle || 'the facts stated herein are true and correct'} to the best of my knowledge and belief.`;
+    } else if (type === 'petition') {
+        document.getElementById('print-doc-title').innerText = 'PETITION / APPLICATION';
+        document.getElementById('print-doc-body').innerHTML = `Respectfully submitted that the applicant seeks ${casetitle || 'appropriate relief'} before the Hon'ble ${court || 'court'}. It is therefore prayed that the Hon'ble Court may be pleased to grant the necessary relief.`;
     }
 
     document.getElementById('doc-print-template').style.display = 'block';
